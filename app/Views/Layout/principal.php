@@ -16,7 +16,7 @@
     <!-- Google fonts - Muli-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="<?php echo site_url('recursos/');?>css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="<?php echo site_url('recursos/');?>css/style.blue.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="<?php echo site_url('recursos/');?>css/custom.css">
     <!-- Favicon-->
@@ -46,8 +46,8 @@
         <div class="container-fluid d-flex align-items-center justify-content-between">
           <div class="navbar-header">
             <!-- Navbar Header--><a href="index.html" class="navbar-brand">
-              <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Dark</strong><strong>Admin</strong></div>
-              <div class="brand-text brand-sm"><strong class="text-primary">D</strong><strong>A</strong></div></a>
+              <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Oberon</strong><strong>Sys</strong></div>
+              <div class="brand-text brand-sm"><strong class="text-primary">OB</strong><strong>N</strong></div></a>
             <!-- Sidebar Toggle Btn-->
             <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
           </div>
@@ -213,8 +213,12 @@
         </div>
         <section class="no-padding-top no-padding-bottom">
 
-        <!-- ESPAÇO RESERVADO PARA RENDERIZAR O CONTEÚDO DE CADA VIEW E EXTENDER O LAYOUT -->
-        <?php echo $this->renderSection('conteudo'); ?>
+          <div class="container-fluid">
+
+          <!-- ESPAÇO RESERVADO PARA RENDERIZAR O CONTEÚDO DE CADA VIEW E EXTENDER O LAYOUT -->
+          <?php echo $this->renderSection('conteudo'); ?>
+            
+          </div>
 
         </section>
 

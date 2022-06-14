@@ -38,8 +38,9 @@
 
             <h5 class="card-title mt-2"><?php echo esc($usuario->nome);?></h5>
             <p class="card-text"><?php echo esc($usuario->email); ?></p>
-            <p class="card-text">Criado <?php echo $usuario->criado_em ?></p>
-            <p class="card-text">Atualizado <?php echo $usuario->atualizado_em ?></p>
+            <p class="card-text"><?php echo ($usuario->ativo == true ? 'Status:<span class="text-success">&nbsp;Ativo</span>' : 'Status:<span class="text-danger">&nbsp;Inativo</span>'); ?></p>
+            <p class="card-text">Criado <?php echo $usuario->criado_em->humanize(); ?></p>
+            <p class="card-text">Atualizado <?php echo $usuario->atualizado_em->humanize();?></p>
 
             <!-- Example single danger button -->
             <div class="btn-group">
@@ -48,7 +49,7 @@
                     Ações
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="<?php echo site_url("usuario/editar/$usuario->id"); ?>">Editar Usuário</a>
+                    <a class="dropdown-item" href="<?php echo site_url("usuarios/editar/$usuario->id"); ?>">Editar Usuário</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Separated link</a>
                 </div>

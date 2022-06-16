@@ -42,11 +42,12 @@ class Usuarios extends BaseController
                 'email',
                 'ativo',
                 'imagem',
-
+                'deletado_em',
             ];
 
+            // SELECT EM TODOS OS USUÁRIOS
             $usuarios = $this->usuarioModel->select($atributos)
-                                            ->withDeleted(true)
+                                            ->withDeleted(true) //Buscar também os dados deletados
                                             ->orderBy('id', 'DESC')
                                             ->findAll();
 
@@ -83,11 +84,10 @@ class Usuarios extends BaseController
 
                 $data[] = [
 
-                    'imagem' => $usuario->imagem = img($imagem),
-                    'nome' => anchor("usuarios/exibir/$usuario->id", esc($usuario->nome), 'title="Exibir usuário '.$nomeUsuario.'"'),
-                    'email' => esc($usuario->email),
-                    'ativo' => ($usuario->ativo == true ? '<i class="fa fa-unlock text-success"></i>&nbsp;Ativo' : '<i class="fa fa-lock text-danger"></i>&nbsp;Inativo'),
-
+                    'imagem'    => $usuario->imagem = img($imagem),
+                    'nome'      => anchor("usuarios/exibir/$usuario->id", esc($usuario->nome), 'title="Exibir usuário '.$nomeUsuario.'"'),
+                    'email'     => esc($usuario->email),
+                    'ativo'     => $usuario->exibeSituacao(),
                 ];
 
             }
@@ -372,6 +372,12 @@ class Usuarios extends BaseController
 
         $usuario = $this->buscaUsuarioOu404($id);
 
+        if($usuario->deletado_em != null ){
+
+            return redirect()->back()->with('info', "Esse usuário já foi excluído");
+
+        }
+
         if($this->request->getMethod() === 'post'){
 
             $this->usuarioModel->delete($usuario->id);
@@ -399,6 +405,25 @@ class Usuarios extends BaseController
 
         return view('Usuarios/excluir', $data);
 
+
+    }
+
+    public function desfazerExclusao(int $id = null){
+
+
+        $usuario = $this->buscaUsuarioOu404($id);
+
+        if($usuario->deletado_em == null){
+
+            return redirect()->back()->with('info', "Apenas usuários excluídos podem ser recuperados");
+
+        }
+
+        $usuario->deletado_em = null;
+        $this->usuarioModel->protect(false)->save($usuario);
+
+        
+        return redirect()->back()->with('sucesso', "$usuario->nome restaurado com sucesso. Usuários restaurados voltam com status inativo, você pode alterar isso quando quiser =D");
 
     }
 

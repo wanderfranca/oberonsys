@@ -35,7 +35,6 @@ class Usuarios extends BaseController
             return redirect()->back();
         }
 
-            
             $atributos = [
                 
                 'id',
@@ -47,6 +46,7 @@ class Usuarios extends BaseController
             ];
 
             $usuarios = $this->usuarioModel->select($atributos)
+                                            ->withDeleted(true)
                                             ->orderBy('id', 'DESC')
                                             ->findAll();
 
@@ -58,10 +58,32 @@ class Usuarios extends BaseController
 
                 $nomeUsuario = esc($usuario->nome);
 
+                //Caminho da imagem do usuário
+                if($usuario->imagem != null){
+
+                    $imagem = [
+                        'src' => site_url("usuarios/imagem/$usuario->imagem"),
+                        'class' => 'rounded-circle img-fluid',
+                        'alt' => esc($usuario->nome),
+                        'width'=> '50',
+                    ];
+
+
+                } else {
+
+                    $imagem = [
+                        'src' => site_url("recursos/img/usuario_sem_imagem.png"),
+                        'class' => 'rounded-circle img-fluid',
+                        'alt' => '',
+                        'width'=> '50',
+
+                    ];
+                }
+
 
                 $data[] = [
 
-                    'imagem' => $usuario->imagem,
+                    'imagem' => $usuario->imagem = img($imagem),
                     'nome' => anchor("usuarios/exibir/$usuario->id", esc($usuario->nome), 'title="Exibir usuário '.$nomeUsuario.'"'),
                     'email' => esc($usuario->email),
                     'ativo' => ($usuario->ativo == true ? '<i class="fa fa-unlock text-success"></i>&nbsp;Ativo' : '<i class="fa fa-lock text-danger"></i>&nbsp;Inativo'),
@@ -227,7 +249,6 @@ class Usuarios extends BaseController
 
     }
 
-
     public function editarImagem(int $id = null){
 
 
@@ -250,18 +271,37 @@ class Usuarios extends BaseController
             return redirect()->back();
         }
 
-
         // Envio o hash do token do form
         $retorno['token'] = csrf_hash();
 
+        $validacao = service('validation');
 
+        $regras = [
+            'imagem' => 'uploaded[imagem]|max_size[imagem,2048]|ext_in[imagem,png,jpg,jpeg,webp,gif]',
+        ];
+
+        $mensagens = [//Errors
+            'imagem' => [
+                'uploaded' => 'Por favor, escolha uma imagem',
+                'ext_in' => 'Por favor, escolha uma imagem png, jpg, jpeg, webp ou gif',
+                'max_size' => 'Tamanho Máx permitido é 2048kb',
+            ],
+        ];
+
+        $validacao->setRules($regras, $mensagens);
+
+        if($validacao->withRequest($this->request)->run() == false){
+        //Retornar os erros de validação do formulário
+        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $validacao->getErrors();
+
+
+        // Retorno para o ajax request
+        return $this->response->setJSON($retorno);
+
+        }
 
         
-
-
-
-
-
         // Recupero o post da requisição
         $post = $this->request->getPost();
 
@@ -269,39 +309,95 @@ class Usuarios extends BaseController
         //Validamos a existência do ususário
         $usuario = $this->buscaUsuarioOu404($post['id']);
 
+        // Recuperar a imagem que veio no post
+        $imagem = $this->request->getFile('imagem');
+
+        list($largura, $altura) = getimagesize($imagem->getPathname());
+
+        if($largura < "300" || $altura < "300" ){
+
+            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['dimensao' => 'A imagem não pode ser menor do que 300 x 300 pixels'];
+
+        }
+
+            // LOCAL DE ARMAZENAMENTO DA IMAGEM - STORE
+        $caminhoImagem = $imagem->store('usuarios');
+
+        // C:\xampp\htdocs\oberonsys\writable\uploads/usuarios/$imagem
+        $caminhoImagem = WRITEPATH . "uploads/$caminhoImagem";
+
+        // MANIPULAÇÃO DE IMAGEM
+        $this->manipulaImagem($caminhoImagem, $usuario->id);
+
         
-        // Se não foi informada a senha, então removemos a captura desse dado do post
-        if(empty($post['password'])){
-            unset($post['password']);
-            unset($post['password_confirmation']);
-        }
+        //Atualizar a tabela de usuário no banco de dados
 
-        //Preenchemos os atributos do usuário com os valores do POST
-        $usuario->fill($post);
-        
-        if($usuario->hasChanged() == false){
+        $imagemAntiga = $usuario->imagem; // Recuperar a possível imagem antiga
 
-            $retorno['info'] = 'Não há dados para serem atualizados';
-            return $this->response->setJSON($retorno);
+        $usuario->imagem = $imagem->getName();
+
+        $this->usuarioModel->save($usuario);
+
+
+        if($imagemAntiga != null){
+            $this->removeImagemDoFileSystem($imagemAntiga);
 
         }
 
-        if($this->usuarioModel->protect(false)->save($usuario)){
 
-            session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
+        session()->setFlashdata('sucesso', 'Imagem atualizada com suceso!');
 
-            //
-            return $this->response->setJSON($retorno);
 
-        }
-
-        //Retornar os erros de validação do formulário
-        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-        $retorno['erros_model'] = $this->usuarioModel->errors();
 
 
         // Retorno para o ajax request
         return $this->response->setJSON($retorno);
+
+
+    }
+
+    public function imagem(string $imagem = null){
+
+        if($imagem != null){
+
+            $this->exibeArquivo('usuarios', $imagem);
+
+        }
+
+    }
+
+    public function excluir(int $id = null){
+
+
+        $usuario = $this->buscaUsuarioOu404($id);
+
+        if($this->request->getMethod() === 'post'){
+
+            $this->usuarioModel->delete($usuario->id);
+
+            if($usuario->imagem != null){
+
+                $this->removeImagemDoFileSystem($usuario->imagem);
+
+            }
+
+            $usuario->imagem = null;
+            $usuario->ativo = false;
+            $this->usuarioModel->protect(false)->save($usuario);
+
+            return redirect()->to(site_url("usuarios"))->with('sucesso', "Usuário $usuario->nome removido com sucesso!");
+
+        }
+
+        $data = [
+
+            'titulo' => "Excluir usuário: ".esc($usuario->nome),
+            'usuario' => $usuario,
+
+        ];
+
+        return view('Usuarios/excluir', $data);
 
 
     }
@@ -323,6 +419,44 @@ class Usuarios extends BaseController
 
         return $usuario;
 
+    }
+
+    private function removeImagemDoFileSystem(string $imagem){
+
+        $caminhoImagem = WRITEPATH . "uploads/usuarios/$imagem";
+
+        if(is_file($caminhoImagem)){
+
+            unlink($caminhoImagem);
+
+        }
+
+    }
+
+    private function manipulaImagem(string $caminhoImagem, int $usuario_id){
+        
+        //Redimensionar a imagem 300 x 300 para ficar no centro
+        service('image')
+        ->withFile($caminhoImagem)
+        ->fit(300, 300, 'center')
+        ->save($caminhoImagem);
+
+
+        $anoAtual = date('Y');
+        
+        // Adicionar uma marca d'água de texto
+        \Config\Services::image('imagick')
+            ->withFile($caminhoImagem)
+            ->text("Oberon $anoAtual - User-ID $usuario_id", 
+            [
+                'color'      => '#fff',
+                'opacity'    => 0.5,
+                'withShadow' => false,
+                'hAlign'     => 'center',
+                'vAlign'     => 'bottom',
+                'fontSize'   => 10,
+            ])
+            ->save($caminhoImagem);
     }
 
 }

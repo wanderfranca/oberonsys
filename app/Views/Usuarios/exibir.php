@@ -31,8 +31,7 @@
 
                 <?php endif; ?>
 
-                <a href="<?php echo site_url("usuarios/editarimagem/$usuario->id") ?>"
-                    class="btn btn-outline-primary btn-sm mt-2">Alterar imagem</a>
+                <a href="<?php echo site_url("usuarios/editarimagem/$usuario->id") ?>" class="btn btn-outline-primary btn-sm mt-2">Alterar imagem</a>
             </div>
             <hr class="border-secondary">
 
@@ -44,26 +43,28 @@
 
             <!-- Example single danger button -->
             <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     Ações
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="<?php echo site_url("usuarios/editar/$usuario->id"); ?>">Editar Usuário</a>
+                    
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
+                    <a class="dropdown-item" href="<?php echo site_url("usuarios/excluir/$usuario->id"); ?>">Excluir usuário</a>
+
                 </div>
             </div>
 
-            <a href="<?php echo site_url("usuarios") ?>" class="btn btn-secondary ml-2">Voltar</a>
+            <a href="<?php echo site_url("usuarios") ?>" class="btn btn-secondary btn-sm ml-2">Voltar</a>
 
         </div> <!-- FIM DO DIV BLOCK -->
-
-
 
     </div>
 
 </div>
+
+
 
 
 <?php $this->endSection() ?>

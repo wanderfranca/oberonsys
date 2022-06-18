@@ -15,8 +15,7 @@ class Usuarios extends BaseController
     }
 
 
-    public function index()
-    {
+    public function index(){
         $data = [
 
             'titulo' => 'Usuários do sistema',

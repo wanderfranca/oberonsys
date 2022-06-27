@@ -47,8 +47,8 @@
 estamos fazendo debung para ver o que está vindo do post -->
 <?php if(session()->has('error')): ?>
 
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>Erro!</strong> <?php echo session('error') ?>
+<div id="alert-danger" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong><i class="fa fa-exclamation-circle fa-2x text-white"></i></strong> <?php echo session('error') ?>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>

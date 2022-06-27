@@ -223,7 +223,7 @@
                             </div>
                         </div>
                         <!-- Megamenu end     -->
-                     
+
                         <!-- Log out               -->
                         <div class="list-inline-item logout"> <a id="logout" href="login.html" class="nav-link">Sair
                                 <i class="icon-logout"></i></a></div>
@@ -244,9 +244,14 @@
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
                 <ul class="list-unstyled">
-                    <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>"> <i class="icon-home"></i>Início </a></li>
-                    <li class="<?php echo (url_is('usuarios*') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>"> <i class="fa fa-user-circle"></i>Usuários </a></li>
-                    <li class="<?php echo (url_is('grupos*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>"> <i class="fa fa-users"></i>Grupos & Permissões  </a></li>
+                    <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>"> <i
+                                class="icon-home"></i>Início </a></li>
+                    <li class="<?php echo (url_is('usuarios*') ? 'active' : '') ?>"><a
+                            href="<?php echo site_url('usuarios'); ?>"> <i class="fa fa-user-circle"></i>Usuários </a>
+                    </li>
+                    <li class="<?php echo (url_is('grupos*') ? 'active' : '') ?>"><a
+                            href="<?php echo site_url('grupos'); ?>"> <i class="fa fa-users"></i>Grupos & Permissões
+                        </a></li>
                     <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
                     <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
@@ -304,6 +309,21 @@
 
         <!-- ESPAÇO RESERVADO PARA RENDERIZAR OS SCRIPTS DE CADA VIEW E EXTENDER O LAYOUT -->
         <?php echo $this->renderSection('scripts'); ?>
+
+        <script>
+        $(function() {
+            $('[data-toggle="popover"]').popover({
+
+                html: true,
+
+            });
+        })
+
+        $("#alert-danger").fadeTo(7000, 800).slideUp(800, function() {
+            $("#alert-danger").slideUp(800);
+        });
+
+        </script>
     </body>
 
 </html>

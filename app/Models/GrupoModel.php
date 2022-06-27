@@ -20,14 +20,15 @@ class GrupoModel extends Model
         // Validações
         protected $validationRules = [
             'nome'      => 'required|min_length[2]|max_length[120]|is_unique[grupos.nome,id,{id}]',
-            'descricao' => 'required|max_length[6]',
+            'descricao' => 'required|max_length[230]',
         ];
         protected $validationMessages = [
             'nome' => [
-                'required' => 'O campo nome é obrigatório.',
+                'required' => 'É necessário preencher o nome do grupo',
+                'is_unique'=> 'Já existe um grupo com este nome, por favor escolha outro'
             ],
             'descricao' => [
-                'required' => 'O campo descrição é obrigatório.',
+                'required' => 'A descrição do grupo é obrigatória',
             ],
 
         ];

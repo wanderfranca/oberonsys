@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class GrupoPermissaoModel extends Model
 {
-    protected $table            = 'grupopermissaos';
+    protected $table            = 'grupos_permissoes';
     protected $returnType       = 'object';
     protected $allowedFields    = ['grupo_id', 'permissao_id'];
 
@@ -18,7 +18,7 @@ class GrupoPermissaoModel extends Model
         $atributos = [
             'grupos_permissoes.id',
             'grupos.id AS grupo_id',
-            'permissoes.id AS permissoes_id',
+            'permissoes.id AS permissao_id',
             'permissoes.nome',
         ];
 
@@ -28,7 +28,6 @@ class GrupoPermissaoModel extends Model
                     ->where('grupos_permissoes.grupo_id', $grupo_id) //WHERE grupo_id = $grupo_id que vem como parâmetro
                     ->groupBy('permissoes.nome') //Agrupe todos os registros pelos nomes das permissões
                     ->paginate($quantidade_paginacao); //Façao paginate pelo valor da informação definida no parâmetro
-
     }
 
 }

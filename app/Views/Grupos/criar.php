@@ -118,18 +118,17 @@ $(document).ready(function() {
                                 }
 
                             });
-
                     });
 
-                 $("#form").submit(function(){
+            $("#form").submit(function(){
 
-                    $(this).find(":submit").attr('disabled', 'disabled')
+            $(this).find(":submit").attr('disabled', 'disabled')
 
-                 });     
-                
+            });     
+        
 
-            
-            });
+    
+    });
 </script>
 
 <?php $this->endSection() ?>

@@ -9,9 +9,13 @@ class Grupos extends BaseController
 {
 
     private $grupoModel;
+    private $grupoPermissaoModel;
+    private $permissaoModel;
 
     public function __construct(){
         $this->grupoModel = new \App\Models\GrupoModel();
+        $this->grupoPermissaoModel = new \App\Models\GrupoPermissaoModel();
+        $this->permissaoModel = new \App\Models\PermissaoModel();
     }
 
     public function index(){
@@ -192,6 +196,8 @@ class Grupos extends BaseController
 
             $retorno['erro'] = 'Não é possível editar esse grupo';
             $retorno['erros_model'] = ['grupo' => "O grupo <b class='text-white-50'>".esc($grupo->nome). " </b> não pode ser editado ou excluído, pois trata-se de um grupo de controle interno" ];
+           
+            // Retorno para o ajax request
             return $this->response->setJSON($retorno);
         }
 
@@ -303,7 +309,13 @@ class Grupos extends BaseController
                             ->with('info', "Não é necessário atribuir ou remover permissões de acesso para o grupo <b>".esc($grupo->nome). " </b>, pois esse grupo é controlado automaticamente pelo sistema");
         }
 
-        
+        // Garantir a recuperação de permissões quando não for administrador ou clientes
+        if($grupo->id > 2){
+
+            $grupo->permissoes = $this->grupoPermissaoModel->recuperaPermissoesDoGrupo($grupo->id, 5);
+            $grupo->pager = $this->grupoPermissaoModel->pager;
+
+        }
 
         
         $data = [
@@ -312,7 +324,75 @@ class Grupos extends BaseController
 
         ];
 
+
+        if(!empty($grupo->permissoes)){
+
+            $permissoesExistentes = array_column($grupo->permissoes, 'permissao_id');
+
+            //Colocar no array DATA todas as permissões, EXCETO as $permissoesExistentes
+            $data['permissoesDisponiveis'] = $this->permissaoModel->whereNotIn('id', $permissoesExistentes)->findAll();
+
+
+        } else {
+
+            //Caso o grupo não possua permissão, então exiba todas as permissões
+            $data['permissoesDisponiveis'] = $this->permissaoModel->findAll();
+
+
+        }
+
+
         return view('Grupos/permissoes', $data);
+
+    }
+
+    public function salvarpermissoes(){
+
+        if(!$this->request->isAJAX()){
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        // Recupero o post da requisição
+        $post = $this->request->getPost();
+
+
+        //Validamos a existência do Grupo
+        $grupo = $this->buscaGrupoOu404($post['id']);
+
+
+        if(empty($post['permissao_id'])){
+        
+            //Retornar os erros de validação do formulário
+            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['permissao_id' => 'Escolha uma ou mais permissões'];
+
+
+            // Retorno para o ajax request
+            return $this->response->setJSON($retorno);
+
+        }
+
+        // Receber as permissões do POST
+        $permissaoPush = [];
+
+        foreach($post['permissao_id'] as $permissao){
+
+            array_push($permissaoPush, [
+
+                'grupo_id' => $grupo->id,
+                'permissao_id'=> $permissao
+
+            ]);
+
+        }
+
+        $this->grupoPermissaoModel->insertBatch($permissaoPush);
+
+        session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
+        return $this->response->setJSON($retorno);
 
     }
 

@@ -232,44 +232,8 @@ class Grupos extends BaseController
 
     }
 
-    public function excluir(int $id = null){
 
-
-        $grupo = $this->buscaGrupoOu404($id);
-
-        if($grupo->id < 3){
-
-            return redirect()
-                            ->back()
-                            ->with('error', "O grupo <b>".esc($grupo->nome). " </b> não pode ser editado ou excluído, pois trata-se de um grupo de controle interno");
-        }
-
-        if($grupo->deletado_em != null ){
-
-            return redirect()->back()->with('info', "Esse grupo já foi excluído");
-
-        }
-
-        if($this->request->getMethod() === 'post'){
-
-            // Exclui o grupo
-            $this->grupoModel->delete($grupo->id);
-
-            return redirect()->to(site_url("grupos"))->with('sucesso', 'Grupo <b> '.esc($grupo->nome).' </b> removido com sucesso!');
-
-        }
-
-        $data = [
-
-            'titulo' => "Excluir o grupo: ".esc($grupo->nome),
-            'grupo' => $grupo,
-
-        ];
-
-        return view('Grupos/excluir', $data);
-
-
-    }
+    
 
     public function desfazerExclusao(int $id = null){
 
@@ -346,7 +310,7 @@ class Grupos extends BaseController
 
     }
 
-    public function salvarpermissoes(){
+    public function salvarPermissoes(){
 
         if(!$this->request->isAJAX()){
             return redirect()->back();
@@ -393,6 +357,24 @@ class Grupos extends BaseController
 
         session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
         return $this->response->setJSON($retorno);
+
+    }
+
+
+    public function removePermissao(int $principal_id = null){
+
+
+        if($this->request->getMethod() === 'post'){
+
+            // Exclui o a permissão ($principal_id)
+            $this->grupoPermissaoModel->delete($principal_id);
+
+            return redirect()->back()->with('sucesso', 'Permissão removida');
+
+        }
+
+        // Não é POST
+        return redirect()->back();
 
     }
 

@@ -40,7 +40,7 @@
 
             <?php if(empty($permissoesDisponiveis)): ?>
 
-            <p class="contributions text-info mt-0">Esse grupo já possui todas permissões no sistema</p>
+            <p class="contributions mt-0">Esse grupo já possui todas permissões no sistema</p>
 
             <?php else: ?>
 
@@ -48,7 +48,7 @@
 
             </div>
 
-            <?php echo form_open('/', ['id' => 'form'], ['id' => "$grupo->id"])  ?>
+            <?php echo form_open('/', ['id' => 'form'], ['id' => "$grupo->id"]) ?>
 
             <div class="form-group">
                 <label class="form-control-label">Escolha uma ou mais permissões</label>
@@ -106,7 +106,20 @@
                         <tr>
                             <td><?php echo esc($permissao->nome); ?></td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-danger">Excluir</a>
+
+                            <?php $atributos = [
+                                'onSubmit' => "return confirm('Deseja remover essa permissão?');",
+                            ]; 
+                            
+                            ?>
+
+                            <?php echo form_open("grupos/removepermissao/$permissao->principal_id", $atributos)  ?>                    
+                                
+                                
+                                    <button type="submit" class="btn btn-sm btn-danger">Remover</button>
+
+
+                                <?php echo form_close(); ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -131,6 +144,7 @@
     <!-- Scripts -->
     <?php echo $this->section('scripts') ?>
     <script type="text/javascript" src="<?php echo site_url('recursos/vendor/selectize/selectize.min.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo site_url('recursos/js/close-alert.js'); ?>"></script>
 
     <script>
     $(document).ready(function() {

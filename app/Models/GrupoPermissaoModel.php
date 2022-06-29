@@ -16,7 +16,7 @@ class GrupoPermissaoModel extends Model
 
         // Array de dados que serão recuperados do banco de dados
         $atributos = [
-            'grupos_permissoes.id',
+            'grupos_permissoes.id AS principal_id',
             'grupos.id AS grupo_id',
             'permissoes.id AS permissao_id',
             'permissoes.nome',

@@ -8,10 +8,15 @@ use App\Entities\usuario;
 class Usuarios extends BaseController
 {
     private $usuarioModel;
+    private $grupoUsuarioModel;
+    private $grupoModel;
+
     public function __construct() 
     
     {
         $this->usuarioModel = new \App\Models\UsuarioModel();
+        $this->grupoUsuarioModel = new \App\Models\GrupoUsuarioModel();
+        $this->grupoModel = new \App\Models\GrupoModel();
     }
 
 
@@ -423,6 +428,64 @@ class Usuarios extends BaseController
 
         
         return redirect()->back()->with('sucesso', "$usuario->nome restaurado com sucesso. Usuários restaurados voltam com status inativo, você pode alterar isso quando quiser =D");
+
+    }
+
+    public function grupos(int $id = null){
+
+
+        //Buscar usuário pelo id
+        $usuario = $this->buscaUsuarioOu404($id);
+
+        //Pegar o usuário e recuperar o grupo que o mesmo pertence, 5 itens na lista para paginação
+        $usuario->grupos = $this->grupoUsuarioModel->recuperaGruposDoUsuario($usuario->id, 5);
+        $usuario->pager = $this->grupoUsuarioModel->pager;
+
+        $data = [
+
+            'titulo' => "Grenciar grupos de acesso do usuário: ".esc($usuario->nome),
+            'usuario' => $usuario,
+
+        ];
+
+
+        /**
+         * Verificar se é um cliente
+         * Caso seja um cliente: retornar para view de exibição de usuário
+         * Mensagem: Não é possível esse usuário a outros grupos ou removê-los pois trata-se de um cliente
+         */
+        if(in_array(2, array_column($usuario->grupos, 'grupo_id'))){
+
+
+            return redirect()->to(site_url("usuarios/exibir/$usuario->id"))
+                            ->with('info', 'Não é possível esse usuário a outros grupos ou removê-los pois trata-se de um cliente');
+
+        }
+        
+        /**
+         * Verificar se o usuário está em algum grupo
+         * capturar no array_column o(s) grupo(s) que o usuário está e colocar na variável $gruposExistentes
+         * Criar um array temporário "gruposDisponiveis" e dentro dele capturar todos os grupos exceto o 2 (clientes) e os $gruposExistentes
+         */
+
+        if(!empty($usuario->grupos)){
+
+            $gruposExistentes = array_column($usuario->grupos, 'grupo_id');
+
+            $data['gruposDisponiveis'] = $this->grupoModel
+                                                ->where('id !=', 2)
+                                                ->whereNotIn('id', $gruposExistentes)
+                                                ->findAll();
+
+
+        }else {
+            //Recuperar todos os grupos, com exceção do grupo ID 2 que é o grupo de clientes
+            $data['gruposDisponiveis'] = $this->grupoModel
+                                                ->where('id !=', 2)
+                                                ->findAll();
+        }
+
+        return view('Usuarios/grupos', $data);
 
     }
 

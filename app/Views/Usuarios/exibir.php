@@ -46,6 +46,8 @@
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="<?php echo site_url("usuarios/editar/$usuario->id"); ?>">Editar Usuário</a>
+                    <a class="dropdown-item" href="<?php echo site_url("usuarios/grupos/$usuario->id"); ?>">Grupos de acessos</a>
+                    
                     <div class="dropdown-divider"></div>
 
                     <?php if($usuario->deletado_em == null): ?>

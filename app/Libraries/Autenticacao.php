@@ -42,6 +42,28 @@ class Autenticacao {
 
     }
 
+    // Método: Logout
+    public function logou(): void
+    {
+        session()->destroy();
+    }
+
+    public function pegaUsuarioLogado()
+    {
+        if($this->usuario === null)
+        {
+            $this->usuario = $this->pegaUsuarioDaSessao();
+        }
+
+        return $this->usuario;
+    }
+
+    //Metodo: Verifica se o usuário está logado
+    public function estaLogado() : bool
+    {
+        return $this->pegaUsuarioLogado() !== null;
+    }
+
 
     // Método: Criar a sessão do usuário
     private function logaUsuario(object $usuario): void
@@ -51,11 +73,30 @@ class Autenticacao {
         $session = session();
 
         // Gerar um novo ID de sessão
-        $session->regenerate();
+        $_SESSION['__ci_last_regenerate'] = time(); 
 
         // Setar o ID do usuário na sessão
         $session->set('usuario_id', $usuario->id);
 
+    }
+
+    // Método: Recuperar usuário da sessão e valida usuário logado
+    private function pegaUsuarioDaSessao()
+    {
+        if(session()->has('usuario_id') == false)
+        {
+            return null;
+        }
+
+        $usuario = $this->usuarioModel->find(session()->get('usuario_id'));
+
+        // Validação: Se o usuário existe e se tem permissão de login na aplicação
+        if($usuario == null || $usuario->ativo == false)
+        {
+            return null;
+        }
+
+        return $usuario;
     }
 
 }

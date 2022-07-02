@@ -231,10 +231,7 @@ class Grupos extends BaseController
 
 
     }
-
-
     
-
     public function desfazerExclusao(int $id = null){
 
         $grupo = $this->buscaGrupoOu404($id);
@@ -359,7 +356,6 @@ class Grupos extends BaseController
         return $this->response->setJSON($retorno);
 
     }
-
 
     public function removePermissao(int $principal_id = null){
 

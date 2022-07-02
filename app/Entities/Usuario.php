@@ -12,7 +12,9 @@ class Usuario extends Entity
         'deletado_em',
     ];
 
-    public function exibeSituacao(){
+    //Método: Exibir a situação do usuário
+    public function exibeSituacao()
+    {
 
         if($this->deletado_em != null){
             // Usuário excluído
@@ -40,4 +42,13 @@ class Usuario extends Entity
 
     }
     
+
+    //Método: Verificar a senha do usuário
+    public function verificaPassword(string $password): bool
+    {
+
+        return password_verify($password, $this->password_hash);
+
+    }
+
 }

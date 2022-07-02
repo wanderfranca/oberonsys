@@ -7,7 +7,7 @@ class Autenticacao {
     private $usuario;
     private $usuarioModel;
 
-    public function __construc()
+    public function __construct()
     {
         $this->usuarioModel = new \App\Models\UsuarioModel();
     }
@@ -21,18 +21,22 @@ class Autenticacao {
          //Verificação: Usuário
         if($usuario === null)
         {
+            exit('Usuário não encontrado');
             return false;
         }
 
         //Verificação: Senha
         if($usuario->verificaPassword($password) == false)
         {
+            exit('Senha Inválida');
             return false;
+            
         }
 
         //Verificação: Status
         if($usuario->ativo == false)
         {
+            exit('Usuário inativo');
             return false;
         }
         
@@ -43,7 +47,7 @@ class Autenticacao {
     }
 
     // Método: Logout
-    public function logou(): void
+    public function logout(): void
     {
         session()->destroy();
     }

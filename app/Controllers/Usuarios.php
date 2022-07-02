@@ -629,7 +629,7 @@ class Usuarios extends BaseController
 
         if (!$id || !$usuario = $this->usuarioModel->withDeleted(true)->find($id)){
 
-            throw\CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("A Oberon não encontrou o usuário desejado $id");
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Usuário não encontrado pelo ID informado");
 
         }
 
@@ -643,7 +643,7 @@ class Usuarios extends BaseController
 
         if (!$principal_id || !$grupoUsuario = $this->grupoUsuarioModel->find($principal_id)){
 
-            throw\CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Não encontramos o registro desejado $principal_id");
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Não encontramos o registro desejado $principal_id");
 
         }
 

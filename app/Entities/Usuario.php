@@ -42,12 +42,38 @@ class Usuario extends Entity
 
     }
     
-
-    //Método: Verificar a senha do usuário
+    // Método: Verificar a senha do usuário
     public function verificaPassword(string $password): bool
     {
 
         return password_verify($password, $this->password_hash);
+
+    }
+
+    // Método: Verifica se o usuário tem permissão para acessar uma determinada rota
+    public function temPermissaoPara(string $permissao) : bool
+    {
+        // Se o usuário logado é admin, return true
+        if($this->is_admin == true)
+        {
+            return true;
+        }
+
+        // Se o usuário tiver permissões VAZIA, return false
+        if(empty($this->permissoes))
+        {
+            return false;
+        }
+
+        // O usuário possui permissões
+        // Então verificar se ele possui a permissão correta, caso não, return false
+        if(in_array($permissao, $this->permissoes) == false)
+        {
+            return false;
+        }
+        
+        // Permissão concedida
+        return true;
 
     }
 

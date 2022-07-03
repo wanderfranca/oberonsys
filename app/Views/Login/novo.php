@@ -22,7 +22,7 @@ function saudacao() {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <?php echo $this->section('titulo') ?> <?php echo $titulo; ?><?php $this->endSection() ?>
+        <title>Oberon - <?php echo $titulo; ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -84,7 +84,7 @@ function saudacao() {
                                         action="<?php echo base_url('login/auth'); ?>">
 
                                         <div class="form-group mb-3">
-                                            <input id="inputEmail" name="email" type="text" placeholder="Login" required
+                                            <input id="inputEmail" name="email" type="text" placeholder="E-mail" required
                                                 autofocus="" class="form-control  border-0 shadow-sm px-4"
                                                 value="<?php echo set_value('email'); ?>">
                                         </div>

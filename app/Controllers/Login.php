@@ -6,13 +6,13 @@ use App\Controllers\BaseController;
 
 class Login extends BaseController
 {
-    public function index()
+    public function novo()
     {
         $data = [
 
             'titulo' => 'Login',
         ];
 
-        return view('Login/index', $data);
+        return view('Login/novo', $data);
     }
 }

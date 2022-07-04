@@ -31,7 +31,7 @@
 
 <?php endif; ?>
 
-<!-- UTILIZAREMOS EM POST SEM AJAX REQUEST -->
+<!-- AJAX POST -->
 <?php if(session()->has('erros_model')): ?>
 <ul>
     <?php foreach($erros_model as $erro): ?>
@@ -43,8 +43,7 @@
 </ul>
 <?php endif; ?>
 
-<!-- Utilizamos quando o formulário é interceptado por erro no backend ou quando
-estamos fazendo debung para ver o que está vindo do post -->
+<!-- Erro -->
 <?php if(session()->has('error')): ?>
 
 <div id="alert-danger" class="alert alert-danger alert-dismissible fade show" role="alert">

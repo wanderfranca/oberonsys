@@ -14,7 +14,6 @@ function saudacao() {
 
 ?>
 
-
 <!DOCTYPE html>
 
 <html>
@@ -51,17 +50,14 @@ function saudacao() {
     }
     </style>
 
-
     <body>
         <div class="container-fluid">
             <div class="row no-gutter">
                 <!-- The image half -->
                 <div class="col-md-6 d-none d-md-flex bg-image"></div>
-
                 <!-- The content half -->
                 <div class="col-md-6 bg-light">
                     <div class="login d-flex align-items-center py-5">
-
                         <!-- Demo content-->
                         <div class="container">
                             <div class="row">
@@ -69,48 +65,49 @@ function saudacao() {
                                 <?php echo $this->include('Layout/_mensagens'); ?>
 
                                 <div class="col-lg-10 col-xl-7 mx-auto">
-
                                     <div class="text-center pb-2">
                                         <img src="<?php echo site_url('imgs/')?>Ologo.png">
                                         <h5 class="mb-5 text-primary ml-2 pl-2 font-weight-bolder"> Gestão </h5>
                                     </div>
                                     <div class="text-center">
-
-
                                         <h5 class="text-lg-center mb-4"><?php echo saudacao(); ?>, seja bem-vindo!</h5>
                                     </div>
 
-                                    <form class="user" name="form_auth" method="POST"
-                                        action="<?php echo base_url('login/auth'); ?>">
-
+                                    <?php echo form_open('/', ['id' => 'form', 'class'=>'user', 'autocomplete'=>'off']) ?>
+                                    <!-- <form class="user" name="form_auth" method="POST" action="<//?php echo base_url('login/auth'); ?>"> -->
                                         <div class="form-group mb-3">
-                                            <input id="inputEmail" name="email" type="text" placeholder="E-mail" required
-                                                autofocus="" class="form-control  border-0 shadow-sm px-4"
-                                                value="<?php echo set_value('email'); ?>">
+                                        
+                                            <input id="login-username" name="email" type="text" placeholder="E-mail" required data-msg="Por favor, informe seu e-mail" autofocus="" class="offz form-control  border-0 shadow-sm px-4" disabled value="<?php echo set_value('email'); ?>">
                                         </div>
                                         <div class="form-group mb-3">
-                                            <input id="inputPassword" name="password" type="password"
-                                                placeholder="Senha" required data-validate="Password is required"
-                                                class="form-control border-0 shadow-sm px-4 text-primary">
+                                            <input id="login-password" name="password" type="password" placeholder="Senha" required data-msg="Por favor, informe sua senha" required class="form-control border-0 shadow-sm px-4 text-primary">
                                         </div>
-                                        <button type="submit"
-                                            class="btn btn-primary btn-block text-uppercase mb-2  shadow-sm">ENTRAR</button>
+                                        <input id="btn-login" type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm" value="ENTRAR">
                                         <div class="text-center d-flex justify-content-between mt-4">
                                             <p>Esqueceu sua senha? <a href="#" class="font-italic ">
-                                                    <u>Clique Aqui</u></a></p>
+                                                <u>Clique Aqui</u></a>
+                                            </p>
                                         </div>
-                                    </form>
+                                    <?php echo form_close(); ?>
                                 </div>
                             </div>
                         </div><!-- End -->
-
                     </div>
                 </div><!-- End -->
-
             </div>
-
         </div>
-
     </body>
+    <script>
+ function getRidOffAutocomplete(){
 
+var timer = window.setTimeout( function(){
+    $('.offz').prop('disabled',false);
+    clearTimeout(timer);
+   },
+   900);
+}
+
+// Invoke the function, handle page load autocomplete by chrome.
+getRidOffAutocomplete();
+</script>
 </html>

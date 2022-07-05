@@ -40,7 +40,7 @@
                         <div class="close-btn">Fechar <i class="fa fa-close"></i></div>
                         <form id="searchForm" action="#">
                             <div class="form-group">
-                                <input type="search" name="search" placeholder="What are you searching for...">
+                                <input type="search" name="search" placeholder="O que você está buscando?">
                                 <button type="submit" class="submit">Buscar</button>
                             </div>
                         </form>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="container-fluid d-flex align-items-center justify-content-between">
                     <div class="navbar-header">
-                        <!-- Navbar Header--><a href="index.html" class="navbar-brand">
+                        <!-- Navbar Header--><a href="<?php echo site_url('/') ?>" class="navbar-brand">
                             <div class="brand-text brand-big visible text-uppercase"><strong
                                     class="text-primary">Oberon</strong><strong>Sys</strong></div>
                             <div class="brand-text brand-sm"><strong class="text-primary">OB</strong><strong>N</strong>
@@ -200,7 +200,7 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h5">Mael Soares</h1>
+                        <h1 class="h5"><?php echo usuario_logado()->nome; ?></h1>
                         <p>CEO Oberon</p>
                     </div>
                 </div>

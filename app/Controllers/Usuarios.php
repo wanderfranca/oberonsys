@@ -617,6 +617,37 @@ class Usuarios extends BaseController
 
     }
 
+    public function editarSenha()
+    {
+        $data = [
+            'titulo' => 'Edite a sua senha de acesso',
+        ];
+
+        return view('usuarios/editar_senha', $data);
+
+    }
+
+    public function atualizarsenha()
+    {
+        if(!$this->request->isAJAX()){
+            return redirect()->back();
+        }
+
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+
+        // [current_password] => 123456
+        // [password] => abcd
+        // [password_confirmation] => abcd
+
+        
+
+
+
+    }
+
     /**
      * Método que recupera o usuário
      * 

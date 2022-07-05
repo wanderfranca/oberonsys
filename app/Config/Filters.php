@@ -24,6 +24,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'login'         => \App\Filters\LoginFilter::class,
+        'visitante'         => \App\Filters\VisitanteFilter::class,
     ];
 
     /**
@@ -72,6 +73,13 @@ class Filters extends BaseConfig
                 'home(/*)?',
                 'usuarios(/*)?',
                 'grupos(/*)?',
+            ],
+        ],
+
+        'visitante' => [
+            'before' => [
+                'login(/*)?',
+                'password(/*)?',
             ],
         ],
     ];

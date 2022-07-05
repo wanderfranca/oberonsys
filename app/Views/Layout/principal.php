@@ -225,8 +225,8 @@
                         <!-- Megamenu end     -->
 
                         <!-- Log out               -->
-                        <div class="list-inline-item logout"> <a id="logout" href="login.html" class="nav-link">Sair
-                                <i class="icon-logout"></i></a></div>
+                        <div class="list-inline-item logout"> <a id="logout" href="<?php echo site_url('logout') ?>" class="nav-link">Sair<i class="icon-logout"></i></a>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -306,6 +306,7 @@
         <script src="<?php echo site_url('recursos/');?>vendor/popper.js/umd/popper.min.js"> </script>
         <script src="<?php echo site_url('recursos/');?>vendor/bootstrap/js/bootstrap.min.js"></script>
         <script src="<?php echo site_url('recursos/');?>js/front.js"></script>
+        <script src="<?php echo site_url('recursos/');?>js/close-alert.js"></script>
 
         <!-- ESPAÇO RESERVADO PARA RENDERIZAR OS SCRIPTS DE CADA VIEW E EXTENDER O LAYOUT -->
         <?php echo $this->renderSection('scripts'); ?>
@@ -322,7 +323,6 @@
         $("#alert-danger").fadeTo(7000, 800).slideUp(800, function() {
             $("#alert-danger").slideUp(800);
         });
-
         </script>
     </body>
 

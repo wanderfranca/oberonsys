@@ -40,7 +40,7 @@
                         <div class="close-btn">Fechar <i class="fa fa-close"></i></div>
                         <form id="searchForm" action="#">
                             <div class="form-group">
-                                <input type="search" name="search" placeholder="What are you searching for...">
+                                <input type="search" name="search" placeholder="O que você está buscando?">
                                 <button type="submit" class="submit">Buscar</button>
                             </div>
                         </form>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="container-fluid d-flex align-items-center justify-content-between">
                     <div class="navbar-header">
-                        <!-- Navbar Header--><a href="index.html" class="navbar-brand">
+                        <!-- Navbar Header--><a href="<?php echo site_url('/') ?>" class="navbar-brand">
                             <div class="brand-text brand-big visible text-uppercase"><strong
                                     class="text-primary">Oberon</strong><strong>Sys</strong></div>
                             <div class="brand-text brand-sm"><strong class="text-primary">OB</strong><strong>N</strong>
@@ -173,60 +173,22 @@
                                             <li><a href="#">Maiores alias</a></li>
                                         </ul>
                                     </div>
-                                    <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements
-                                            Heading</strong>
-                                        <ul class="list-unstyled mb-3">
-                                            <li><a href="#">Lorem ipsum dolor</a></li>
-                                            <li><a href="#">Sed ut perspiciatis</a></li>
-                                            <li><a href="#">Voluptatum deleniti</a></li>
-                                            <li><a href="#">At vero eos</a></li>
-                                            <li><a href="#">Consectetur adipiscing</a></li>
-                                            <li><a href="#">Duis aute irure</a></li>
-                                            <li><a href="#">Necessitatibus saepe</a></li>
-                                            <li><a href="#">Maiores alias</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements
-                                            Heading</strong>
-                                        <ul class="list-unstyled mb-3">
-                                            <li><a href="#">Lorem ipsum dolor</a></li>
-                                            <li><a href="#">Sed ut perspiciatis</a></li>
-                                            <li><a href="#">Voluptatum deleniti</a></li>
-                                            <li><a href="#">At vero eos</a></li>
-                                            <li><a href="#">Consectetur adipiscing</a></li>
-                                            <li><a href="#">Duis aute irure</a></li>
-                                            <li><a href="#">Necessitatibus saepe</a></li>
-                                            <li><a href="#">Maiores alias</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row megamenu-buttons text-center">
-                                    <div class="col-lg-2 col-md-4"><a href="#"
-                                            class="d-block megamenu-button-link dashbg-1"><i
-                                                class="fa fa-clock-o"></i><strong>Demo 1</strong></a></div>
-                                    <div class="col-lg-2 col-md-4"><a href="#"
-                                            class="d-block megamenu-button-link dashbg-2"><i
-                                                class="fa fa-clock-o"></i><strong>Demo 2</strong></a></div>
-                                    <div class="col-lg-2 col-md-4"><a href="#"
-                                            class="d-block megamenu-button-link dashbg-3"><i
-                                                class="fa fa-clock-o"></i><strong>Demo 3</strong></a></div>
-                                    <div class="col-lg-2 col-md-4"><a href="#"
-                                            class="d-block megamenu-button-link dashbg-4"><i
-                                                class="fa fa-clock-o"></i><strong>Demo 4</strong></a></div>
-                                    <div class="col-lg-2 col-md-4"><a href="#"
-                                            class="d-block megamenu-button-link bg-danger"><i
-                                                class="fa fa-clock-o"></i><strong>Demo 5</strong></a></div>
-                                    <div class="col-lg-2 col-md-4"><a href="#"
-                                            class="d-block megamenu-button-link bg-info"><i
-                                                class="fa fa-clock-o"></i><strong>Demo 6</strong></a></div>
                                 </div>
                             </div>
                         </div>
                         <!-- Megamenu end     -->
 
-                        <!-- Log out               -->
-                        <div class="list-inline-item logout"> <a id="logout" href="login.html" class="nav-link">Sair
-                                <i class="icon-logout"></i></a></div>
+                        <div class="dropdown show list-inline-item ">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opções do Usuário
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                
+                                <a class="dropdown-item" href="<?php echo site_url("usuarios/editarsenha") ?>">Alterar senha</a>
+                                <a class="dropdown-item" href="<?php echo site_url('logout') ?>">Sair do sistema</a>
+ 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -238,7 +200,7 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h5">Mael Soares</h1>
+                        <h1 class="h5"><?php echo usuario_logado()->nome; ?></h1>
                         <p>CEO Oberon</p>
                     </div>
                 </div>
@@ -262,7 +224,7 @@
                             <li><a href="#">Page</a></li>
                         </ul>
                     </li>
-                    <li><a href="login.html"> <i class="icon-logout"></i>Login page </a></li>
+                    <li><a href="<?php echo site_url("usuarios/editarsenha") ?>"> <i class="icon-settings"></i>Alterar senha </a></li>
                 </ul><span class="heading">Extras</span>
                 <ul class="list-unstyled">
                     <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
@@ -306,6 +268,7 @@
         <script src="<?php echo site_url('recursos/');?>vendor/popper.js/umd/popper.min.js"> </script>
         <script src="<?php echo site_url('recursos/');?>vendor/bootstrap/js/bootstrap.min.js"></script>
         <script src="<?php echo site_url('recursos/');?>js/front.js"></script>
+        <script src="<?php echo site_url('recursos/');?>js/close-alert.js"></script>
 
         <!-- ESPAÇO RESERVADO PARA RENDERIZAR OS SCRIPTS DE CADA VIEW E EXTENDER O LAYOUT -->
         <?php echo $this->renderSection('scripts'); ?>
@@ -322,7 +285,6 @@
         $("#alert-danger").fadeTo(7000, 800).slideUp(800, function() {
             $("#alert-danger").slideUp(800);
         });
-
         </script>
     </body>
 

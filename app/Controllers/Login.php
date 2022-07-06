@@ -6,11 +6,14 @@ use App\Controllers\BaseController;
 
 class Login extends BaseController
 {
+    // Método: Login e Autenticação de usuários na plataforma
     public function novo()
     {
+        
         $data = [
 
             'titulo' => 'Login',
+            // 'saudacao' => 'IMPLEMENTAR',
         ];
 
         return view('Login/novo', $data);
@@ -36,27 +39,49 @@ class Login extends BaseController
         {
             $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
             $retorno['erros_model'] = ['credenciais' => 'Login ou senha inválido'];
+<<<<<<< HEAD
 
             
 
+=======
+>>>>>>> v1.0.13
             return $this->response->setJSON($retorno);
 
         }
 
         $usuarioLogado = $autenticacao->pegaUsuarioLogado();
-        session()->setFlashdata('sucesso', "Olá $usuarioLogado->nome !");
+        session()->setFlashdata('bem-vindo', "Olá <strong>$usuarioLogado->nome</strong>!");
 
         if($usuarioLogado->is_cliente)
         {
-            $retorno['redirect'] = 'Ordens/minhas';
+            $retorno['redirect'] = 'ordens/minhas';
             return $this->response->setJSON($retorno);
         }
 
             $retorno['redirect'] = 'home';
-            return $this->response->setJSON($retorno);
-        
+            return $this->response->setJSON($retorno);    
 
+    }
+
+    public function logout()
+    {
+        $autenticacao = service('autenticacao');
+
+        $usuarioLogado = $autenticacao->pegaUsuarioLogado();
+
+        $autenticacao->logout();
+
+        return redirect()->to(site_url("login/mostramensagemlogout/$usuarioLogado->nome"));
 
 
     }
+
+    public function mostraMensagemLogout($nome = null)
+    {
+        return redirect()->to(site_url("login"))->with("msgLogout", "$nome. Muito obrigado, esperamos ver você novamente =D");
+        
+    }
+
+
+
 }

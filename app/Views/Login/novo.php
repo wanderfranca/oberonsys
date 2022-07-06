@@ -52,7 +52,6 @@ function saudacao() {
 
     <body>
         <div class="container-fluid">
-            
             <div class="row no-gutter">
                 <!-- The image half -->
                 <div class="col-md-6 d-none d-md-flex bg-image"></div>
@@ -62,6 +61,7 @@ function saudacao() {
                         <!-- Demo content-->
                         <div class="container">
                             <div class="row">
+                            
                                 <div class="col-lg-10 col-xl-7 mx-auto">
                                     <div class="text-center pb-2">
                                         <img src="<?php echo site_url('imgs/')?>Ologo.png">
@@ -71,8 +71,9 @@ function saudacao() {
                                         <h5 class="text-lg-center mb-4"><?php echo saudacao(); ?>, seja bem-vindo!</h5>
                                     </div>
                                     <div id="response">
-
                                     </div>
+                                    <?php echo $this->include('Layout/_mensagens'); ?>
+
                                     <?php echo form_open('/', ['id' => 'form', 'class'=>'user']) ?>
                                     <div class="form-group mb-3">
 
@@ -133,7 +134,7 @@ $("#form").on('submit', function(e) {
         },
 
         success: function(response) {
-            $("#btn-login").val('Salvar');
+            $("#btn-login").val('ENTRAR');
             $("#btn-login").removeAttr("disabled");
 
             $('[name=csrf_oberon]').val(response.token);
@@ -169,7 +170,7 @@ $("#form").on('submit', function(e) {
             alert(
                 'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!'
                 );
-            $("#btn-login").val('Salvar');
+            $("#btn-login").val('ENTRAR');
             $("#btn-login").removeAttr("disabled");
         }
 
@@ -203,5 +204,7 @@ $("#form").submit(function() {
     // Invoke the function, handle page load autocomplete by chrome.
     getRidOffAutocomplete();
     </script>
+
+<script src="<?php echo site_url('recursos/');?>js/close-alert.js"></script>
 
 </html>

@@ -65,3 +65,14 @@
 </div>
 
 <?php endif; ?>
+
+<?php if(session()->has('bem-vindo')): ?>
+
+<div class="alert alert-success alert-dismissible fade show closealert" role="alert">
+    <?php echo session('bem-vindo') ?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<?php endif; ?>

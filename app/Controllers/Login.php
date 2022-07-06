@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 
 class Login extends BaseController
 {
+    // Método: Login e Autenticação de usuários na plataforma
     public function novo()
     {
         
@@ -43,7 +44,7 @@ class Login extends BaseController
         }
 
         $usuarioLogado = $autenticacao->pegaUsuarioLogado();
-        session()->setFlashdata('sucesso', "Olá $usuarioLogado->nome !");
+        session()->setFlashdata('bem-vindo', "Olá <strong>$usuarioLogado->nome</strong>!");
 
         if($usuarioLogado->is_cliente)
         {

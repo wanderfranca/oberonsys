@@ -184,7 +184,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 
-                                <a class="dropdown-item" href="<?php echo site_url("usuarios/editarsenha") ?>">Editar Senha</a>
+                                <a class="dropdown-item" href="<?php echo site_url("usuarios/editarsenha") ?>">Alterar senha</a>
                                 <a class="dropdown-item" href="<?php echo site_url('logout') ?>">Sair do sistema</a>
  
                             </div>

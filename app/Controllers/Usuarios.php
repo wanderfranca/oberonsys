@@ -232,7 +232,8 @@ class Usuarios extends BaseController
         //Preenchemos os atributos do usuário com os valores do POST
         $usuario->fill($post);
         
-        if($usuario->hasChanged() == false){
+        if($usuario->hasChanged() === false)
+        {
 
             $retorno['info'] = 'Não há dados para serem atualizados';
             return $this->response->setJSON($retorno);
@@ -617,6 +618,7 @@ class Usuarios extends BaseController
 
     }
 
+    // Método: Que edita a senha
     public function editarSenha()
     {
         $data = [
@@ -627,6 +629,7 @@ class Usuarios extends BaseController
 
     }
 
+    // Método: que atualiza a senha no BD
     public function atualizarsenha()
     {
         if(!$this->request->isAJAX()){
@@ -637,14 +640,43 @@ class Usuarios extends BaseController
         // Envio o hash do token do form
         $retorno['token'] = csrf_hash();
 
+        $senha_atual = $this->request->getPost('current_password');
 
-        // [current_password] => 123456
-        // [password] => abcd
-        // [password_confirmation] => abcd
+        $usuario = usuario_logado();
 
-        
+        // Usuário logado -> password == senha_atual? falso
+        if($usuario->verificaPassword($senha_atual) === false)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['current_passowrd'=> 'Senha atual inválida'];
+
+            return $this->response->setJSON($retorno);
+        }
+
+        $usuario->fill($this->request->getPost());
+
+        //Verificação: Caso nada seja preenchido, nada fazer
+        if($usuario->hasChanged() === false)
+        {
+
+            $retorno['info'] = 'Não há dados para atualizar';
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        if($this->usuarioModel->save($usuario)){
 
 
+            $retorno['sucesso'] = 'Senha atualizada!';
+            
+            return $this->response->setJSON($retorno);
+
+        }
+
+        $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $this->usuarioModel->errors();
+
+        return $this->response->setJSON($retorno);
 
     }
 

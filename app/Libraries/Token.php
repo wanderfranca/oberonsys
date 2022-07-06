@@ -35,6 +35,6 @@ public function __construct(string $token = null)
 
     public function getHash() : string
     {
-        return hash_hmac("sha256", $this->token, getenv('KEY_RECUPERCAO_SENHA'))
+        return hash_hmac("sha256", $this->token, getenv('KEY_RECUPERCAO_SENHA'));
     }
 }

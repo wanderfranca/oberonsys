@@ -15,6 +15,7 @@ class Home extends BaseController
         ];
 
         return view('Home/index', $data);
+        // return view('Password/reset_email', $data);
     }
 
 
@@ -34,6 +35,27 @@ class Home extends BaseController
         // dd($autenticacao->estaLogado());
         // dd($autenticacao->isCliente());
 
+    }
+
+    public function email()
+    {
+        $email = service('email');
+
+        $email->setFrom('no-replay@oberonsys.com', 'Oberon Sistema');
+        $email->setTo('ysqhwuex@knowledgemd.com');
+
+        $email->setSubject('Recuperação de senha - Nova');
+        $email->setMessage('Iniciando os testes na parte de recuperação de senha');
+
+        if($email->send())
+        {
+            echo 'Email enviado';
+
+        } else{
+
+            echo $email->printDebugger();
+
+        }
     }
 
 

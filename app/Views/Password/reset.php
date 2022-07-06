@@ -1,19 +1,3 @@
-<?php
-
-//SAUDAÇÃO EM TEXTO
-function saudacao() {
-	date_default_timezone_set('America/Sao_Paulo');
-	$hora = date('H');
-	if( $hora >= 6 && $hora <= 12 )
-		return 'Bom dia' . (empty($nome) ? '' : ', ');
-	else if ( $hora > 12 && $hora <=18  )
-		return 'Boa tarde' . (empty($nome) ? '' : ', ');
-	else
-		return 'Boa noite' . (empty($nome) ? '' : ', ');
-}
-
-?>
-
 <!DOCTYPE html>
 
 <html>
@@ -44,13 +28,13 @@ function saudacao() {
     }
 
     .bg-image {
-        background-image: url('<?php echo site_url('imgs/sistema/')?>bg.jpg');
+        background-image: url('<?php echo site_url('imgs/')?>mail/reset.jpg');
         background-size: cover;
         background-position: center center;
     }
     </style>
 
-    <body>
+<body>
         <div class="container-fluid">
             <div class="row no-gutter">
                 <!-- The image half -->
@@ -68,30 +52,30 @@ function saudacao() {
                                         <h5 class="mb-5 text-primary ml-4 pl-2 font-weight-bolder"> Gestão </h5>
                                     </div>
                                     <div class="text-center">
-                                        <h5 class="text-lg-center mb-4"><?php echo saudacao(); ?>, seja bem-vindo!</h5>
+                                        <h5 class="text-lg-center mb-4">Redefina sua senha</h5>
                                     </div>
                                     <div id="response">
                                     </div>
                                     <?php echo $this->include('Layout/_mensagens'); ?>
 
                                     <?php echo form_open('/', ['id' => 'form', 'class'=>'user']) ?>
-                                    <div class="form-group mb-3">
 
-                                        <input id="login-username" name="email" type="text" placeholder="E-mail" required data-msg="Por favor, informe seu e-mail" autofocus=""
-                                            class="offz form-control  border-0 shadow-sm px-4 text-black" disabled
-                                            value="<?php echo set_value('email'); ?>">
-                                    </div>
                                     <div class="form-group mb-3">
-                                        <input id="login-password" name="password" type="password" placeholder="Senha"
+                                        <input id="login-password" name="password" type="password" placeholder="SUA NOVA SENHA"
                                             required data-msg="Por favor, informe sua senha" required
                                             class="form-control border-0 shadow-sm px-4 text-black">
                                     </div>
-                                    <input id="btn-login" type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm" value="ENTRAR">
+
+                                    <div class="form-group mb-3">
+                                        <input id="login-password" name="password_confirmation" type="password" placeholder="CONFIME A SUA NOVA SENHA"
+                                            required data-msg="Por favor, informe sua senha" required
+                                            class="form-control border-0 shadow-sm px-4 text-black">
+                                    </div>
+
+                                    <input id="btn-reset" type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm" value="Criar nova senha">
                                         <?php echo form_close(); ?>
                                     <div class="text-center d-flex justify-content-between mt-4">
-                                        <p>Esqueceu sua senha? <a href="<?php echo site_url('esqueci') ?>" class="font-italic ">
-                                                <u>Clique Aqui</u></a>
-                                        </p>
+                                            <!-- Link e conteudo -->
                                     </div>
                                    
                                 </div>
@@ -105,90 +89,87 @@ function saudacao() {
               
             </div>
         </div>
-    </body>
+    </body>>
 
     <script src="<?php echo site_url('recursos/');?>vendor/jquery/jquery.min.js"></script>
 
     <script>
+    $(document).ready(function() {
 
-$(document).ready(function() {
+        $("#form").on('submit', function(e) {
 
-$("#form").on('submit', function(e) {
+            e.preventDefault();
 
-    e.preventDefault();
+            $.ajax({
 
-    $.ajax({
+                type: 'POST',
+                url: '<?php echo site_url('password/processareset'); ?>',
+                data: new FormData(this),
+                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function() {
 
-        type: 'POST',
-        url: '<?php echo site_url('login/criar'); ?>',
-        data: new FormData(this),
-        dataType: 'json',
-        contentType: false,
-        cache: false,
-        processData: false,
-        beforeSend: function() {
+                    $("#response").html('');
+                    $("#btn-reset").val('Redefinindo Senha...');
 
-            $("#response").html('');
-            $("#btn-login").val('Por favor aguarde...');
+                },
 
-        },
+                success: function(response) {
+                    $("#btn-reset").val('Criar nova senha');
+                    $("#btn-reset").removeAttr("disabled");
 
-        success: function(response) {
-            $("#btn-login").val('ENTRAR');
-            $("#btn-login").removeAttr("disabled");
+                    $('[name=csrf_oberon]').val(response.token);
 
-            $('[name=csrf_oberon]').val(response.token);
+                    if (!response.erro) {
 
-            if (!response.erro) 
-            {
+                        window.location.href = "<?php echo site_url("login"); ?>";
 
-                window.location.href = "<?php echo site_url(); ?>" + response.redirect;
+                    }
 
-            }
+                    if (response.erro) {
 
-            if (response.erro) {
+                        // Erros de validação
+                        $("#response").html('<div class="alert alert-danger">' + response.erro + '</div>');
 
-                // Existem erros de validação
-                $("#response").html('<div class="alert alert-danger">' + response.erro +'</div>');
+                        if (response.erros_model) {
 
-                if (response.erros_model) {
+                            $.each(response.erros_model, function(key, value) {
 
-                    $.each(response.erros_model, function(key, value) {
+                                $("#response").append(
+                                    '<ul class="list-unstyled"><li class="text-danger">' + value + '</li></ul>')
 
-                        $("#response").append('<ul class="list-unstyled"><li class="text-danger">' + value + '</li></ul>')
+                            });
 
-                    });
+                        }
 
+                    }
+
+                },
+
+                error: function() {
+
+                    alert(
+                        'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!'
+                    );
+                    $("#btn-reset").val('Criar nova senha');
+                    $("#btn-reset").removeAttr("disabled");
                 }
 
-            }
+            });
 
-        },
+        });
 
-        error: function() {
+        $("#form").submit(function() {
 
-            alert(
-                'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!'
-                );
-            $("#btn-login").val('ENTRAR');
-            $("#btn-login").removeAttr("disabled");
-        }
+            $(this).find(":submit").attr('disabled', 'disabled')
+
+        });
+
+
 
     });
-
-});
-
-$("#form").submit(function() {
-
-    $(this).find(":submit").attr('disabled', 'disabled')
-
-});
-
-
-
-});
-
-
     </script>
 
 
@@ -205,6 +186,6 @@ $("#form").submit(function() {
     getRidOffAutocomplete();
     </script>
 
-<script src="<?php echo site_url('recursos/');?>js/close-alert.js"></script>
+    <script src="<?php echo site_url('recursos/');?>js/close-alert.js"></script>
 
 </html>

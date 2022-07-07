@@ -100,6 +100,51 @@ class Password extends BaseController
 
     }
 
+    public function processaReset()
+    {
+        if(!$this->request->isAJAX()){
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        //Recuperar todos os dados do POST
+        $post = $this->request->getPost();
+
+        $usuario = $this->usuarioModel->buscaUsuarioParaRedefinirSenha($post['token']);
+
+        if($usuario === null)
+        {
+
+            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ["link_invalido" => 'Link inválido ou expirado'];
+            return $this->response->setJSON($retorno);
+
+        }
+
+        $usuario->fill($post);
+
+        $usuario->finalizaPasswordReset();
+
+        if($this->usuarioModel->save($usuario)){
+
+
+            session()->setFlashdata("sucesso", "Senha alterada com sucesso!");
+            
+            return $this->response->setJSON($retorno);
+
+        }
+
+        $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $this->usuarioModel->errors();
+
+        return $this->response->setJSON($retorno);
+
+
+
+    }
+
     // Método: Envia e-mail para redefinição de senha para o usuário
     private function enviaEmailRedefinicaoSenha(object $usuario) : void
     {

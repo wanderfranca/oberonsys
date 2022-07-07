@@ -58,7 +58,7 @@
                                     </div>
                                     <?php echo $this->include('Layout/_mensagens'); ?>
 
-                                    <?php echo form_open('/', ['id' => 'form', 'class'=>'user']) ?>
+                                    <?php echo form_open('/', ['id' => 'form', 'class'=>'user'], ['token' => $token]) ?>
 
                                     <div class="form-group mb-3">
                                         <input id="login-password" name="password" type="password" placeholder="SUA NOVA SENHA"

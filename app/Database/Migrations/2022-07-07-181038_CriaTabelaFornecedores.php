@@ -43,6 +43,11 @@ class CriaTabelaFornecedores extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '128',
             ],
+
+            'cep'       => [
+                'type'       => 'VARCHAR',
+                'constraint' => '20',
+            ],
             
             'numero'       => [
                 'type'       => 'VARCHAR',

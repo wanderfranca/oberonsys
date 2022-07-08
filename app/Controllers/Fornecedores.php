@@ -96,6 +96,22 @@ class Fornecedores extends BaseController
 
     }
 
+    public function editar(int $id = null)
+    {
+        $fornecedor = $this->buscaFornecedorOu404($id);
+
+        // dd($fornecedor);
+
+        $data = [
+
+            'titulo' => "Editar fornecedor ".esc($fornecedor->nome),
+            'fornecedor' => $fornecedor,
+
+        ];
+
+        return view('Fornecedores/editar', $data);
+    }
+
     /**
      * Método: que recupera o Fornecedor
      * 

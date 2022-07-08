@@ -43,7 +43,7 @@ class Fornecedores extends BaseController
                 'deletado_em',
             ];
 
-            // SELECT EM TODOS OS USUÁRIOS
+            // SELECT EM TODOS OS FornecedorS
             $fornecedores = $this->fornecedorModel->select($atributos)
                                                 ->withDeleted(true) //Buscar também os dados deletados
                                                 ->orderBy('id', 'DESC')
@@ -73,6 +73,46 @@ class Fornecedores extends BaseController
             ];
 
             return $this->response->setJSON($retorno);
+
+    }
+
+    public function exibir(int $id = null)
+    {
+
+
+        $fornecedor = $this->buscaFornecedorOu404($id);
+
+        // dd($fornecedor);
+
+        $data = [
+
+            'titulo' => "Perfil do fornecedor: ".esc($fornecedor->nome),
+            'fornecedor' => $fornecedor,
+
+        ];
+
+        return view('Fornecedores/exibir', $data);
+
+
+    }
+
+    /**
+     * Método: que recupera o Fornecedor
+     * 
+     * @param integer $id
+     * @return Exceptions|object
+     */
+
+    private function buscaFornecedorOu404(int $id = null)
+    {
+
+        if (!$id || !$fornecedor = $this->fornecedorModel->withDeleted(true)->find($id)){
+
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Fornecedor não encontrado pelo ID informado");
+
+        }
+
+        return $fornecedor;
 
     }
 }

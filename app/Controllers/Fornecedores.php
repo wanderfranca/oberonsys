@@ -234,6 +234,54 @@ class Fornecedores extends BaseController
 
     }
 
+    public function excluir(int $id = null)
+    {
+
+        $fornecedor = $this->buscaFornecedorOu404($id);
+
+        if($fornecedor->deletado_em != null)
+        {
+            return redirect()->back()->with('info', "O fornecedor $fornecedor->razao Já está excluído");
+        }
+
+        if($this->request->getMethod() === 'post')
+        {
+            $this->fornecedorModel->delete($id);
+
+            return redirect()->to(site_url("fornecedores"))->with('sucesso', "$fornecedor->razao foi excluído com sucesso");
+        }
+
+        $data = [
+
+            'titulo' => "Excluir fornecedor: ".esc($fornecedor->razao),
+            'fornecedor' => $fornecedor,
+
+        ];
+
+
+        return view('Fornecedores/excluir', $data);
+
+    }
+
+    public function desfazerExclusao(int $id = null)
+    {
+
+
+        $fornecedor = $this->buscaFornecedorOu404($id);
+
+        if($fornecedor->deletado_em == null){
+
+            return redirect()->back()->with('info', "Apenas usuários excluídos podem ser recuperados");
+
+        }
+
+        $fornecedor->deletado_em = null;
+        $this->fornecedorModel->protect(false)->save($fornecedor);
+
+        
+        return redirect()->back()->with('sucesso', "$fornecedor->razao restaurado com sucesso. Fornecedores restaurados a sua base de dados voltam com status inativo, você pode alterar isso quando quiser =D");
+
+    }
 
     /**
      * Função: consultaCep

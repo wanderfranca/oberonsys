@@ -20,7 +20,7 @@ class Fornecedor extends Entity
             if($this->deletado_em != null){
                 // Fornecedor excluído
     
-                $icone = '<span class="text-white">Excluído</span> <i class="fa fa-undo"></i> Desfazer';
+                $icone = '<span class="text-white">Excluído</span> <i class="fa fa-undo"></i> Recuperar';
                 $situacao = anchor("fornecedores/desfazerexclusao/$this->id", $icone, ['class'=> 'btn btn-outline-success btn-sm']);
     
                 return $situacao;

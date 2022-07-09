@@ -30,8 +30,7 @@
 
                     <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary mr-2">
 
-                    <a href="<?php echo site_url("fornecedores/exibir/$fornecedor->id") ?>"
-                        class="btn btn-secondary ml-2">Voltar</a>
+                    <a href="<?php echo site_url("fornecedores") ?>" class="btn btn-secondary ml-2">Voltar</a>
 
                 </div>
 
@@ -70,7 +69,7 @@ $(document).ready(function() {
         $.ajax({
 
             type: 'POST',
-            url: '<?php echo site_url('fornecedores/atualizar'); ?>',
+            url: '<?php echo site_url('fornecedores/cadastrar'); ?>',
             data: new FormData(this),
             dataType: 'json',
             contentType: false,
@@ -93,16 +92,14 @@ $(document).ready(function() {
 
                     if (response.info) {
 
-                        $("#response").html('<div class="alert alert-info">' + response
-                            .info + '</div>');
+                        $("#response").html('<div class="alert alert-info">' + response.info + '</div>');
 
                     } else {
 
                         // Tudo certo com a atualização do usuário
                         // Podemos agora redirecioná-lo tranquilamente
 
-                        window.location.href =
-                            "<?php echo site_url("fornecedores/exibir/$fornecedor->id"); ?>";
+                        window.location.href ="<?php echo site_url("fornecedores/exibir/"); ?>" + response.id;
 
                     }
 
@@ -111,8 +108,7 @@ $(document).ready(function() {
                 if (response.erro) {
 
                     // Existem erros de validação
-                    $("#response").html('<div class="alert alert-danger">' + response.erro +
-                        '</div>');
+                    $("#response").html('<div class="alert alert-danger">' + response.erro + '</div>');
 
                     if (response.erros_model) {
 

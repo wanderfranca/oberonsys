@@ -3,9 +3,13 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Traits\ValidacoesTrait;
+use App\Entities\Fornecedor;
 
 class Fornecedores extends BaseController
 {
+
+    use ValidacoesTrait;
 
     private $fornecedorModel;
 
@@ -23,6 +27,70 @@ class Fornecedores extends BaseController
         ];
 
         return view('Fornecedores/index', $data);
+    }
+
+    public function criar()
+    {
+
+
+        $fornecedor = new Fornecedor();
+
+        $data = [
+
+            'titulo' => "Cadastrar novo fornecedor ",
+            'fornecedor' => $fornecedor,
+
+        ];
+
+        return view('Fornecedores/criar', $data);
+
+
+    }
+
+    public function cadastrar()
+    {
+      
+        if(!$this->request->isAJAX()){
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        if(session()->get('blockCep') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['cep' => 'Informe um CEP válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+        
+        // Recupero o post da requisição
+        $post = $this->request->getPost();  
+
+        $fornecedor = new Fornecedor($post);
+
+        if($this->fornecedorModel->save($fornecedor)){
+
+            $btnCriar = anchor("Fornecedores/criar", 'Cadastrar mais fornecedores', ['class' => 'btn btn-primary mt2']);
+            session()->setFlashdata('sucesso', "Novo fornecedor cadastrado! <br> $btnCriar");
+
+            $retorno['id'] = $this->fornecedorModel->getInsertID();
+
+            //Retornar para o Json
+            return $this->response->setJSON($retorno);
+
+        }
+
+        //Retornar os erros de validação do formulário
+        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $this->fornecedorModel->errors();
+
+
+        // Retorno para o ajax request
+        return $this->response->setJSON($retorno);
+
+
     }
 
     public function recuperaFornecedores()
@@ -104,12 +172,93 @@ class Fornecedores extends BaseController
 
         $data = [
 
-            'titulo' => "Editar fornecedor ".esc($fornecedor->nome),
+            'titulo' => "Editar fornecedor: ".esc($fornecedor->razao),
             'fornecedor' => $fornecedor,
 
         ];
 
         return view('Fornecedores/editar', $data);
+    }
+
+    public function atualizar()
+    {
+      
+        if(!$this->request->isAJAX()){
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        if(session()->get('blockCep') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['cep' => 'Informe um CEP válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+        
+        // Recupero o post da requisição
+        $post = $this->request->getPost();  
+
+        $fornecedor = $this->buscaFornecedorOu404($post['id']);
+
+        $fornecedor->fill($post);
+
+        if($fornecedor->hasChanged() === false)
+        {
+
+            $retorno['info'] = 'Não há dados para atualizar!';
+
+            return $this->response->setJSON($retorno);
+
+        }
+
+        if($this->fornecedorModel->save($fornecedor)){
+
+            session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
+
+            //
+            return $this->response->setJSON($retorno);
+
+        }
+
+        //Retornar os erros de validação do formulário
+        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $this->fornecedorModel->errors();
+
+
+        // Retorno para o ajax request
+        return $this->response->setJSON($retorno);
+
+
+    }
+
+
+    /**
+     * Função: consultaCep
+     * getGet (Pega o CEP e passa para a func consultaViaCep)
+     * Retornando um Json
+     * O tratamento está em Traits/Validacoes
+     * 
+     */
+    public function consultaCep()
+    {
+       if (!$this->request->isAJAX())
+       {
+            return redirect()->back();
+       } 
+
+       
+       $cep = $this->request->getGet('cep');
+
+       return $this->response->setJSON($this->consultaViaCep($cep));
+
+
+
+
+
+
     }
 
     /**

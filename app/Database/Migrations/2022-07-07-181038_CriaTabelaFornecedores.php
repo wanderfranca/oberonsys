@@ -39,6 +39,12 @@ class CriaTabelaFornecedores extends Migration
                 'unique'    => true,
             ],
 
+            'email'       => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+
+            ],
+
             'endereco'       => [
                 'type'       => 'VARCHAR',
                 'constraint' => '128',
@@ -68,6 +74,16 @@ class CriaTabelaFornecedores extends Migration
             'estado'       => [
                 'type'       => 'VARCHAR',
                 'constraint' => '2',
+            ],
+
+            'complemento'       => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+            ],
+
+            'responsavel'       => [
+                'type'       => 'VARCHAR',
+                'constraint' => '50',
             ],
 
             'ativo'       => [

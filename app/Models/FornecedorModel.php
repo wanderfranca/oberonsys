@@ -4,6 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+
 class FornecedorModel extends Model
 {
     protected $table            = 'fornecedores';
@@ -15,12 +16,15 @@ class FornecedorModel extends Model
         'cnpj',
         'ie',
         'telefone',
+        'email',
+        'responsavel',
         'cep',
         'endereco',
         'numero',
         'bairro',
         'cidade',
         'estado',
+        'complemento',
         'ativo',
 
     ];
@@ -43,6 +47,8 @@ class FornecedorModel extends Model
         'bairro'                => 'required|max_length[50]',
         'cidade'                => 'required|max_length[50]',
         'estado'                => 'required|max_length[2]',
+        'email'                 => 'valid_email|max_length[90]',
+
     ];
     protected $validationMessages = [
         'razao' => [
@@ -54,6 +60,11 @@ class FornecedorModel extends Model
             'required' => 'O campo E-mail é obrigatório.',
             'max_length' => 'CNPJ Inválido',
             'is_unique' => 'Já existe um fornecedor cadastrado com este CNPJ',
+        ],
+
+        'email' => [
+            'max_length' => 'O campo E-mail ultrapassou 90 caracteres.',
+            'valid_email' => 'Informe um E-mail válido',
         ],
 
     ];

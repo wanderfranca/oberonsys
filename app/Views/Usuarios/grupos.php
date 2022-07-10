@@ -42,7 +42,7 @@
 
                 <?php if($usuario->full_control == false): ?>
 
-                    <p class="contributions mt-0">Não há grupos disponíveis para este usuário</p>
+                    <p class="contributions mt-0 row d-flex justify-content-center">Não há grupos disponíveis para este usuário</p>
 
                 <?php else: ?>
 
@@ -86,7 +86,7 @@
         <div class="user-block block">
             <?php if(empty($usuario->grupos)): ?>
 
-            <p class="contributions text-warning mt-0">Esse usuário ainda não faz parte de nenhum grupo de acesso</p>
+            <p class="contributions text-warning mt-0 row d-flex justify-content-center">Esse usuário ainda não faz parte de nenhum grupo de acesso</p>
 
             <?php else: ?>
             <div class="table-responsive">

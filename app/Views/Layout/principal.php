@@ -198,7 +198,7 @@
             <nav id="sidebar">
                 <!-- Sidebar Header-->
                 <div class="sidebar-header d-flex align-items-center">
-                    <div class="avatar"><img src="img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                    <div class="avatar"><img src="<?php echo "usuarios/imagem/".usuario_logado()->imagem; ?>" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
                         <h1 class="h5"><?php echo usuario_logado()->nome; ?></h1>
                         <p>CEO Oberon</p>
@@ -206,14 +206,10 @@
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
                 <ul class="list-unstyled">
-                    <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>"> <i
-                                class="icon-home"></i>Início </a></li>
-                    <li class="<?php echo (url_is('usuarios*') ? 'active' : '') ?>"><a
-                            href="<?php echo site_url('usuarios'); ?>"> <i class="fa fa-user-circle"></i>Usuários </a>
-                    </li>
-                    <li class="<?php echo (url_is('grupos*') ? 'active' : '') ?>"><a
-                            href="<?php echo site_url('grupos'); ?>"> <i class="fa fa-users"></i>Grupos & Permissões
-                        </a></li>
+                    <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>"> <i class="icon-home"></i>Início </a></li>
+                    <li class="<?php echo (url_is('fornecedores') ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores'); ?>"> <i class="icon-home"></i>Fornecedores </a></li>
+                    <li class="<?php echo (url_is('usuarios*') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>"> <i class="fa fa-user-circle"></i>Usuários </a></li>
+                    <li class="<?php echo (url_is('grupos*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>"> <i class="fa fa-users"></i>Grupos & Permissões </a></li>
                     <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
                     <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i

@@ -34,7 +34,6 @@
 <?php echo $this->section('conteudo') ?>
 
 <div class="row">
-
     <div class="col-lg-8">
         <div class="user-block block">
 
@@ -80,7 +79,6 @@
             <?php endif; ?>
 
         </div>
-
 
     </div>
 

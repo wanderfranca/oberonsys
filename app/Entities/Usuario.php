@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use CodeIgniter\Entity\Entity;
+use App\Libraries\Token;
 
 class Usuario extends Entity
 {
@@ -74,6 +75,34 @@ class Usuario extends Entity
         
         // Permissão concedida
         return true;
+
+    }
+
+    /**
+     * Método: iniciar a recuperação de senha
+     */
+    public function iniciaPasswordReset() : void
+    {
+        $token = new Token();
+
+        // Enviar para o e-mail do usuário
+        $this->reset_token = $token->getValue();
+        
+        // Salvar no banco de dados
+        $this->reset_hash = $token->getHash();
+
+        //O usuário tem 2H para resetar a senha
+        $this->reset_expira_em = date('Y-m-d H:i:s', time() + 7200);
+    }
+
+    /**
+     * Método: Finaliza o processo de redefinição de senha
+     * Método: que apaga o hash e data após a senha ser alterada
+     */
+    public function finalizaPasswordReset() : void
+    {
+        $this->reset_hash = null;
+        $this->reset_expira_em = null;
 
     }
 

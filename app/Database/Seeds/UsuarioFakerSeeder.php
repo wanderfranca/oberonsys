@@ -30,10 +30,6 @@ class UsuarioFakerSeeder extends Seeder
 
         }
 
-        // echo '<pre>';
-        // print_r($usuariosPush);
-        // exit;
-
         $usuarioModel->skipValidation(true) // bypass na validação
                      ->protect(false) // bypass na proteção dos campos allowedfields
                      ->insertBatch($usuariosPush);

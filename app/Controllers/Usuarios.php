@@ -303,7 +303,7 @@ class Usuarios extends BaseController
 
         $validacao->setRules($regras, $mensagens);
 
-        if($validacao->withRequest($this->request)->run() == false){
+        if($validacao->withRequest($this->request)->run() === false){
         //Retornar os erros de validação do formulário
         $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
         $retorno['erros_model'] = $validacao->getErrors();

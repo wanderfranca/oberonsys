@@ -40,11 +40,17 @@ class Login extends BaseController
             $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
             $retorno['erros_model'] = ['credenciais' => 'Login ou senha inválido'];
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             
 
 =======
 >>>>>>> v1.0.13
+=======
+
+            
+
+>>>>>>> v1.0.15
             return $this->response->setJSON($retorno);
 
         }

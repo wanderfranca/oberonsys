@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Libraries\Token;
 
 class UsuarioModel extends Model
 {
@@ -69,10 +70,10 @@ class UsuarioModel extends Model
             return $data;
     }
 
-    // Método que recupera e-mail do usuário para logar na aplicação
+    // Método: Recupera usuário por e-mail
     public function buscaUsuarioPorEmail(string $email)
     {
-        //Buscar apenas usuário ativo - não excluídos
+        // Retornar apenas usuário ativo - não excluídos
         return $this->where('email', $email)->where('deletado_em', null)->first();
     }
 
@@ -95,6 +96,34 @@ class UsuarioModel extends Model
                     ->where('usuarios.id', $usuario_id)
                     ->groupBy('permissoes.nome')
                     ->findAll();
+
+    }
+
+    // Método: Recupera o usuário de acordo com o hash do token
+    public function buscaUsuarioParaRedefinirSenha(string $token)
+    {
+        $token = new Token($token);
+
+        $tokenHash = $token->getHash();
+
+        $usuario = $this->where('reset_hash', $tokenHash)
+                        ->where('deletado_em', null)
+                        ->first();
+
+        if($usuario === null)
+        {
+            return null;
+        }
+
+        // Verificação: Se o token ainda é válido
+        if($usuario->reset_expira_em < date('Y-m-d H:i:s'))
+        {
+
+            return null;
+
+        }
+
+        return $usuario;
 
     }
 

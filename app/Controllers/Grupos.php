@@ -385,7 +385,7 @@ class Grupos extends BaseController
 
         if (!$id || !$grupo = $this->grupoModel->withDeleted(true)->find($id)){
 
-            throw\CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("A Oberon não encontrou o grupo de acesso $id");
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("A Oberon não encontrou o grupo de acesso $id");
 
         }
 

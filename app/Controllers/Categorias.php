@@ -51,7 +51,6 @@ class Categorias extends BaseController
                                                 ->orderBy('id', 'DESC')
                                                 ->findAll();
 
-
             //Receberá o array de objetos de categorias
             $data = [];
 

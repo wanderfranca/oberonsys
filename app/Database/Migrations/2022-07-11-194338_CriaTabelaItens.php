@@ -118,6 +118,7 @@ class CriaTabelaItens extends Migration
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('categoria_id','categorias', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('itens');
     }
 

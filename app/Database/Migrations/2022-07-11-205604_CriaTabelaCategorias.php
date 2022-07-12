@@ -26,6 +26,23 @@ class CriaTabelaCategorias extends Migration
                 'null'           => true,
             ],
 
+            'ativo'       => [
+                'type'       => 'BOOLEAN',
+                'null' => false,
+            ],
+
+            'criado_em'             => [
+                'type'              => 'TIMESTAMP',
+            ],
+
+            'atualizado_em'             => [
+                'type'              => 'TIMESTAMP',
+            ],
+
+            'deeltado_em'             => [
+                'type'              => 'TIMESTAMP',
+            ],
+
         ]);
 
         $this->forge->addKey('id', true);

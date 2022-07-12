@@ -84,19 +84,19 @@ class CriaTabelaItens extends Migration
 
             'ativo'       => [
                 'type'              => 'BOOLEAN',
-                'null' => false,
+                'null'              => false,
             ],
 
             'descricao'             => [
                 'type'              => 'TEXT',
-                'null' => false,
+                'null'              => false,
             ],
 
             'imagem'       => [
-                'type'       => 'VARCHAR',
-                'constraint' => '240',
-                'null'      => true,
-                'default'   => null,
+                'type'          => 'VARCHAR',
+                'constraint'    => '240',
+                'null'          => true,
+                'default'       => null,
             ],
 
             'criado_em'         => [
@@ -107,12 +107,12 @@ class CriaTabelaItens extends Migration
             'atualizado_em'     => [
                 'type'          => 'DATETIME',
                 'null'          => true,
-                'default'   => null,
+                'default'       => null,
             ],
             'deletado_em'       => [
-                'type'       => 'DATETIME',
-                'null'      => true,
-                'default'   => null,
+                'type'          => 'DATETIME',
+                'null'          => true,
+                'default'       => null,
             ],
 
         ]);

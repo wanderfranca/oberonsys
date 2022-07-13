@@ -1,10 +1,6 @@
 <div class="form-group">
     <label class="form-control-label">Categoria</label>
-    <input type="text" name="nome" placeholder="Insira o nome completo" maxlength="30" class="form-control"value="<?php
-
-use Kint\Zval\Value;
-
- echo esc($categoria->nome) ?>">
+    <input type="text" name="nome" placeholder="Insira o nome completo" maxlength="30" class="form-control"value="<?php echo esc($categoria->nome) ?>">
 </div>
 <div class="form-group">
     <label for="exampleFormControlTextarea1">Descrição</label>

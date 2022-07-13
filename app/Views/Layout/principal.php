@@ -207,6 +207,8 @@
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
                 <ul class="list-unstyled">
                     <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>"> <i class="icon-home"></i>Início </a></li>
+                    <li class="<?php echo (url_is('itens') ? 'active' : '') ?>"><a href="<?php echo site_url('itens'); ?>"> <i class="icon-home"></i>Produtos </a></li>
+                    <li class="<?php echo (url_is('categorias') ? 'active' : '') ?>"><a href="<?php echo site_url('categorias'); ?>"> <i class="icon-home"></i>Categorias </a></li>
                     <li class="<?php echo (url_is('fornecedores') ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores'); ?>"> <i class="icon-home"></i>Fornecedores </a></li>
                     <li class="<?php echo (url_is('usuarios*') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>"> <i class="fa fa-user-circle"></i>Usuários </a></li>
                     <li class="<?php echo (url_is('grupos*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>"> <i class="fa fa-users"></i>Grupos & Permissões </a></li>

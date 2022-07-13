@@ -76,6 +76,62 @@ class Categorias extends BaseController
 
     }
 
+
+    // Método: Criar nova categoria
+    public function criar()
+    {
+        
+        $categoria = new Categoria();
+
+        $data = [
+
+            'titulo' => "Cadastrar nova categoria",
+            'categoria' => $categoria,
+
+        ];
+
+        return view('Categorias/criar', $data);
+
+    }
+
+    public function cadastrar()
+    {
+        if(!$this->request->isAJAX()){
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        // Recupero o post da requisição AJAX
+        $post = $this->request->getPost();  
+
+         // Salvando a nova Categoria no Banco de Dados
+        $categoria = new Categoria($post);
+
+   
+        if($this->categoriaModel->save($categoria)){
+
+            $btnCriar = anchor("categorias/criar", 'Cadastrar mais categorias', ['class' => 'btn btn-primary mt2']);
+            session()->setFlashdata('sucesso', "Nova categoria cadastrada e pronta para ser utilizada em seus produtos.<br> $btnCriar");
+
+            $retorno['id'] = $this->categoriaModel->getInsertID();
+
+            //Retornar para o Json
+            return $this->response->setJSON($retorno);
+
+        }
+
+        //Retornar os erros de validação do formulário
+        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $this->categoriaModel->errors();
+
+
+        // Retorno para o ajax request
+        return $this->response->setJSON($retorno);
+
+    }
+
     public function editar(int $id = null)
     {
 

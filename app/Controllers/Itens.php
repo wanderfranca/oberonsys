@@ -44,6 +44,17 @@ class Itens extends BaseController
 
     }
 
+    public function codigoBarras(int $id = null)
+    {
+
+        $item = $this->buscaItemOu404($id);
+
+        $generator = new \Picqer\Barcode\BarcodeGeneratorSVG();
+        $item->codigo_barras = $generator->getBarcode($item->codigo_interno, $generator::TYPE_CODE_128, 3, 80);
+
+        echo $item->codigo_barras;
+    }
+
     public function recuperaItens()
     {
         if (!$this->request->isAJAX())

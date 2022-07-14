@@ -35,6 +35,7 @@
             <p class="contributions mt-0"><?php echo $item->exibeTipo(); ?></p>
             <p class="contributions mt-0">Estoque: <?php echo $item->exibeEstoque(); ?></p>
             <p class="contributions mt-0"><?php echo $item->exibeSituacao(); ?></p>
+
             <p class="card-text">Criado:  <?php echo date('d/m/Y H:m',strtotime($item->criado_em)); ?></p>
             <p class="card-text">Atualizado <?php echo $item->atualizado_em->humanize();?></p>
 
@@ -42,10 +43,11 @@
             <div class="btn-group">
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    Ações
+                    Opções
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="<?php echo site_url("items/editar/$item->id"); ?>">Editar</a>
+                    <a class="dropdown-item" target="_blank" href="<?php echo site_url("itens/codigobarras/$item->id") ?>">Gerar Código de Barras</a>
                     
                     <div class="dropdown-divider"></div>
 

@@ -75,6 +75,7 @@ class Filters extends BaseConfig
                 'grupos(/*)?',
                 'categorias(/*)?',
                 'fornecedores(/*)?',
+                'itens(/*)?',
             ],
         ],
 

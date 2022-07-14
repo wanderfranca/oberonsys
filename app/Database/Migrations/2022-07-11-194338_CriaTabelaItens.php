@@ -70,7 +70,7 @@ class CriaTabelaItens extends Migration
                 'null' => true,
             ],
 
-            'estoque'       => [
+            'tipo'       => [
                 'type'              => 'ENUM',
                 'constraint'        => ['produto', 'servico'],
                 'null' => false,

@@ -198,13 +198,13 @@
             <nav id="sidebar">
                 <!-- Sidebar Header-->
                 <div class="sidebar-header d-flex align-items-center">
-                    <div class="avatar"><img src="<?php echo "usuarios/imagem/".usuario_logado()->imagem; ?>" alt="..." class="img-fluid rounded-circle"></div>
+                    <div class="avatar"><img src="#" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h5"><?php echo usuario_logado()->nome; ?></h1>
+                        <h1 class="h5">DESENVOLVIMENTO</h1>
                         <p>CEO Oberon</p>
                     </div>
                 </div>
-                <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+                <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
                 <ul class="list-unstyled">
                     <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>"> <i class="icon-home"></i>Início </a></li>
                     <li class="<?php echo (url_is('itens') ? 'active' : '') ?>"><a href="<?php echo site_url('itens'); ?>"> <i class="icon-home"></i>Produtos </a></li>

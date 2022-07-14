@@ -193,6 +193,35 @@ class Categorias extends BaseController
 
     }
 
+    public function excluir(int $id = null)
+    {
+
+        $categoria = $this->buscaCategoriaOu404($id);
+
+        if($categoria->deletado_em != null)
+        {
+            return redirect()->back()->with('info', "A categoria $categoria->nome Já está excluída");
+        }
+
+        if($this->request->getMethod() === 'post')
+        {
+            $this->categoriaModel->delete($id);
+
+            return redirect()->to(site_url("categoria"))->with('sucesso', "$categoria->nome foi excluído com sucesso");
+        }
+
+        $data = [
+
+            'titulo' => "Excluir categoria: ".esc($categoria->nome),
+            'categoria' => $categoria,
+
+        ];
+
+
+        return view('categoriaes/excluir', $data);
+
+    }
+
     public function buscaCategoriaOu404(int $id = null)
     {
         if (!$id || !$categoria = $this->categoriaModel->withDeleted(true)->find($id)){

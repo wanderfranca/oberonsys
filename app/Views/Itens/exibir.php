@@ -36,8 +36,8 @@
             <p class="contributions mt-0">Estoque: <?php echo $item->exibeEstoque(); ?></p>
             <p class="contributions mt-0"><?php echo $item->exibeSituacao(); ?></p>
 
-            <p class="card-text">Criado:  <?php echo date('d/m/Y H:m',strtotime($item->criado_em)); ?></p>
-            <p class="card-text">Atualizado <?php echo $item->atualizado_em->humanize();?></p>
+            <p class="card-text">Criado em:  <?php echo date('d/m/Y H:m',strtotime($item->criado_em)); ?></p>
+            <p class="card-text">Atualizado em: <?php echo $item->atualizado_em->humanize();?></p>
 
             <!-- Example single danger button -->
             <div class="btn-group">

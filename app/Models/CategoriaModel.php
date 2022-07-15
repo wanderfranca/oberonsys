@@ -38,4 +38,13 @@ class CategoriaModel extends Model
         ],
 
     ];
+
+    public function categoriasAtivas()
+    {
+        $atributos = [
+            'categorias.*'
+        ];
+
+        return $this->select($atributos)->where('ativo',1)->findAll();
+    }
 }

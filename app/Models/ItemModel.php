@@ -20,7 +20,7 @@ class ItemModel extends Model
         'estoque',
         'controla_estoque',
         'tipo',
-        'ativo',
+        'situacao',
         'descricao',
         'categoria_id',
     ];
@@ -61,8 +61,31 @@ class ItemModel extends Model
 
             return $data;
     }
-    
 
+    /**
+ * Método: que recupera o grupo de acesso do usuário informado
+ * Utilizado no controller de usuarios
+ */
+    public function recuperaCategoriaDeItens(int $id){
+
+        $atributos = [
+            'itens.id AS item_id',
+            'categorias.*',
+            'itens.categoria_id AS item_categoria_id',
+            'categorias.id AS categoria_id',
+            'categorias.nome AS categoria_nome',
+            
+        ];
+
+        return $this->select($atributos)
+                    ->join('categorias', 'categorias.id = itens.categoria_id')
+                    ->where('itens.id', $id)
+                    ->groupBy('categorias.nome')
+                    ->findAll();
+
+    }
+
+    
     /**
      * Método: Gerar código interno automaticamente
      * 

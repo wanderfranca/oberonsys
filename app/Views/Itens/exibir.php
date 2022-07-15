@@ -14,23 +14,27 @@
     <div class="col-lg-5">
 
         <div class="user-block block">
+
+        <?php if($item->tipo === 'produto'): ?>
+
             <div class="text-center">
 
                 <?php  if($item->imagem == null): ?>
 
-                <img src="<?php echo site_url('recursos/img/item_sem_imagem.png'); ?>" class="card-img-top"
-                    style="width: 90%;" alt="Usuário sem imagem">
+                    <img src="<?php echo site_url('recursos/img/item_sem_imagem.png'); ?>" class="card-img-top" style="width: 90%;" alt="Usuário sem imagem">
 
                 <?php else: ?>
 
-                <img src="<?php echo site_url("itens/imagem/$item->imagem"); ?>" class="card-img-top"
-                    style="width: 90%;" alt="<?php echo esc($item->nome);?>">
+                    <img src="<?php echo site_url("itens/imagem/$item->imagem"); ?>" class="card-img-top" style="width: 90%;" alt="<?php echo esc($item->nome);?>">
 
                 <?php endif; ?>
-
-                <a href="<?php echo site_url("items/editarimagem/$item->id") ?>" class="btn btn-outline-primary btn-sm mt-2">Alterar imagem</a>
+                <a href="<?php echo site_url("itens/editarimagem/$item->id") ?>" class="btn btn-outline-primary btn-sm mt-2">Alterar imagem</a>
+            
             </div>
             <hr class="border-secondary">
+
+            <?php endif; ?>
+
             <h5 class="card-title mt-2 text-center"><?php echo esc($item->nome);?></h5>
             <p class="contributions mt-0"><?php echo $item->exibeTipo(); ?></p>
             <p class="contributions mt-0">Estoque: <?php echo $item->exibeEstoque(); ?></p>
@@ -46,16 +50,16 @@
                     Opções
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="<?php echo site_url("items/editar/$item->id"); ?>">Editar</a>
+                    <a class="dropdown-item" href="<?php echo site_url("itens/editar/$item->id"); ?>">Editar</a>
                     <a class="dropdown-item" target="_blank" href="<?php echo site_url("itens/codigobarras/$item->id") ?>">Gerar Código de Barras</a>
                     
                     <div class="dropdown-divider"></div>
 
                     <?php if($item->deletado_em == null): ?>
-                    <a class="dropdown-item" href="<?php echo site_url("items/excluir/$item->id"); ?>">Excluir</a>
+                    <a class="dropdown-item" href="<?php echo site_url("itens/excluir/$item->id"); ?>">Excluir</a>
 
                     <?php else:  ?>
-                        <a class="dropdown-item" href="<?php echo site_url("items/desfazerexclusao/$item->id"); ?>">Restaurar</a>
+                        <a class="dropdown-item" href="<?php echo site_url("itens/desfazerexclusao/$item->id"); ?>">Restaurar</a>
 
                     <?php endif;  ?>
 

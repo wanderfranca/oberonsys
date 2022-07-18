@@ -84,6 +84,7 @@ class Itens extends BaseController
 
         $item = $this->buscaItemOu404($id);
 
+        // Quantidade de paginas
         $quantidade_paginacao = 5;
 
         $this->defineHistoricoItem($item, $quantidade_paginacao);

@@ -75,4 +75,28 @@ class BaseController extends Controller
         exit;
 
     }
+
+    protected function padronizaImagem600x600(string $caminhoImagem)
+    {
+        
+        //Redimensionar a imagem 600 x 600 para ficar no centro
+        service('image')
+        ->withFile($caminhoImagem)
+        ->fit(600, 600, 'center')
+        ->save($caminhoImagem);
+        
+        // Adicionar uma marca d'água de texto
+        \Config\Services::image('imagick')
+            ->withFile($caminhoImagem)
+            ->text("Oberon", 
+            [
+                'color'      => '#fff',
+                'opacity'    => 0.5,
+                'withShadow' => false,
+                'hAlign'     => 'center',
+                'vAlign'     => 'bottom',
+                'fontSize'   => 10,
+            ])
+            ->save($caminhoImagem);
+    }
 }

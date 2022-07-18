@@ -198,35 +198,38 @@
             <nav id="sidebar">
                 <!-- Sidebar Header-->
                 <div class="sidebar-header d-flex align-items-center">
-                    <div class="avatar"><img src="<?php echo "usuarios/imagem/".usuario_logado()->imagem; ?>" alt="..." class="img-fluid rounded-circle"></div>
+                    <div class="avatar"><img src="#" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h5"><?php echo usuario_logado()->nome; ?></h1>
+                        <h1 class="h5">DESENVOLVIMENTO</h1>
                         <p>CEO Oberon</p>
                     </div>
                 </div>
-                <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+                <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
                 <ul class="list-unstyled">
-                    <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>"> <i class="icon-home"></i>Início </a></li>
-                    <li class="<?php echo (url_is('fornecedores') ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores'); ?>"> <i class="icon-home"></i>Fornecedores </a></li>
-                    <li class="<?php echo (url_is('usuarios*') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>"> <i class="fa fa-user-circle"></i>Usuários </a></li>
-                    <li class="<?php echo (url_is('grupos*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>"> <i class="fa fa-users"></i>Grupos & Permissões </a></li>
-                    <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-                    <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
-                    <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
-                                class="icon-windows"></i>Example dropdown </a>
-                        <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                            <li><a href="#">Page</a></li>
+                <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>">Início </a></li>
+
+                <li><a href="#cadastrosDropdown" aria-expanded="<?php echo (url_is('fornecedores') | url_is('itens') ? 'true' : 'false') ?>" data-toggle="collapse">Cadastros</a>
+                        <ul id="cadastrosDropdown" class="<?php echo (url_is('fornecedores') | url_is('itens')? '' : 'collapse') ?> list-unstyled ">
+                        <li class="<?php echo (url_is('itens') ? 'active' : '') ?>"><a href="<?php echo site_url('itens'); ?>">Produtos</a></li>
+                        <li class="<?php echo (url_is('fornecedores')  ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores'); ?>">Fornecedores </a></li>
+                        <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">--Clientes</a></li>
+                        </ul>
+                    <li class="<?php echo (url_is('usuarios/*') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>">Usuários </a></li>
+                    <li class="<?php echo (url_is('grupos/*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>">Grupos & Permissões </a></li>
+                    <li><a href="charts.html">Charts </a></li>
+                    <li><a href="forms.html">Forms </a></li>
+                    
+                    <li><a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') | url_is('itens') ? 'true' : 'false') ?>" data-toggle="collapse">Tabelas</a>
+                    <ul id="tabelasDropdown" class="collapse list-unstyled ">
+                      <!-- Sidebar Navidation Menus--><span class="heading">Produtos</span>    
+                        <li class="<?php echo (url_is('categorias/*') ? 'active' : '') ?>"><a href="<?php echo site_url('categorias'); ?>">Categorias </a></li>
                             <li><a href="#">Page</a></li>
                             <li><a href="#">Page</a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo site_url("usuarios/editarsenha") ?>"> <i class="icon-settings"></i>Alterar senha </a></li>
-                </ul><span class="heading">Extras</span>
-                <ul class="list-unstyled">
-                    <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
-                    <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
-                    <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
-                </ul>
+
+                    <li><a href="<?php echo site_url("usuarios/editarsenha") ?>">Alterar senha </a></li>
+               
             </nav>
             <!-- Sidebar Navigation end-->
             <div class="page-content">

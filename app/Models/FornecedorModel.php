@@ -4,7 +4,6 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-
 class FornecedorModel extends Model
 {
     protected $table            = 'fornecedores';
@@ -26,7 +25,6 @@ class FornecedorModel extends Model
         'estado',
         'complemento',
         'ativo',
-
     ];
 
     // Dates

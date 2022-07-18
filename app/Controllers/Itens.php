@@ -99,7 +99,7 @@ class Itens extends BaseController
         
         $data = [
 
-            'titulo' => "Item ".$item->exibeTipo(),
+            'titulo' => "Visualizar item",
             'item' => $item,
         ];
 

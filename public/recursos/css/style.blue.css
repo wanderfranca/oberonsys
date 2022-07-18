@@ -75,7 +75,7 @@ a {
 }
 
 .text-gray-dark {
-  color: #6a6c70;
+  color: #e0e0e0;
 }
 
 .text-black {
@@ -136,7 +136,7 @@ pre {
 }
 
 .dropdown-divider {
-  border-top-color: #6a6c70;
+  border-top-color: #e0e0e0;
 }
 
 .no-padding {
@@ -716,7 +716,7 @@ nav.navbar .dropdown .dropdown-menu.active {
 nav#sidebar {
   width: 280px;
   background: #2d3035;
-  color: #6a6c70;
+  color: #e0e0e0;
   border-right: 1px solid #34373d;
   /* shrinked navbar */
 }
@@ -1261,7 +1261,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 
 .user-block .item i {
   margin-right: 10px;
-  color: #6a6c70;
+  color: #e0e0e0;
 }
 
 .user-block a.user-title {
@@ -1313,7 +1313,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 
 .public-user-block .item i {
   margin-right: 10px;
-  color: #6a6c70;
+  color: #e0e0e0;
 }
 
 .public-user-block .item strong {
@@ -2083,7 +2083,7 @@ STYLE SWITCHER FOR DEMO
   top: 160px;
   right: 0;
   background: #22252a;
-  border: solid 1px #6a6c70;
+  border: solid 1px #e0e0e0;
   z-index: 2000;
 }
 

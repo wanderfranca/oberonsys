@@ -36,8 +36,30 @@ class ItemModel extends Model
         'nome'                  => 'required|min_length[2]|max_length[120]|is_unique[itens.nome,id,{id}]',
         'preco_venda'           => 'required',
         'descricao'             => 'required',
+        'ean'                   => 'max_length[13]',
+        'codigo_interno'        => 'max_length[15]|is_unique[itens.codigo_interno,id,{id}]',
     ];
-    protected $validationMessages = [];
+    protected $validationMessages = [
+        'nome' => [
+            'required' => '* Informe o nome do item',
+            'min_length' => '* Precisa ter pelo menos 2 caracteres.',
+            'max_length' => '* Você tentou me trolar heim kkk, quantidade de carecteres é no máximo 120',
+        ],
+        'preco_venda' => [
+            'required' => '* informe um preço para venda',
+        ],
+
+        'preco_custo' => [
+            'required' => '* informe o valor do custo',
+        ],
+
+
+        'codigo_interno' => [
+            'is_unique' => '* Esse código já está sendo utilizado em outro item',
+            'max_length' => '* Limite máximo permitido é de até 15 caracteres',
+        ],
+
+    ];
 
     // Callbacks
     protected $beforeInsert   = ['removeVirgulaValores'];
@@ -63,9 +85,9 @@ class ItemModel extends Model
     }
 
     /**
- * Método: que recupera o grupo de acesso do usuário informado
- * Utilizado no controller de usuarios
- */
+     * Método: que recupera o grupo de acesso do usuário informado
+     * Utilizado no controller de usuarios
+     */
     public function recuperaCategoriaDeItens(int $id){
 
         $atributos = [
@@ -94,13 +116,14 @@ class ItemModel extends Model
     {
         do{
 
-            $codigoInterno = random_string('numeric', 14);
+            $codigoInterno = random_string('numeric', 8);
 
-            $this->where('codigo_interno', $codigoInterno)->first();
+            $this->where('codigo_interno', $codigoInterno);
 
          }while($this->countAllResults() > 1);
 
         return $codigoInterno;
     }
+
 
 }

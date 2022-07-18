@@ -9,7 +9,6 @@
 <?php echo $this->section('conteudo') ?>
 
 <div class="row">
-
     <div class="col-lg-10">
         <div class="block">
             <div class="block-body">

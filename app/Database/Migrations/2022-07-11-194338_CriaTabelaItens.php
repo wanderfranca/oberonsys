@@ -24,6 +24,8 @@ class CriaTabelaItens extends Migration
             'ean'       => [
                 'type'             => 'VARCHAR',
                 'constraint'       => '20',
+                'null'              => true,  
+
             ],
 
             'nome'           => [

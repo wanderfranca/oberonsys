@@ -66,7 +66,7 @@ class Login extends BaseController
 
         $autenticacao->logout();
 
-        return redirect()->to(site_url("login/mostramensagemlogout/$usuarioLogado->nome"));
+        return redirect()->to(site_url("login"));
 
 
     }

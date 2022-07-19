@@ -77,6 +77,7 @@
 
     </div>
 
+ 
     <div class="col-lg-8">
 
         <div class="user-block block">
@@ -108,8 +109,8 @@
                                                 <button class="btn btn-link" data-toggle="collapse"
                                                     data-target="#collapse-<?php echo $key;?>" aria-expanded="true"
                                                     aria-controls="collapse-<?php echo $key;?>">
-                                                    <b class="text-white">Atualização:
-                                                    </b><?php echo date('d/m/Y H:i', strtotime($historico['data_modificacao']))?>
+                                                    <b class="text-white"><?php echo esc($historico['acao']) ?>
+                                                    </b><?php echo date('d/m/Y H:i', strtotime($historico['criado_em']))?>
                                                 </button>
                                             </h5>
                                         </div>

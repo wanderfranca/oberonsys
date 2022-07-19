@@ -567,9 +567,10 @@ class Itens extends BaseController
 
         $item->deletado_em = null;
         $this->itemModel->protect(false)->save($item);
-
+        // Inserir histórico de exclusão
+        $this->insereHistoricoItem($item, "Recuperação");
         
-        return redirect()->back()->with('sucesso', "$item->nome restaurado com sucesso. Produtos ou Serviços restaurados, voltam como INATIVOS e sem IMAGEM, você pode alterar isso quando quiser =D");
+        return redirect()->back()->with('sucesso', "$item->nome Restaurado com sucesso! Produtos restaurados, voltam sem IMAGEM, você pode alterar isso quando quiser =D");
 
     }
 
@@ -656,23 +657,7 @@ class Itens extends BaseController
      */
     private function defineHistoricoItem(object $item, int $quantidade_paginacao)
     {
-        $atributos = [
-            'usuarios.id',
-            'usuarios.nome AS nome_usuario',
-            'atributos_alterados',
-            'data_modificacao',
-            'acao',
-            'usuario_id',
-        ];
-
-        $historico = $this->itemHistoricoModel
-                            ->asArray()
-                            ->select($atributos)
-                            ->join('usuarios', 'usuario_id = usuarios.id')
-                            ->where('item_id', $item->id)
-                            ->orderBy('data_modificacao', 'DESC')
-                            ->paginate($quantidade_paginacao); //Faça o paginate pelo valor da informação definida no parâmetro
-   
+       $historico = $this->itemHistoricoModel->recuperaHistoricoItem($item->id, $quantidade_paginacao);   
 
         if($historico != null)
         {

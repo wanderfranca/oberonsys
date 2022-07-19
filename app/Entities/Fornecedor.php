@@ -39,6 +39,6 @@ class Fornecedor extends Entity
                     return '<i class="fa fa-lock text-danger"></i>&nbsp;Inativo'; 
                 }
         
-    }
+        }
       
 }

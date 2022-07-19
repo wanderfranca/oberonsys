@@ -178,6 +178,11 @@ class Clientes extends BaseController
             session()->setFlashdata('sucesso', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
             return $this->response->setJSON($retorno);
 
+            /**
+             * @todo: Tirar o timer dessa mensagem de sucesso (na verdade criar uma mensagem personalizada para este método assim q houver envio de e-mail)
+             * 
+             */
+
             }
 
             session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');

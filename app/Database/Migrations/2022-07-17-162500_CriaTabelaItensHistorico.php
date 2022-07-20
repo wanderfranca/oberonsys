@@ -33,7 +33,7 @@ class CriaTabelaItensHistorico extends Migration
                 'type'              => 'TEXT',
                 'null'              => true,
             ],
-            'data_modificacao'      => [ 
+            'criado_em'      => [ 
                 'type'              => 'TIMESTAMP',
             ],
 

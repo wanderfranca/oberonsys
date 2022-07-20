@@ -31,6 +31,57 @@ class Fornecedores extends BaseController
         return view('Fornecedores/index', $data);
     }
 
+    public function recuperaFornecedores()
+    {
+
+        if(!$this->request->isAJAX()){
+            
+            return redirect()->back();
+        }
+
+            $atributos = [
+                
+                'id',
+                'razao',
+                'cnpj',
+                'telefone',
+                'ativo',
+                'deletado_em',
+            ];
+
+            // SELECT EM TODOS OS FornecedorS
+            $fornecedores = $this->fornecedorModel->select($atributos)
+                                                ->withDeleted(true) //Buscar também os dados deletados
+                                                ->orderBy('id', 'DESC')
+                                                ->findAll();
+
+
+            //Receberá o array de objetos de fornecedores
+            $data = [];
+
+            foreach($fornecedores as $fornecedor){
+
+
+                $data[] = [
+
+                    'razao'         => anchor("fornecedores/exibir/$fornecedor->id", esc($fornecedor->razao), 'title="Exibir Fornecedor '.esc($fornecedor->razao).'"'),
+                    'cnpj'          => esc($fornecedor->cnpj),
+                    'telefone'      => esc($fornecedor->telefone),
+                    'ativo'         => $fornecedor->exibeSituacao(),
+                ];
+
+            }
+
+            $retorno = [
+
+                'data' => $data,
+
+            ];
+
+            return $this->response->setJSON($retorno);
+
+    }
+
     public function criar()
     {
 
@@ -92,57 +143,6 @@ class Fornecedores extends BaseController
         // Retorno para o ajax request
         return $this->response->setJSON($retorno);
 
-
-    }
-
-    public function recuperaFornecedores()
-    {
-
-        if(!$this->request->isAJAX()){
-            
-            return redirect()->back();
-        }
-
-            $atributos = [
-                
-                'id',
-                'razao',
-                'cnpj',
-                'telefone',
-                'ativo',
-                'deletado_em',
-            ];
-
-            // SELECT EM TODOS OS FornecedorS
-            $fornecedores = $this->fornecedorModel->select($atributos)
-                                                ->withDeleted(true) //Buscar também os dados deletados
-                                                ->orderBy('id', 'DESC')
-                                                ->findAll();
-
-
-            //Receberá o array de objetos de fornecedores
-            $data = [];
-
-            foreach($fornecedores as $fornecedor){
-
-
-                $data[] = [
-
-                    'razao'         => anchor("fornecedores/exibir/$fornecedor->id", esc($fornecedor->razao), 'title="Exibir Fornecedor '.esc($fornecedor->razao).'"'),
-                    'cnpj'          => esc($fornecedor->cnpj),
-                    'telefone'      => esc($fornecedor->telefone),
-                    'ativo'         => $fornecedor->exibeSituacao(),
-                ];
-
-            }
-
-            $retorno = [
-
-                'data' => $data,
-
-            ];
-
-            return $this->response->setJSON($retorno);
 
     }
 

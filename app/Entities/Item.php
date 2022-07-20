@@ -122,7 +122,7 @@ class Item extends Entity
 
             if($this->hasChanged('controla_estoque')){
 
-                if($this->controla_estoque === true){
+                if($this->controla_estoque == true){
                     $atributosAlterados['controla_estoque'] = "- <b class='text-white'>Controle de estoque foi </b><b class='text-success'> ativado </b>";
                
                 } else {
@@ -133,7 +133,7 @@ class Item extends Entity
 
             if($this->hasChanged('situacao'))
             {
-                if($this->situacao === true){
+                if($this->situacao == true){
                     $atributosAlterados['situacao'] = "- <b class='text-white'>O item foi </b><b class='text-success'> ativado </b>";
                 
                 } else {

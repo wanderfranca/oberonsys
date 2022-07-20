@@ -212,7 +212,7 @@
                         <ul id="cadastrosDropdown" class="<?php echo (url_is('fornecedores') | url_is('itens')? '' : 'collapse') ?> list-unstyled ">
                         <li class="<?php echo (url_is('itens') ? 'active' : '') ?>"><a href="<?php echo site_url('itens'); ?>">Produtos</a></li>
                         <li class="<?php echo (url_is('fornecedores')  ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores'); ?>">Fornecedores </a></li>
-                        <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">--Clientes</a></li>
+                        <li class="<?php echo (url_is('clientes') ? 'active' : '') ?>"><a href="<?php echo site_url('clientes'); ?>">Clientes</a></li>
                         </ul>
                     <li class="<?php echo (url_is('usuarios/*') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>">Usuários </a></li>
                     <li class="<?php echo (url_is('grupos/*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>">Grupos & Permissões </a></li>

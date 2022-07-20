@@ -127,4 +127,16 @@ class UsuarioModel extends Model
 
     }
 
+    /**
+     * Método: Atualiza o e-mail do usuário de acordo com o e-mail do cliente
+     * Utilizar no momento de atualizar os dados do cliente
+     */
+    public function atualizaEmailDoCliente(int $usuario_id, string $email)
+    {
+        return $this->protect(false)
+                    ->where('id', $usuario_id)
+                    ->set('email', $email)
+                    ->update();
+    }
+
 }

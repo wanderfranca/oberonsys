@@ -83,5 +83,15 @@ class Home extends BaseController
         return $this->response->setJSON($this->checkEmail($email));
     }
 
+    public function pegarIpDoUsuario()
+    {
+        $ip = $this->request->getIPAddress();
+
+        echo '<pre>';
+        print_r($ip);
+        exit;
+
+    }
+
 
 }

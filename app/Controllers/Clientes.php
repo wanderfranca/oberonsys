@@ -86,37 +86,22 @@ class Clientes extends BaseController
 
     }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> bigbeta
     // Método: Criar cliente
     public function criar()
     {
         $this->limpaInfoSessao();
 
-<<<<<<< HEAD
        $cliente = new Cliente();
-=======
-        $cliente = new Cliente();
->>>>>>> bigbeta
 
         $data = [
 
             'titulo' => 'CADASTRAR NOVO CLIENTE',
             'cliente' => $cliente,
 
-<<<<<<< HEAD
 
         ];
 
-        dd($data['cliente']);
 
-=======
-        ];
-
->>>>>>> bigbeta
         return view('Clientes/criar', $data);
     }
 
@@ -158,24 +143,12 @@ class Clientes extends BaseController
 
         if($this->clienteModel->save($cliente)){
 
-<<<<<<< HEAD
             $this->criaUsuarioParaCliente($cliente);
 
             // $this->enviaEmailCriacaoEmailAcesso($cliente);
 
             session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '.$cliente->email.'<p><p>Senha Inicial: obn1234</b></p><p> Geramos um E-mail de notificação com estes dados de acesso para o cliente</b>');
 
-=======
-            $this->enviaEmailCriacaoEmailAcesso($cliente);
-
-            /**
-             * @todo - criar usuário do cliente
-             */
-            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
-
-
-            session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
->>>>>>> bigbeta
             return $this->response->setJSON($retorno);
 
         }
@@ -351,11 +324,6 @@ class Clientes extends BaseController
         return $cliente;
 
     }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> bigbeta
 
     // Método enviaEmailAlteracaoEmailAcesso: E-mail para o cliente informando alterações de acesso
     private function enviaEmailAlteracaoEmailAcesso(object $cliente) : void
@@ -380,11 +348,7 @@ class Clientes extends BaseController
     }
 
     // Remove da sessão as informações que travam formulário em requisições
-<<<<<<< HEAD
     private function limpaInfoSessao() : void
-=======
-    public function limpaInfoSessao() : void
->>>>>>> bigbeta
     {
         session()->remove('blockCep');
         session()->remove('blockEmail');
@@ -421,8 +385,4 @@ class Clientes extends BaseController
 
     }
     
->>>>>>> Stashed changes
-=======
-    
->>>>>>> bigbeta
 }

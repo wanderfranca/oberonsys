@@ -116,7 +116,7 @@ class Clientes extends BaseController
         return view('Clientes/editar', $data);
     }
 
-    public function atualizar(int $id = null)
+    public function atualizar()
     {
         if(!$this->request->isAJAX())
         {
@@ -136,6 +136,14 @@ class Clientes extends BaseController
         {
             $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
             $retorno['erros_model'] = ['cep' => 'Informe um CEP válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        if(session()->get('blockEmail') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['email' => 'Informe um E-mail válido'];
             
             return $this->response->setJSON($retorno);
         }
@@ -197,6 +205,19 @@ class Clientes extends BaseController
        $cep = $this->request->getGet('cep');
 
        return $this->response->setJSON($this->consultaViaCep($cep));
+
+    }
+
+    public function consultaEmail()
+    {
+       if (!$this->request->isAJAX())
+       {
+            return redirect()->back();
+       } 
+
+       $email = $this->request->getGet('email');
+
+       return $this->response->setJSON($this->checkEmail($email));
 
     }
 

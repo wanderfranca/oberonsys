@@ -57,4 +57,9 @@ trait ValidacoesTrait
 
 
     }
+
+    public function checkEmail()
+    {
+        
+    }
 }

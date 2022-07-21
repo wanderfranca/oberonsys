@@ -141,12 +141,6 @@ class Clientes extends BaseController
 
         if($this->clienteModel->save($cliente)){
 
-            $this->enviaEmailCriacaoEmailAcesso($cliente);
-
-            /**
-             * @todo - criar usuário do cliente
-             */
-            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
 
 
             session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
@@ -161,9 +155,6 @@ class Clientes extends BaseController
         // Retorno para o ajax request
         return $this->response->setJSON($retorno);
 
-
-
-        return view('Clientes/editar', $data);
     }
 
     // Método: Exibir cliente
@@ -272,9 +263,6 @@ class Clientes extends BaseController
         // Retorno para o ajax request
         return $this->response->setJSON($retorno);
 
-
-
-        return view('Clientes/editar', $data);
     }
 
     // Método consultaCep

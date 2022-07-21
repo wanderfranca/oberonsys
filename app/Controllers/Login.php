@@ -31,7 +31,7 @@ class Login extends BaseController
         // Pegar E-mail, Password e Endereço IP
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
-        $ip = $this->request->getIPAddress();
+        // $ip = $this->request->getIPAddress();
 
         // Serviço: instância autênticação
         $autenticacao = service('autenticacao');

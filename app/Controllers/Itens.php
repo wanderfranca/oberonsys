@@ -188,22 +188,6 @@ class Itens extends BaseController
                 }
 
                
-                              
-                    if($this->itemModel->where('itens', array('ean' => $ean,'id !='=> $item_id)) == false){
-                        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-                        $retorno['erros_model'] = ['estoque' => '* Defina a quantidade do produto em estoque'];
-                        return $this->response->setJSON($retorno);
-                    
-                    }
-
-
-                // if($item->ean == "")
-                // {
-                //     //Retornar os erros de validação do formulário
-                //     $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-                //     $retorno['erros_model'] = ['estoque' => '* Defina a quantidade do produto em estoque'];                    
-                //     return $this->response->setJSON($retorno);
-                // }
 
                 $precoCusto = str_replace([',', '.'], '', $item->preco_custo);
                 $precoVenda = str_replace([',', '.'], '', $item->preco_venda);

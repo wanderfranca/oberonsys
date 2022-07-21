@@ -6,7 +6,11 @@ use CodeIgniter\Entity\Entity;
 
 class Cliente extends Entity
 {
-    protected $dates   = ['criado_em', 'atualizado_em', 'deletado_em'];
+    protected $dates   = [
+        'criado_em', 
+        'atualizado_em', 
+        'deletado_em'
+    ];
 
         //Método: Exibir a situação do cliente
         public function exibeSituacao()

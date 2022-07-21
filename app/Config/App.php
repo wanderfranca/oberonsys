@@ -162,7 +162,11 @@ class App extends BaseConfig
      *
      * @var string
      */
+<<<<<<< Updated upstream
     public $sessionCookieName = 'ci_session';
+=======
+    public $sessionCookieName = 'ci-session';
+>>>>>>> Stashed changes
 
     /**
      * --------------------------------------------------------------------------

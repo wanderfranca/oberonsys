@@ -85,6 +85,90 @@ class Clientes extends BaseController
 
     }
 
+<<<<<<< Updated upstream
+=======
+    // Método: Criar cliente
+    public function criar()
+    {
+        $this->limpaInfoSessao();
+
+       $cliente = new Cliente();
+
+        $data = [
+
+            'titulo' => 'CADASTRAR NOVO CLIENTE',
+            'cliente' => $cliente,
+
+
+        ];
+
+        dd($data['cliente']);
+
+        return view('Clientes/criar', $data);
+    }
+
+    // Método: Cadastrar cliente
+    public function cadastrar(int $id = null)
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+  
+
+        // Verificação: Email inválido
+        if(session()->get('blockEmail') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['email' => 'Informe um E-mail válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        // Verificação: Cep inválido
+        if(session()->get('blockCep') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['cep' => 'Informe um CEP válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        // Recupero o post da requisição
+        $post = $this->request->getPost();
+
+        $client = new Cliente($post);
+
+
+        if($this->clienteModel->save($cliente)){
+
+            $this->criaUsuarioParaCliente($cliente);
+
+            // $this->enviaEmailCriacaoEmailAcesso($cliente);
+
+            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '.$cliente->email.'<p><p>Senha Inicial: obn1234</b></p><p> Geramos um E-mail de notificação com estes dados de acesso para o cliente</b>');
+
+            return $this->response->setJSON($retorno);
+
+        }
+
+        //Retornar os erros de validação do formulário
+        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $this->clienteModel->errors();
+
+        // Retorno para o ajax request
+        return $this->response->setJSON($retorno);
+
+
+
+        return view('Clientes/editar', $data);
+    }
+
+    // Método: Exibir cliente
+>>>>>>> Stashed changes
     public function exibir(int $id = null)
     {
 
@@ -231,4 +315,67 @@ class Clientes extends BaseController
         return $cliente;
 
     }
+<<<<<<< Updated upstream
+=======
+
+    // Método enviaEmailAlteracaoEmailAcesso: E-mail para o cliente informando alterações de acesso
+    private function enviaEmailAlteracaoEmailAcesso(object $cliente) : void
+    {
+
+        $email = service('email');
+        
+        $email->setFrom('no-replay@oberonsys.com', 'Oberon Sistema');
+        $email->setTo($cliente->email);
+        $email->setSubject('Novo e-mail de acesso ao sistema');
+
+        $data = [
+                    'cliente' => $cliente,
+            
+                ];
+
+        $mensagem = view('Clientes/email_acesso_alterado', $data);
+
+        $email->setMessage($mensagem);
+        $email->send();
+
+    }
+
+    // Remove da sessão as informações que travam formulário em requisições
+    private function limpaInfoSessao() : void
+    {
+        session()->remove('blockCep');
+        session()->remove('blockEmail');
+    }
+
+    // Método: Criação do usuário do cliente recém cadastrado
+    private function criaUsuarioParaCliente(object $cliente) : void
+    {
+          // Montagem de dados de Usuário do Cliente
+          $usuario = [
+            'nome'      => $cliente->nome,
+            'email'     => $cliente->email,
+            'password'  => 'obn1234',
+            'ativo'     => true,
+        ];
+
+        // Inserção de dados do cliente na tabela de usuário
+        $this->usuarioModel->skipValidation(true)->protect(false)->insert($usuario);
+
+        $grupoUsuario = [
+            'grupo_id'      => 2, //Grupo 2 foi destinado aos clientes
+            'usuario_id'    => $this->usuarioModel->getInsertID(), // Pegar o último ID inserido e atribuindo ao usuario_id
+        ];
+
+        // Inserção de dados do usuário/cliente na tabela de grupos usuários
+        $this->grupoUsuarioModel->protect(false)->insert($grupoUsuario);
+
+        // Update na tabela usuario_id, com o valor do id do usuário recém criado
+        $this->clienteModel->protect(false)
+                    ->where('id', $this->clienteModel->getInsertID())
+                    ->set('usuario_id', $this->usuarioModel->getInsertID())
+                    ->update();
+
+    }
+    
+>>>>>>> Stashed changes
 }

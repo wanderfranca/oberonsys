@@ -131,18 +131,6 @@ class Clientes extends BaseController
 
         $cliente = $this->buscaClienteOu404($post['id']);
 
-    // [id] => 1000
-    // [nome] => Yohanna Isis Saito Sobrinho
-    // [cpf] => 636.864.108-85
-    // [telefone] => (19) 98577-1193
-    // [email] => isis31@faro.com
-    // [cep] => 11758-528
-    // [endereco] => Miranda Prairie
-    // [numero] => 734
-    // [complemento] => New Fabríciofurt
-    // [bairro] => São Rafael
-    // [cidade] => Rio de Janeiro
-    // [estado] => RJ
 
         if(session()->get('blockCep') === true)
         {
@@ -197,9 +185,6 @@ class Clientes extends BaseController
         // Retorno para o ajax request
         return $this->response->setJSON($retorno);
 
-
-
-        return view('Clientes/editar', $data);
     }
 
     public function consultaCep()

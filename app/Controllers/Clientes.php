@@ -166,10 +166,7 @@ class Clientes extends BaseController
     }
 
     // Método: Exibir cliente
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> bigbeta
+
     public function exibir(int $id = null)
     {
 
@@ -354,7 +351,7 @@ class Clientes extends BaseController
         session()->remove('blockEmail');
     }
 
-<<<<<<< HEAD
+
     // Método: Criação do usuário do cliente recém cadastrado
     private function criaUsuarioParaCliente(object $cliente) : void
     {

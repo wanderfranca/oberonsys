@@ -285,7 +285,6 @@ class Fornecedores extends BaseController
 
     }
 
-
     public function notas(int $id = null)
     {
 

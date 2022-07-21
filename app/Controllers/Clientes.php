@@ -104,7 +104,7 @@ class Clientes extends BaseController
     }
 
     // Método: Cadastrar cliente
-    public function cadastrar(int $id = null)
+    public function cadastrar()
     {
         if(!$this->request->isAJAX())
         {
@@ -113,7 +113,7 @@ class Clientes extends BaseController
 
         // Envio o hash do token do form
         $retorno['token'] = csrf_hash();
-  
+
 
         // Verificação: Email inválido
         if(session()->get('blockEmail') === true)
@@ -136,14 +136,19 @@ class Clientes extends BaseController
         // Recupero o post da requisição
         $post = $this->request->getPost();
 
-        $client = new Cliente($post);
+        $cliente = new Cliente($post);
 
+    
 
         if($this->clienteModel->save($cliente)){
 
+            $this->criaUsuarioParaCliente($cliente);
+
+            // $this->enviaEmailCricaoEmailAcesso($cliente);
+            
+            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '.$cliente->email.'<p><p>Senha inicial: obn1234</p><p>Um e-mail de notificação com estes dados foi enviado para o cliente</P>');
 
 
-            session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
             return $this->response->setJSON($retorno);
 
         }
@@ -156,6 +161,7 @@ class Clientes extends BaseController
         return $this->response->setJSON($retorno);
 
     }
+
 
     // Método: Exibir cliente
     public function exibir(int $id = null)
@@ -192,7 +198,7 @@ class Clientes extends BaseController
     }
 
     // Método: Atualizar cliente
-    public function atualizar(int $id = null)
+    public function atualizar()
     {
         if(!$this->request->isAJAX())
         {
@@ -245,8 +251,12 @@ class Clientes extends BaseController
                 $this->usuarioModel->atualizaEmailDoCliente($cliente->usuario_id, $cliente->email);
              
                 $this->enviaEmailAlteracaoEmailAcesso($cliente);
+            
+            $btnCriar = anchor("Fornecedores/criar", 'Cadastrar mais fornecedores', ['class' => 'btn btn-primary mt2']);
+            session()->setFlashdata('sucesso', "Novo fornecedor cadastrado! Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente<br><br> $btnCriar");
 
-            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
+            $retorno['id'] = $this->fornecedorModel->getInsertID();
+            
             return $this->response->setJSON($retorno);
 
             }
@@ -333,10 +343,39 @@ class Clientes extends BaseController
     }
 
     // Remove da sessão as informações que travam formulário em requisições
-    public function limpaInfoSessao() : void
+    private function limpaInfoSessao() : void
     {
         session()->remove('blockCep');
         session()->remove('blockEmail');
+    }
+
+    // Método: cria o usuário para o cliente recém cadastrado
+    private function  criaUsuarioParaCliente(object $cliente) : void
+    {
+            // Montagem de dados de Usuário do Cliente
+            $usuario = [
+                'nome'      => $cliente->nome,
+                'email'     => $cliente->email,
+                'password'  => 'obn1234',
+                'ativo'     => true,
+            ];
+
+            // Inserção de dados do cliente na tabela de usuário
+            $this->usuarioModel->skipValidation(true)->protect(false)->insert($usuario);
+
+            $grupoUsuario = [
+                'grupo_id'      => 2, //Grupo 2 foi destinado aos clientes
+                'usuario_id'    => $this->usuarioModel->getInsertID(), // Pegar o último ID inserido e atribuindo ao usuario_id
+            ];
+
+            // Inserção de dados do usuário/cliente na tabela de grupos usuários
+            $this->grupoUsuarioModel->protect(false)->insert($grupoUsuario);
+
+            // Update na tabela usuario_id, com o valor do id do usuário recém criado
+            $this->clienteModel->protect(false)
+                        ->where('id', $this->clienteModel->getInsertID())
+                        ->set('usuario_id', $this->usuarioModel->getInsertID())
+                        ->update();
     }
 
     

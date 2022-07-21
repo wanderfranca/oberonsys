@@ -77,7 +77,7 @@
 
     </div>
 
- 
+
     <div class="col-lg-8">
 
         <div class="user-block block">
@@ -132,20 +132,21 @@
                         </div>
             </div>
         </div>
-
-
-        <?php endforeach; ?>
-        </tbody>
-        </tbody>
-        </table>
-        <div class="mt-3 ml-1">
-                    <?php echo $item->pager->links(); ?>
-                </div>
-
-        <!-- /div -- Fim acordion  -->
     </div>
 
-    <?php endif; ?>
+    <?php endforeach; ?>
+    </tbody>
+    </tbody>
+    </table>
+    <div class="mt-3 ml-1">
+        <?php echo $item->pager->links(); ?>
+    </div>
+
+    <!-- /div -- Fim acordion  -->
+</div>
+</div>
+
+<?php endif; ?>
 
 
 

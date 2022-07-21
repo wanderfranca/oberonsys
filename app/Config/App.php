@@ -162,11 +162,11 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $sessionCookieName = 'ci_session';
+    public $sessionCookieName = 'oberon_session';
 
     /**
      * --------------------------------------------------------------------------
-     * Session Expiration
+     * Session Expiration / Tempo de sessão
      * --------------------------------------------------------------------------
      *
      * The number of SECONDS you want the session to last.
@@ -174,7 +174,7 @@ class App extends BaseConfig
      *
      * @var int
      */
-    public $sessionExpiration = 7200;
+    public $sessionExpiration = 86400; //86400 = 24 horas
 
     /**
      * --------------------------------------------------------------------------

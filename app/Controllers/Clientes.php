@@ -33,6 +33,7 @@ class Clientes extends BaseController
         return view('Clientes/index', $data);
     }
 
+    // Método: Recuperar clientes ativos, inativos e deletados
     public function recuperaClientes()
     {
 
@@ -85,6 +86,87 @@ class Clientes extends BaseController
 
     }
 
+    // Método: Criar cliente
+    public function criar()
+    {
+        $this->limpaInfoSessao();
+
+        $cliente = new Cliente();
+
+        $data = [
+
+            'titulo' => 'CADASTRAR NOVO CLIENTE',
+            'cliente' => $cliente,
+
+        ];
+
+        return view('Clientes/criar', $data);
+    }
+
+    // Método: Cadastrar cliente
+    public function cadastrar(int $id = null)
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+  
+
+        // Verificação: Email inválido
+        if(session()->get('blockEmail') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['email' => 'Informe um E-mail válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        // Verificação: Cep inválido
+        if(session()->get('blockCep') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['cep' => 'Informe um CEP válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        // Recupero o post da requisição
+        $post = $this->request->getPost();
+
+        $client = new Cliente($post);
+
+
+        if($this->clienteModel->save($cliente)){
+
+            $this->enviaEmailCriacaoEmailAcesso($cliente);
+
+            /**
+             * @todo - criar usuário do cliente
+             */
+            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
+
+
+            session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
+            return $this->response->setJSON($retorno);
+
+        }
+
+        //Retornar os erros de validação do formulário
+        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $this->clienteModel->errors();
+
+        // Retorno para o ajax request
+        return $this->response->setJSON($retorno);
+
+
+
+        return view('Clientes/editar', $data);
+    }
+
+    // Método: Exibir cliente
     public function exibir(int $id = null)
     {
 
@@ -100,11 +182,13 @@ class Clientes extends BaseController
         return view('Clientes/exibir', $data);
     }
 
-
+    // Método: Editar cliente
     public function editar(int $id = null)
     {
 
         $cliente = $this->buscaClienteOu404($id);
+
+        $this->limpaInfoSessao();
 
         $data = [
 
@@ -116,6 +200,7 @@ class Clientes extends BaseController
         return view('Clientes/editar', $data);
     }
 
+    // Método: Atualizar cliente
     public function atualizar(int $id = null)
     {
         if(!$this->request->isAJAX())
@@ -131,19 +216,17 @@ class Clientes extends BaseController
 
         $cliente = $this->buscaClienteOu404($post['id']);
 
-    // [id] => 1000
-    // [nome] => Yohanna Isis Saito Sobrinho
-    // [cpf] => 636.864.108-85
-    // [telefone] => (19) 98577-1193
-    // [email] => isis31@faro.com
-    // [cep] => 11758-528
-    // [endereco] => Miranda Prairie
-    // [numero] => 734
-    // [complemento] => New Fabríciofurt
-    // [bairro] => São Rafael
-    // [cidade] => Rio de Janeiro
-    // [estado] => RJ
 
+        // Verificação: Email inválido
+        if(session()->get('blockEmail') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['email' => 'Informe um E-mail válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        // Verificação: Cep inválido
         if(session()->get('blockCep') === true)
         {
             $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
@@ -170,18 +253,10 @@ class Clientes extends BaseController
             {
                 $this->usuarioModel->atualizaEmailDoCliente($cliente->usuario_id, $cliente->email);
              
-            /**
-             * @todo: Enviar um e-mail para o cliente informando acerca da alteração do e-mail de acesso
-             * 
-             */
+                $this->enviaEmailAlteracaoEmailAcesso($cliente);
 
-            session()->setFlashdata('sucesso', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
+            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
             return $this->response->setJSON($retorno);
-
-            /**
-             * @todo: Tirar o timer dessa mensagem de sucesso (na verdade criar uma mensagem personalizada para este método assim q houver envio de e-mail)
-             * 
-             */
 
             }
 
@@ -202,23 +277,38 @@ class Clientes extends BaseController
         return view('Clientes/editar', $data);
     }
 
+    // Método consultaCep
     public function consultaCep()
     {
-       if (!$this->request->isAJAX())
-       {
-            return redirect()->back();
-       } 
+        if (!$this->request->isAJAX())
+        {
+                return redirect()->back();
+        } 
 
-       $cep = $this->request->getGet('cep');
+        $cep = $this->request->getGet('cep');
 
-       return $this->response->setJSON($this->consultaViaCep($cep));
+        return $this->response->setJSON($this->consultaViaCep($cep));
 
     }
 
+    // Método consultaCep
+    public function consultaEmail()
+    {
+        if (!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        } 
 
+        $email = $this->request->getGet('email');
+
+        return $this->response->setJSON($this->checkEmail($email));
+
+    }
 
     /*---------- METODOS PRIVADOS ----------*/
 
+
+    // Método buscaClienteOu404: buscar cliente
     private function buscaClienteOu404(int $id = null)
     {
 
@@ -231,4 +321,35 @@ class Clientes extends BaseController
         return $cliente;
 
     }
+
+    // Método enviaEmailAlteracaoEmailAcesso: E-mail para o cliente informando alterações de acesso
+    private function enviaEmailAlteracaoEmailAcesso(object $cliente) : void
+    {
+
+        $email = service('email');
+        
+        $email->setFrom('no-replay@oberonsys.com', 'Oberon Sistema');
+        $email->setTo($cliente->email);
+        $email->setSubject('Novo e-mail de acesso ao sistema');
+
+        $data = [
+                    'cliente' => $cliente,
+            
+                ];
+
+        $mensagem = view('Clientes/email_acesso_alterado', $data);
+
+        $email->setMessage($mensagem);
+        $email->send();
+
+    }
+
+    // Remove da sessão as informações que travam formulário em requisições
+    public function limpaInfoSessao() : void
+    {
+        session()->remove('blockCep');
+        session()->remove('blockEmail');
+    }
+
+    
 }

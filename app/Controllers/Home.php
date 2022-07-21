@@ -76,5 +76,12 @@ class Home extends BaseController
         echo $generator->getBarcode('081231723897', $generator::TYPE_CODE_128);
     }
 
+    public function testEmail()
+    {
+        $email = 'wander.wpf@gmail.com';
+
+        return $this->response->setJSON($this->checkEmail($email));
+    }
+
 
 }

@@ -4,19 +4,20 @@
         <input type="text" name="nome" placeholder="Nome Completo" require maxlength="110" class="form-control"value="<?php echo esc($cliente->nome) ?>">
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
         <label class="form-control-label">CPF</label>
         <input type="text" name="cpf" placeholder="cpf" require class="form-control cpf"value="<?php echo esc($cliente->cpf) ?>">
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
         <label class="form-control-label">Telefone</label>
         <input type="text" name="telefone" placeholder="Telefone" require class="form-control sp_celphones"value="<?php echo esc($cliente->telefone) ?>">
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-5">
         <label class="form-control-label">E-mail (para acesso ao sistema)</label>
         <input type="text" name="email" placeholder="E-mail" require maxlength="50" class="form-control "value="<?php echo esc($cliente->email) ?>">
+        <div id="email"></div>
     </div>
 
     <div class="form-group col-md-4">
@@ -35,7 +36,7 @@
         <input type="text" name="numero" placeholder="Nº" require maxlength="10" class="form-control"value="<?php echo esc($cliente->numero) ?>">
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
         <label class="form-control-label">Complemento</label>
         <input type="text" name="complemento" placeholder="Complemento" require maxlength="50" class="form-control"value="<?php echo esc($cliente->complemento) ?>">
     </div>
@@ -50,7 +51,7 @@
         <input type="text" name="cidade" placeholder="cidade" require maxlength="50" class="form-control"value="<?php echo esc($cliente->cidade) ?>" readonly>
     </div>
 
-    <div class="form-group col-md-1">
+    <div class="form-group col-md-2">
         <label class="form-control-label">Estado</label>
         <input type="text" name="estado" placeholder="UF" require maxlength="2" class="form-control uf"value="<?php echo esc($cliente->estado) ?>" readonly>
     </div>

@@ -33,6 +33,7 @@ class Clientes extends BaseController
         return view('Clientes/index', $data);
     }
 
+    // Método: Recuperar clientes ativos, inativos e deletados
     public function recuperaClientes()
     {
 
@@ -85,25 +86,37 @@ class Clientes extends BaseController
 
     }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> bigbeta
     // Método: Criar cliente
     public function criar()
     {
         $this->limpaInfoSessao();
 
+<<<<<<< HEAD
        $cliente = new Cliente();
+=======
+        $cliente = new Cliente();
+>>>>>>> bigbeta
 
         $data = [
 
             'titulo' => 'CADASTRAR NOVO CLIENTE',
             'cliente' => $cliente,
 
+<<<<<<< HEAD
 
         ];
 
         dd($data['cliente']);
 
+=======
+        ];
+
+>>>>>>> bigbeta
         return view('Clientes/criar', $data);
     }
 
@@ -145,12 +158,24 @@ class Clientes extends BaseController
 
         if($this->clienteModel->save($cliente)){
 
+<<<<<<< HEAD
             $this->criaUsuarioParaCliente($cliente);
 
             // $this->enviaEmailCriacaoEmailAcesso($cliente);
 
             session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '.$cliente->email.'<p><p>Senha Inicial: obn1234</b></p><p> Geramos um E-mail de notificação com estes dados de acesso para o cliente</b>');
 
+=======
+            $this->enviaEmailCriacaoEmailAcesso($cliente);
+
+            /**
+             * @todo - criar usuário do cliente
+             */
+            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
+
+
+            session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
+>>>>>>> bigbeta
             return $this->response->setJSON($retorno);
 
         }
@@ -168,7 +193,10 @@ class Clientes extends BaseController
     }
 
     // Método: Exibir cliente
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> bigbeta
     public function exibir(int $id = null)
     {
 
@@ -184,11 +212,13 @@ class Clientes extends BaseController
         return view('Clientes/exibir', $data);
     }
 
-
+    // Método: Editar cliente
     public function editar(int $id = null)
     {
 
         $cliente = $this->buscaClienteOu404($id);
+
+        $this->limpaInfoSessao();
 
         $data = [
 
@@ -200,6 +230,7 @@ class Clientes extends BaseController
         return view('Clientes/editar', $data);
     }
 
+    // Método: Atualizar cliente
     public function atualizar(int $id = null)
     {
         if(!$this->request->isAJAX())
@@ -215,19 +246,17 @@ class Clientes extends BaseController
 
         $cliente = $this->buscaClienteOu404($post['id']);
 
-    // [id] => 1000
-    // [nome] => Yohanna Isis Saito Sobrinho
-    // [cpf] => 636.864.108-85
-    // [telefone] => (19) 98577-1193
-    // [email] => isis31@faro.com
-    // [cep] => 11758-528
-    // [endereco] => Miranda Prairie
-    // [numero] => 734
-    // [complemento] => New Fabríciofurt
-    // [bairro] => São Rafael
-    // [cidade] => Rio de Janeiro
-    // [estado] => RJ
 
+        // Verificação: Email inválido
+        if(session()->get('blockEmail') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['email' => 'Informe um E-mail válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        // Verificação: Cep inválido
         if(session()->get('blockCep') === true)
         {
             $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
@@ -254,18 +283,10 @@ class Clientes extends BaseController
             {
                 $this->usuarioModel->atualizaEmailDoCliente($cliente->usuario_id, $cliente->email);
              
-            /**
-             * @todo: Enviar um e-mail para o cliente informando acerca da alteração do e-mail de acesso
-             * 
-             */
+                $this->enviaEmailAlteracaoEmailAcesso($cliente);
 
-            session()->setFlashdata('sucesso', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
+            session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente');
             return $this->response->setJSON($retorno);
-
-            /**
-             * @todo: Tirar o timer dessa mensagem de sucesso (na verdade criar uma mensagem personalizada para este método assim q houver envio de e-mail)
-             * 
-             */
 
             }
 
@@ -286,23 +307,38 @@ class Clientes extends BaseController
         return view('Clientes/editar', $data);
     }
 
+    // Método consultaCep
     public function consultaCep()
     {
-       if (!$this->request->isAJAX())
-       {
-            return redirect()->back();
-       } 
+        if (!$this->request->isAJAX())
+        {
+                return redirect()->back();
+        } 
 
-       $cep = $this->request->getGet('cep');
+        $cep = $this->request->getGet('cep');
 
-       return $this->response->setJSON($this->consultaViaCep($cep));
+        return $this->response->setJSON($this->consultaViaCep($cep));
 
     }
 
+    // Método consultaCep
+    public function consultaEmail()
+    {
+        if (!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        } 
 
+        $email = $this->request->getGet('email');
+
+        return $this->response->setJSON($this->checkEmail($email));
+
+    }
 
     /*---------- METODOS PRIVADOS ----------*/
 
+
+    // Método buscaClienteOu404: buscar cliente
     private function buscaClienteOu404(int $id = null)
     {
 
@@ -315,8 +351,11 @@ class Clientes extends BaseController
         return $cliente;
 
     }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> bigbeta
 
     // Método enviaEmailAlteracaoEmailAcesso: E-mail para o cliente informando alterações de acesso
     private function enviaEmailAlteracaoEmailAcesso(object $cliente) : void
@@ -341,12 +380,17 @@ class Clientes extends BaseController
     }
 
     // Remove da sessão as informações que travam formulário em requisições
+<<<<<<< HEAD
     private function limpaInfoSessao() : void
+=======
+    public function limpaInfoSessao() : void
+>>>>>>> bigbeta
     {
         session()->remove('blockCep');
         session()->remove('blockEmail');
     }
 
+<<<<<<< HEAD
     // Método: Criação do usuário do cliente recém cadastrado
     private function criaUsuarioParaCliente(object $cliente) : void
     {
@@ -378,4 +422,7 @@ class Clientes extends BaseController
     }
     
 >>>>>>> Stashed changes
+=======
+    
+>>>>>>> bigbeta
 }

@@ -162,15 +162,19 @@ class App extends BaseConfig
      *
      * @var string
      */
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     public $sessionCookieName = 'ci_session';
 =======
     public $sessionCookieName = 'ci-session';
 >>>>>>> Stashed changes
+=======
+    public $sessionCookieName = 'oberon_session';
+>>>>>>> bigbeta
 
     /**
      * --------------------------------------------------------------------------
-     * Session Expiration
+     * Session Expiration / Tempo de sessão
      * --------------------------------------------------------------------------
      *
      * The number of SECONDS you want the session to last.
@@ -178,7 +182,7 @@ class App extends BaseConfig
      *
      * @var int
      */
-    public $sessionExpiration = 7200;
+    public $sessionExpiration = 86400; //86400 = 24 horas
 
     /**
      * --------------------------------------------------------------------------

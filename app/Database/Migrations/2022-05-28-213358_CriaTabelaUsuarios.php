@@ -45,6 +45,12 @@ class CriaTabelaUsuarios extends Migration
                 'null'      => true,
                 'default'   => null,
             ],
+            'ip'       => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null'      => true,
+                'default'   => null,
+            ],
 
             'ativo'       => [
                 'type'       => 'BOOLEAN',

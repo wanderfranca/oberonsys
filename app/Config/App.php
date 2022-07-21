@@ -162,15 +162,8 @@ class App extends BaseConfig
      *
      * @var string
      */
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-    public $sessionCookieName = 'ci_session';
-=======
-    public $sessionCookieName = 'ci-session';
->>>>>>> Stashed changes
-=======
+
     public $sessionCookieName = 'oberon_session';
->>>>>>> bigbeta
 
     /**
      * --------------------------------------------------------------------------

@@ -148,7 +148,7 @@ class Clientes extends BaseController
             // $this->enviaEmailCriacaoEmailAcesso($cliente);
 
             $btnCriar = anchor("Clientes/criar", 'Cadastrar mais clientes', ['class' => 'btn btn-primary mt2']);
-            session()->setFlashdata('sucesso_pause', "Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '.$cliente->email.'<p><p>Senha Inicial: obn1234</b></p><p> Geramos um E-mail de notificação com estes dados de acesso para o cliente</b></p><br> $btnCriar");
+            session()->setFlashdata('sucesso_pause', "Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '$cliente->email'<p><p> Senha Inicial: obn1234</b></p><p> Geramos um E-mail de notificação com estes dados de acesso para o cliente</b></p><br> $btnCriar");
 
             $retorno['id'] = $this->clienteModel->getInsertID();
 

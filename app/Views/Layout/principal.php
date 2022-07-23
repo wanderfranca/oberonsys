@@ -10,6 +10,7 @@
         <meta name="robots" content="all,follow">
         <!-- Bootstrap CSS-->
         <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/bootstrap/css/bootstrap.min.css.map">
         <!-- Font Awesome CSS-->
         <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/font-awesome/css/font-awesome.min.css">
         <!-- Custom Font Icons CSS-->

@@ -17,16 +17,15 @@
 
             <div class="block-body">
 
-
-                <?php echo form_open("fornecedores/excluir/$fornecedor->id")  ?>
+                <?php echo form_open("clientes/excluir/$cliente->id")  ?>
 
                 <div class="alert alert-warning" role="alert">
-                    Tem certeza que deseja excluir este fornecedor?
+                    Tem certeza que deseja desativar este cliente?
                 </div>
 
                 <div class="form-group mt-5 mb-2">
-                    <input id="btn-salvar" type="submit" value="Sim, desejo excluir" class="btn btn-danger btn-sm mr-1">
-                    <a href="<?php echo site_url("fornecedores/exibir/$fornecedor->id") ?>" class="btn btn-secondary btn-sm ml-1">Cancelar</a>
+                    <input id="btn-salvar" type="submit" value="Sim, desejo desativar" class="btn btn-danger btn-sm mr-1">
+                    <a href="<?php echo site_url("clientes/exibir/$cliente->id") ?>" class="btn btn-secondary btn-sm ml-1">Cancelar</a>
 
                 </div>
 

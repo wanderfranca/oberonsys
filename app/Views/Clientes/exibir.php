@@ -58,7 +58,7 @@
                                             <p class="card-text"><b>CEP: </b><?php echo esc($cliente->cep); ?></p>
                                         </li>
                                         <li class="list-group-item bgblock">
-                                            <p class="card-text"><b>Complemento:: </b><?php echo esc($cliente->complemento); ?></p>
+                                            <p class="card-text"><b>Complemento: </b><?php echo esc($cliente->complemento); ?></p>
                                         </li>
                                     </ul>
                                 </div>

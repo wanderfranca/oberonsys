@@ -255,7 +255,7 @@ class Fornecedores extends BaseController
 
         $data = [
 
-            'titulo' => "Excluir fornecedor: ".esc($fornecedor->razao),
+            'titulo' => "EXCLUIR O FORNECEDOR: ".esc($fornecedor->razao),
             'fornecedor' => $fornecedor,
 
         ];
@@ -273,7 +273,7 @@ class Fornecedores extends BaseController
 
         if($fornecedor->deletado_em == null){
 
-            return redirect()->back()->with('info', "Apenas usuários excluídos podem ser recuperados");
+            return redirect()->back()->with('info', "Apenas fornecedores excluídos podem ser recuperados");
 
         }
 

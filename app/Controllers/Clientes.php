@@ -52,7 +52,7 @@ class Clientes extends BaseController
                 'deletado_em',
             ];
 
-            // SELECT EM TODOS OS FornecedorS
+            // SELECT EM TODOS OS clienteS
             $clientes = $this->clienteModel->select($atributos)
                                                 ->withDeleted(true) //Buscar também os dados deletados
                                                 ->orderBy('id', 'DESC')
@@ -145,10 +145,10 @@ class Clientes extends BaseController
 
             $this->criaUsuarioParaCliente($cliente);
 
-            // $this->enviaEmailCriacaoEmailAcesso($cliente);
+            $this->enviaEmailCriacaoAcesso($cliente);
 
             $btnCriar = anchor("Clientes/criar", 'Cadastrar mais clientes', ['class' => 'btn btn-primary mt2']);
-            session()->setFlashdata('sucesso_pause', "Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '$cliente->email'<p><p> Senha Inicial: obn1234</b></p><p> Geramos um E-mail de notificação com estes dados de acesso para o cliente</b></p><br> $btnCriar");
+            session()->setFlashdata('sucesso_pause', "Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '$cliente->email'<p><p> Senha Inicial: obn3149</b></p><p> Geramos um E-mail de notificação com estes dados de acesso para o cliente</b></p><br> $btnCriar");
 
             $retorno['id'] = $this->clienteModel->getInsertID();
 
@@ -305,7 +305,56 @@ class Clientes extends BaseController
 
        $email = $this->request->getGet('email');
 
-       return $this->response->setJSON($this->checkEmail($email));
+       return $this->response->setJSON($this->checkEmail($email, true));
+
+    }
+
+    public function excluir(int $id = null)
+    {
+
+        $cliente = $this->buscaClienteOu404($id);
+
+        if($cliente->deletado_em != null)
+        {
+            return redirect()->back()->with('info', "O cliente $cliente->nome Já está excluído");
+        }
+
+        if($this->request->getMethod() === 'post')
+        {
+            $this->clienteModel->delete($id);
+
+            return redirect()->to(site_url("clientes"))->with('sucesso', "$cliente->nome foi excluído com sucesso");
+        }
+
+        $data = [
+
+            'titulo' => "EXCLUIR O CLIENTE: ".esc($cliente->nome),
+            'cliente' => $cliente,
+
+        ];
+
+
+        return view('Clientes/excluir', $data);
+
+    }
+
+    public function desfazerExclusao(int $id = null)
+    {
+
+
+        $cliente = $this->buscaClienteOu404($id);
+
+        if($cliente->deletado_em == null){
+
+            return redirect()->back()->with('info', "Apenas clientes excluídos podem ser recuperados");
+
+        }
+
+        $cliente->deletado_em = null;
+        $this->clienteModel->protect(false)->save($cliente);
+
+        
+        return redirect()->back()->with('sucesso', "$cliente->nome foi reativado com sucesso!!!");
 
     }
 
@@ -324,6 +373,28 @@ class Clientes extends BaseController
         }
 
         return $cliente;
+
+    }
+
+    // Método enviaEmailCriacaoEmailAcesso: E-mail para o cliente informando alterações de acesso
+    private function enviaEmailCriacaoAcesso(object $cliente) : void
+    {
+
+        $email = service('email');
+        
+        $email->setFrom('no-replay@oberonsys.com', 'Oberon Sistema');
+        $email->setTo($cliente->email);
+        $email->setSubject('Dados de acesso ao sistema');
+
+        $data = [
+                    'cliente' => $cliente,
+            
+                ];
+
+        $mensagem = view('Clientes/email_dados_acesso', $data);
+
+        $email->setMessage($mensagem);
+        $email->send();
 
     }
 
@@ -364,7 +435,7 @@ class Clientes extends BaseController
           $usuario = [
             'nome'      => $cliente->nome,
             'email'     => $cliente->email,
-            'password'  => 'obn1234',
+            'password'  => 'obn3149',
             'ativo'     => true,
         ];
 

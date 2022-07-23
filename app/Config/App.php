@@ -155,7 +155,7 @@ class App extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
-     * Session Cookie Name
+     * Session Cookie Name // Nome do Cookie de Sessão
      * --------------------------------------------------------------------------
      *
      * The session cookie name, must contain only [0-9a-z_-] characters
@@ -170,8 +170,8 @@ class App extends BaseConfig
      * Session Expiration / Tempo de sessão
      * --------------------------------------------------------------------------
      *
-     * The number of SECONDS you want the session to last.
-     * Setting to 0 (zero) means expire when the browser is closed.
+     * O número de SEGUNDOS que você deseja que a sessão dure.
+     *Definir como 0 (zero) significa expirar quando o navegador for fechado.
      *
      * @var int
      */

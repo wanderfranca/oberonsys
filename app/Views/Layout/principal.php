@@ -299,8 +299,8 @@
             });
         })
 
-        $("#alert-danger").fadeTo(7000, 800).slideUp(800, function() {
-            $("#alert-danger").slideUp(800);
+        $("#alert-danger").fadeTo(7000, 700).slideUp(700, function() {
+            $("#alert-danger").slideUp(700);
         });
         </script>
     </body>

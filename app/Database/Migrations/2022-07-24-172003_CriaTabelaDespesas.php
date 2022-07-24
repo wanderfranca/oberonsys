@@ -4,30 +4,25 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CriaTabelaCategorias extends Migration
+class CriaTabelaDespesas extends Migration
 {
     public function up()
     {
         $this->forge->addField([
             'id'          => [
-                'type'              => 'INT',
-                'constraint'        => 5,
-                'unsigned'          => true,
-                'auto_increment'    => true,
+                'type'           => 'INT',
+                'constraint'     => 5,
+                'unsigned'       => true,
+                'auto_increment' => true,
             ],
-            'categoria_nome'        => [
-                'type'              => 'VARCHAR',
-                'constraint'        => '100',
+            'despesa_nome'       => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '100',
             ],
 
-            'categoria_descricao'   => [
-                'type'              => 'TEXT',
-                'null'              => true,
-            ],  
-
-            'ativo'                 => [
-                'type'              => 'BOOLEAN',
-                'null'              => false,
+            'despesa_descricao'  => [
+                'type'           => 'TEXT',
+                'null'           => true,
             ],
 
             'criado_em'             => [
@@ -35,7 +30,6 @@ class CriaTabelaCategorias extends Migration
                 'null'              => true,
                 'default'           => null,
             ],
-
             'atualizado_em'       => [
                 'type'              => 'DATETIME',
                 'null'              => true,
@@ -51,11 +45,11 @@ class CriaTabelaCategorias extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->createTable('categorias');
+        $this->forge->createTable('fin_despesas');
     }
 
     public function down()
     {
-        $this->forge->dropTable('categorias');
+        $this->forge->dropTable('fin_despesas');
     }
 }

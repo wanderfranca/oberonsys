@@ -227,6 +227,12 @@
                         <li class="<?php echo (url_is('itens/servicosexcluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('itens/servicosexcluidos'); ?>">Serviços Excluídos</a></li>
                         <li class="<?php echo (url_is('fornecedores/excluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores/excluidos'); ?>">Fornecedores Excluídos</a></li>
                     </ul>
+
+                    <li>
+                    <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('contasbancarias') ? 'true' : 'false') ?>" data-toggle="collapse">Gestão Financeira</a>
+                    <ul id="gestaoFinDropdown" class="<?php echo (url_is('contasbancarias')  ? '' : 'collapse') ?> list-unstyled ">
+                        <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>
+                    </ul>
                     
                     <li><a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') | url_is('itens') ? 'true' : 'false') ?>" data-toggle="collapse">Tabelas</a>
                     <ul id="tabelasDropdown" class="collapse list-unstyled ">

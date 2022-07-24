@@ -10,7 +10,6 @@ class CategoriaModel extends Model
         protected $table            = 'categorias';
         protected $returnType       = 'App\Entities\Categoria';
         protected $allowedFields    = [
-    
             'nome',
             'descricao',
             'ativo',

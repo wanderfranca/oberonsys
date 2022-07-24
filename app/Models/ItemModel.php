@@ -85,8 +85,8 @@ class ItemModel extends Model
     }
 
     /**
-     * Método: que recupera o grupo de acesso do usuário informado
-     * Utilizado no controller de usuarios
+     * Método: Recupera a categoria dos itens selecionados
+     * 
      */
     public function recuperaCategoriaDeItens(int $id){
 

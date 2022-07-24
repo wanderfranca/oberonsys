@@ -55,7 +55,7 @@ class Itens extends BaseController
         ];
 
         $itens = $this->itemModel->select($atributos)
-                                    ->withDeleted(true)
+                                    // ->withDeleted(true)
                                     ->orderBy('id', 'DESC')
                                     ->findAll();
 
@@ -67,6 +67,51 @@ class Itens extends BaseController
                 'nome' => anchor("itens/exibir/$item->id", esc($item->nome), 'title= "Clique para visualizar o produto '.esc($item->nome).' "'),
                 'codigo_interno' => $item->codigo_interno,
                 'tipo' => $item->exibeTipo(),
+                'estoque' => $item->exibeEstoque(),
+                'preco_venda' =>'R$ '.$item->preco_venda,
+                'situacao' => $item->exibeSituacao(),
+
+            ];
+        }
+
+        $retorno = [
+            'data' => $data,
+        ];
+
+        return $this->response->setJSON($retorno);
+    }
+
+    public function recuperaProdutosExcluidos()
+    {
+        if (!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        $atributos = [
+            'id',
+            'nome',
+            'codigo_interno',
+            'estoque',
+            'tipo',
+            'preco_venda',
+            'situacao',
+            'deletado_em',
+
+        ];
+
+        $itens = $this->itemModel->select($atributos)
+                                    ->withDeleted(true)
+                                    ->orderBy('id', 'DESC')
+                                    ->findAll();
+
+        $data = [];
+
+        foreach($itens as $item)
+        {
+            $data[] = [
+                'nome' => anchor("itens/exibir/$item->id", esc($item->nome), 'title= "Clique para visualizar o produto '.esc($item->nome).' "'),
+                'codigo_interno' => $item->codigo_interno,
                 'estoque' => $item->exibeEstoque(),
                 'preco_venda' =>'R$ '.$item->preco_venda,
                 'situacao' => $item->exibeSituacao(),
@@ -224,7 +269,6 @@ class Itens extends BaseController
 
 
     }
-
 
     public function editar(int $id = null)
     {

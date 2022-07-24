@@ -4,13 +4,12 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Oberon Sistema -<?php echo $this->renderSection('titulo'); ?></title>
+        <title>Oberon Sistema <?php //echo $this->renderSection('titulo'); ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
         <!-- Bootstrap CSS-->
         <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/bootstrap/css/bootstrap.min.css.map">
         <!-- Font Awesome CSS-->
         <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/font-awesome/css/font-awesome.min.css">
         <!-- Custom Font Icons CSS-->
@@ -216,26 +215,18 @@
                         <li class="<?php echo (url_is('fornecedores')  ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores'); ?>">Fornecedores</a></li>
                         <li class="<?php echo (url_is('clientes') ? 'active' : '') ?>"><a href="<?php echo site_url('clientes'); ?>">Clientes</a></li>
                     </ul>
+                    
+                    <li><a href="charts.html">Em dev...1 </a></li>
+                    <li><a href="forms.html"> Em dev...2 </a></li>
 
                     <li>
                     <a href="#gestaoDropdown" aria-expanded="<?php echo (url_is('fornecedores/excluidos') | url_is('itens/produtosexcluidos') | url_is('clientes/excluidos') ? 'true' : 'false') ?>" data-toggle="collapse">Gestão de Cadastros</a>
-                    <ul id="gestaoDropdown" class="<?php echo (url_is('fornecedores/excluidoss') | url_is('itens/produtosexcluidos') | url_is('itens/servicosexcluidos') | url_is('clientes/excluidoss') ? '' : 'collapse') ?> list-unstyled ">
+                    <ul id="gestaoDropdown" class="<?php echo (url_is('fornecedores/excluidos') | url_is('itens/produtosexcluidos') | url_is('itens/servicosexcluidos') | url_is('clientes/excluidos') ? '' : 'collapse') ?> list-unstyled ">
                         <li class="<?php echo (url_is('clientes/excluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('clientes/excluidos'); ?>">Clientes Excluídos </a></li>
                         <li class="<?php echo (url_is('itens/produtosexcluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('itens/produtosexcluidos'); ?>">Produtos Excluídos</a></li>
                         <li class="<?php echo (url_is('itens/servicosexcluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('itens/servicosexcluidos'); ?>">Serviços Excluídos</a></li>
                         <li class="<?php echo (url_is('fornecedores/excluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores/excluidos'); ?>">Fornecedores Excluídos</a></li>
                     </ul>
-
-                    <li>
-                    <a href="#usuariosDropdown" aria-expanded="<?php echo (url_is('usuarios') | url_is('grupos') ? 'true' : 'false') ?>" data-toggle="collapse">Usuários</a>
-                    <ul id="usuariosDropdown" class="<?php echo (url_is('usuarios') | url_is('grupos') ? '' : 'collapse') ?> list-unstyled ">
-                        <li class="<?php echo (url_is('usuarios/*') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>">Usuários </a></li>
-                        <li class="<?php echo (url_is('grupos/*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>">Grupos & Permissões </a></li>
-                    </ul>
-
-                    
-                    <li><a href="charts.html">Charts </a></li>
-                    <li><a href="forms.html">Forms </a></li>
                     
                     <li><a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') | url_is('itens') ? 'true' : 'false') ?>" data-toggle="collapse">Tabelas</a>
                     <ul id="tabelasDropdown" class="collapse list-unstyled ">
@@ -246,7 +237,13 @@
                         </ul>
                     </li>
 
-                    <li><a href="<?php echo site_url("usuarios/editarsenha") ?>">Alterar senha </a></li>
+                    <li>
+                    <a href="#usuariosDropdown" aria-expanded="<?php echo (url_is('usuarios') | url_is('usuarios/editarsenha') | url_is('grupos') ? 'true' : 'false') ?>" data-toggle="collapse">Usuários</a>
+                    <ul id="usuariosDropdown" class="<?php echo (url_is('usuarios') | url_is('usuarios/editarsenha') | url_is('grupos') ? '' : 'collapse') ?> list-unstyled ">
+                        <li class="<?php echo (url_is('usuarios') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>">Usuários </a></li>
+                        <li class="<?php echo (url_is('grupos/*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>">Grupos & Permissões </a></li>
+                        <li class="<?php echo (url_is('usuarios/editarsenha') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios/editarsenha'); ?>">Alterar senha </a></li>
+                    </ul>
                
             </nav>
             <!-- Sidebar Navigation end-->

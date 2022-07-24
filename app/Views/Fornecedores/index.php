@@ -17,7 +17,8 @@
 
 <div class="col-lg-12">
                 <div class="block">
-                  <a href="<?php echo site_url('fornecedores/criar');?>" class="btn btn-primary mb-5"> NOVO </a>
+                  <a href="<?php echo site_url('fornecedores/criar');?>" class="btn btn-primary mb-5"><i class="fa fa-plus"> CADASTRAR FORNECEDOR </i></a>
+                  <a href="<?php echo site_url('fornecedores/excluidos');?>" class="btn btn-warning text-white mb-5"> FORNECEDORES EXCLUÍDOS </a>
                   <div class="table-responsive"> 
                     <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                       <thead>

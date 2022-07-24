@@ -1,6 +1,6 @@
 <?php echo $this->extend('Layout/principal') ?>
 
-<?php echo $this->section('titulo') ?> <?php echo strtoupper($titulo); ?> <?php $this->endSection() ?>
+<?php echo $this->section('titulo') ?> <?php echo $titulo; ?><?php $this->endSection() ?>
 
 <?php echo $this->section('estilos') ?>
 
@@ -19,16 +19,13 @@
     <div class="col-lg-12">
 
         <div class="block">
-            <a href="<?php echo site_url('itens/criar');?>" class="btn btn-primary mb-5"><i class="fa fa-plus-circle"> NOVO PRODUTO </i></a>
-            <a href="<?php echo site_url('itens/produtosexcluidos');?>" class="btn btn-warning mb-5 text-white"> PRODUTOS EXCLUÍDOS </a>
-            <a href="<?php echo site_url('itens/servicosexcluidos');?>" class="btn btn-warning mb-5 text-white"> SERVIÇOS EXCLCUÍDOS </a>
+            <a href="<?php echo site_url('itens/criar');?>" class="btn btn-primary mb-5"> NOVO </a>
 
                 <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Produto</th>
+                            <th>Serviço</th>
                             <th>Cód.</th>
-                            <th>Tipo</th>
                             <th>Estoque</th>
                             <th>Preço Venda</th>
                             <th>Situação</th>
@@ -85,18 +82,12 @@ $(document).ready(function() {
     $('#ajaxTable').DataTable({
         "oLanguage": DATATABLE_PTBR,
 
-        "ajax": '<?php echo site_url('itens/recuperaitens'); ?>',
+        "ajax": '<?php echo site_url('itens/recuperaservicosexcluidos'); ?>',
         "columns": [{
                 data: 'nome'
             },
             {
                 data: 'codigo_interno'
-            },
-            {
-                data: 'tipo'
-            },
-            {
-                data: 'estoque'
             },
             {
                 data: 'preco_venda'

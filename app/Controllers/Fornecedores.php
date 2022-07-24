@@ -31,6 +31,19 @@ class Fornecedores extends BaseController
         return view('Fornecedores/index', $data);
     }
 
+    // Método: Exibe na tela fornecedores excluídos
+    public function excluidos()
+    {
+        $data = [
+
+            'titulo' => 'FORNECEDORES EXCLUÍDOS',
+
+        ];
+
+        return view('Fornecedores/excluidos_fornecedores', $data);
+    }
+
+    // Método: Recupera todos os fornecedores (deletado_em = null)
     public function recuperaFornecedores()
     {
 
@@ -51,7 +64,7 @@ class Fornecedores extends BaseController
 
             // SELECT EM TODOS OS FornecedorS
             $fornecedores = $this->fornecedorModel->select($atributos)
-                                                ->withDeleted(true) //Buscar também os dados deletados
+                                                // ->withDeleted(true) //Buscar também os dados deletados
                                                 ->orderBy('id', 'DESC')
                                                 ->findAll();
 
@@ -82,6 +95,60 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Recupera fornecedores deletados
+    public function recuperaFornecedoresExcluidos()
+    {
+
+        if(!$this->request->isAJAX()){
+            
+            return redirect()->back();
+        }
+
+            $atributos = [
+                
+                'id',
+                'razao',
+                'cnpj',
+                'telefone',
+                'ativo',
+                'deletado_em',
+            ];
+
+            // SELECT EM TODOS OS FornecedorS
+            $fornecedores = $this->fornecedorModel->select($atributos)
+                                                ->withDeleted(true) //Buscar também os dados deletados
+                                                ->where('deletado_em <', date('Y-m-d H:i:s'))
+                                                ->orderBy('id', 'DESC')
+                                                ->findAll();
+
+
+            //Receberá o array de objetos de fornecedores
+            $data = [];
+
+            foreach($fornecedores as $fornecedor){
+
+
+                $data[] = [
+
+                    'razao'         => anchor("fornecedores/exibir/$fornecedor->id", esc($fornecedor->razao), 'title="Exibir Fornecedor '.esc($fornecedor->razao).'"'),
+                    'cnpj'          => esc($fornecedor->cnpj),
+                    'telefone'      => esc($fornecedor->telefone),
+                    'ativo'         => $fornecedor->exibeSituacao(),
+                ];
+
+            }
+
+            $retorno = [
+
+                'data' => $data,
+
+            ];
+
+            return $this->response->setJSON($retorno);
+
+    }
+
+    // Método: Criar fornecedor
     public function criar()
     {
 
@@ -100,6 +167,7 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Cadastrar fornecedor
     public function cadastrar()
     {
       
@@ -146,6 +214,7 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Exibir fornecedor
     public function exibir(int $id = null)
     {
 
@@ -166,6 +235,7 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Editar fornecedor
     public function editar(int $id = null)
     {
         $fornecedor = $this->buscaFornecedorOu404($id);
@@ -182,6 +252,7 @@ class Fornecedores extends BaseController
         return view('Fornecedores/editar', $data);
     }
 
+    // Método: Atualizar cadastro do fornecedor
     public function atualizar()
     {
       
@@ -236,6 +307,7 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Excluir fornecedor
     public function excluir(int $id = null)
     {
 
@@ -265,6 +337,7 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Desfazer a exclusão do fornecedor
     public function desfazerExclusao(int $id = null)
     {
 
@@ -285,7 +358,7 @@ class Fornecedores extends BaseController
 
     }
 
-
+    // Método: Notas do fornecedor
     public function notas(int $id = null)
     {
 
@@ -312,6 +385,7 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Cadastrar nova nota de fornecedor
     public function cadastrarNotaFiscal()
     {
         if (!$this->request->isAJAX())
@@ -408,6 +482,7 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Exibição nota do fornecedor
     public function exibirNota(string $nota = null)
     {
         if($nota === null)
@@ -419,6 +494,7 @@ class Fornecedores extends BaseController
 
     }
 
+    // Método: Remove nota do fornecedor
     public function removeNota(string $nota_fiscal = null)
     {
 
@@ -447,7 +523,7 @@ class Fornecedores extends BaseController
     }
 
     /**
-     * Função: consultaCep
+     * Método: consultaCep Fornecedor
      * getGet (Pega o CEP e passa para a func consultaViaCep)
      * Retornando um Json
      * O tratamento está em Traits/Validacoes
@@ -473,7 +549,7 @@ class Fornecedores extends BaseController
     }
 
     /**
-     * Método: que recupera o Fornecedor
+     * Método: Busca o fornecedor ou 404
      * 
      * @param integer $id
      * @return Exceptions|object
@@ -492,7 +568,7 @@ class Fornecedores extends BaseController
 
     }
 
-    //Método: Recuperar Nota Fiscal do Fornecedor
+    //Método: Busca a Nota do fornecedor ou 404
     private function buscaNotaFiscalOu404(string $nota_fiscal = null)
     {
 

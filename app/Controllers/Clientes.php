@@ -33,7 +33,7 @@ class Clientes extends BaseController
         return view('Clientes/index', $data);
     }
 
-    // Método: Recuperar clientes ativos, inativos e deletados
+    // Método: Recuperar clientes
     public function recuperaClientes()
     {
 
@@ -54,7 +54,7 @@ class Clientes extends BaseController
 
             // SELECT EM TODOS OS clienteS
             $clientes = $this->clienteModel->select($atributos)
-                                                ->withDeleted(true) //Buscar também os dados deletados
+                                                // ->withDeleted(true) //Buscar também os dados deletados
                                                 ->orderBy('id', 'DESC')
                                                 ->findAll();
 
@@ -85,6 +85,73 @@ class Clientes extends BaseController
             return $this->response->setJSON($retorno);
 
     }
+
+    // Método: Recuperar clientes Excluídos (deletado_em)
+    public function recuperaClientesExcluidos()
+    {
+
+        if(!$this->request->isAJAX()){
+            
+            return redirect()->back();
+        }
+
+            $atributos = [
+                
+                'id',
+                'nome',
+                'cpf',
+                'email',
+                'telefone',
+                'deletado_em',
+            ];
+
+
+            // SELECT EM TODOS OS clienteS
+            $clientes = $this->clienteModel->select($atributos)
+                                            ->withDeleted(true) //Buscar também os dados deletados
+                                            ->where('deletado_em <', date('Y-m-d H:i:s'))
+                                            ->orderBy('id', 'DESC')
+                                            ->findAll();
+
+
+            //Receberá o array de objetos de clientes
+            $data = [];
+
+            foreach($clientes as $cliente){
+
+
+                $data[] = [
+
+                    'nome'         => anchor("clientes/exibir/$cliente->id", esc($cliente->nome), 'title="Exibir cliente '.esc($cliente->nome).'"'),
+                    'cpf'          => esc($cliente->cpf),
+                    'email'        => esc($cliente->email),
+                    'telefone'     => esc($cliente->telefone),
+                    'situacao'     => $cliente->exibeSituacao(),
+                ];
+
+            }
+
+            $retorno = [
+
+                'data' => $data,
+
+            ];
+
+            return $this->response->setJSON($retorno);
+
+    }
+
+    public function excluidos()
+    {
+        $data = [
+
+            'titulo' => 'CLIENTES EXCLUÍDOS',
+
+        ];
+
+        return view('Clientes/excluidos', $data);
+    }
+    
 
     // Método: Criar cliente
     public function criar()

@@ -68,6 +68,7 @@ class Itens extends BaseController
                 'codigo_interno' => $item->codigo_interno,
                 'tipo' => $item->exibeTipo(),
                 'estoque' => $item->exibeEstoque(),
+                'tipo' => $item->exibeTipo(),
                 'preco_venda' =>'R$ '.$item->preco_venda,
                 'situacao' => $item->exibeSituacao(),
 
@@ -81,6 +82,7 @@ class Itens extends BaseController
         return $this->response->setJSON($retorno);
     }
 
+    // Método: recuperar produtos excluídos (deletado_em)
     public function recuperaProdutosExcluidos()
     {
         if (!$this->request->isAJAX())
@@ -102,6 +104,8 @@ class Itens extends BaseController
 
         $itens = $this->itemModel->select($atributos)
                                     ->withDeleted(true)
+                                    ->where('deletado_em <', date('Y-m-d H:i:s'))
+                                    ->where('tipo', 'produto')
                                     ->orderBy('id', 'DESC')
                                     ->findAll();
 
@@ -123,9 +127,90 @@ class Itens extends BaseController
             'data' => $data,
         ];
 
+        // echo '<pre>';
+        // print_r($data);
+        // exit;
+
         return $this->response->setJSON($retorno);
     }
 
+    // Método: recuperar serviços excluídos (deletado_em)
+    public function recuperaServicosExcluidos()
+    {
+        if (!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        $atributos = [
+            'id',
+            'nome',
+            'codigo_interno',
+            'tipo',
+            'preco_venda',
+            'situacao',
+            'deletado_em',
+
+        ];
+
+        $itens = $this->itemModel->select($atributos)
+                                    ->withDeleted(true)
+                                    ->where('deletado_em <', date('Y-m-d H:i:s'))
+                                    ->where('tipo', 'serviço')
+                                    ->orderBy('id', 'DESC')
+                                    ->findAll();
+
+        $data = [];
+
+        foreach($itens as $item)
+        {
+            $data[] = [
+                'nome' => anchor("itens/exibir/$item->id", esc($item->nome), 'title= "Clique para visualizar o cadastro do serviço '.esc($item->nome).' "'),
+                'codigo_interno' => $item->codigo_interno,
+                'preco_venda' =>'R$ '.$item->preco_venda,
+                'situacao' => $item->exibeSituacao(),
+
+            ];
+        }
+
+        $retorno = [
+            'data' => $data,
+        ];
+
+
+        return $this->response->setJSON($retorno);
+    }
+
+    // Método: exibe produtos excluídos
+    public function produtosexcluidos()
+    {
+
+
+        $data = [
+
+            'titulo' => 'PRODUTOS EXCLUÍDOS',            
+
+        ];
+
+        return view('Itens/excluidos_produtos', $data);
+
+    }
+
+    // Método: exibe serviços excluídos
+    public function servicosexcluidos()
+    {
+
+        $data = [
+
+            'titulo' => 'SERVIÇOS EXCLUÍDOS',            
+
+        ];
+
+        return view('Itens/excluidos_servicos', $data);
+
+    }
+
+    // Método: exibir produtos e serviços ativos
     public function exibir(int $id = null)
     {
 
@@ -163,6 +248,7 @@ class Itens extends BaseController
 
     }
 
+    // Método: criar produto
     public function criar()
     {
 
@@ -274,21 +360,17 @@ class Itens extends BaseController
     {
 
         $item = $this->buscaItemOu404($id);
-        $categoria_id = $item->categoria_id;
+        // $categoria_id = $item->categoria_id;
         $categoriasAtivas = $this->categoriaModel->categoriasAtivas(); //Todas as categorias
         $categoriaItem = $this->itemModel->recuperaCategoriaDeItens($id);
 
         $data = [
 
-            'titulo' => "Editar: " .$item->nome,
+            'titulo' => "EDITAR ITEM: " .$item->nome,
             'item' => $item,
             'categoriaItem' => $categoriaItem,
             'categoriasAtivas' => $categoriasAtivas,
         ];
-
-        // echo '<pre>',
-        // print_r($data['categoriaItem']);
-        // exit;
 
 
         return view('Itens/editar', $data);

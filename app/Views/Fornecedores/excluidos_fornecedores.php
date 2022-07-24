@@ -17,14 +17,12 @@
 
 <div class="col-lg-12">
                 <div class="block">
-                  <a href="<?php echo site_url('clientes/criar');?>" class="btn btn-primary mb-5"> <i class="fa fa-plus"> NOVO CLIENTE </i></a>
                   <div class="table-responsive"> 
                     <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                       <thead>
                         <tr>
-                          <th>Nome</th>
-                          <th>CPF</th>
-                          <th>E-mail</th>
+                          <th>Razão Social</th>
+                          <th>CNPJ</th>
                           <th>Telefone</th>
                           <th>Situação</th>
                         </tr>
@@ -42,7 +40,6 @@
 <script type="text/javascript" src="<?php echo site_url('recursos/vendor/datatable/datatables-combinado.min.js'); ?>"></script>
 
 <script>
-
 
 const DATATABLE_PTBR = {
         "sEmptyTable": "Nenhum registro encontrado",
@@ -80,13 +77,12 @@ const DATATABLE_PTBR = {
         $('#ajaxTable').DataTable({
             "oLanguage": DATATABLE_PTBR,
 
-            "ajax": '<?php echo site_url('clientes/recuperaclientes'); ?>',
+            "ajax": '<?php echo site_url('fornecedores/recuperafornecedoresexcluidos'); ?>',
             "columns": [
-                { data: 'nome' },
-                { data: 'cpf' },
-                { data: 'email' },
+                { data: 'razao' },
+                { data: 'cnpj' },
                 { data: 'telefone' },
-                { data: 'situacao' },
+                { data: 'ativo' },
 
             ],
             "order": [],
@@ -97,6 +93,7 @@ const DATATABLE_PTBR = {
 
         });
     })
+
 </script>
 
 <?php $this->endSection() ?>

@@ -2208,7 +2208,7 @@ CREATE TABLE `itens` (
   `categoria_id` int(5) UNSIGNED NOT NULL,
   `situacao` tinyint(1) NOT NULL,
   `descricao` text NOT NULL,
->>>>>>> v1.0.18
+  `imagem` varchar(240) DEFAULT NULL,
   `criado_em` datetime DEFAULT NULL,
   `atualizado_em` datetime DEFAULT NULL,
   `deletado_em` datetime DEFAULT NULL

@@ -316,11 +316,6 @@ class Itens extends BaseController
                     return $this->response->setJSON($retorno);
                 }
 
-<<<<<<< HEAD
-
-=======
-               
->>>>>>> develop-plus
 
                 $precoCusto = str_replace([',', '.'], '', $item->preco_custo);
                 $precoVenda = str_replace([',', '.'], '', $item->preco_venda);

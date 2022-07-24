@@ -162,12 +162,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-<<<<<<< HEAD
-    public $sessionCookieName = 'ci_session';
-=======
-
     public $sessionCookieName = 'oberon_session';
->>>>>>> develop-plus
 
     /**
      * --------------------------------------------------------------------------

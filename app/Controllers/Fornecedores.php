@@ -358,10 +358,6 @@ class Fornecedores extends BaseController
 
     }
 
-<<<<<<< HEAD
-=======
-    // Método: Notas do fornecedor
->>>>>>> develop-plus
     public function notas(int $id = null)
     {
 

@@ -33,7 +33,7 @@ class Clientes extends BaseController
         return view('Clientes/index', $data);
     }
 
-    // Método: Recuperar clientes ativos, inativos e deletados
+    // Método: Recuperar clientes
     public function recuperaClientes()
     {
 
@@ -52,9 +52,9 @@ class Clientes extends BaseController
                 'deletado_em',
             ];
 
-            // SELECT EM TODOS OS FornecedorS
+            // SELECT EM TODOS OS clienteS
             $clientes = $this->clienteModel->select($atributos)
-                                                ->withDeleted(true) //Buscar também os dados deletados
+                                                // ->withDeleted(true) //Buscar também os dados deletados
                                                 ->orderBy('id', 'DESC')
                                                 ->findAll();
 
@@ -86,19 +86,88 @@ class Clientes extends BaseController
 
     }
 
+    // Método: Recuperar clientes Excluídos (deletado_em)
+    public function recuperaClientesExcluidos()
+    {
+
+        if(!$this->request->isAJAX()){
+            
+            return redirect()->back();
+        }
+
+            $atributos = [
+                
+                'id',
+                'nome',
+                'cpf',
+                'email',
+                'telefone',
+                'deletado_em',
+            ];
+
+
+            // SELECT EM TODOS OS clienteS
+            $clientes = $this->clienteModel->select($atributos)
+                                            ->withDeleted(true) //Buscar também os dados deletados
+                                            ->where('deletado_em <', date('Y-m-d H:i:s'))
+                                            ->orderBy('id', 'DESC')
+                                            ->findAll();
+
+
+            //Receberá o array de objetos de clientes
+            $data = [];
+
+            foreach($clientes as $cliente){
+
+
+                $data[] = [
+
+                    'nome'         => anchor("clientes/exibir/$cliente->id", esc($cliente->nome), 'title="Exibir cliente '.esc($cliente->nome).'"'),
+                    'cpf'          => esc($cliente->cpf),
+                    'email'        => esc($cliente->email),
+                    'telefone'     => esc($cliente->telefone),
+                    'situacao'     => $cliente->exibeSituacao(),
+                ];
+
+            }
+
+            $retorno = [
+
+                'data' => $data,
+
+            ];
+
+            return $this->response->setJSON($retorno);
+
+    }
+
+    public function excluidos()
+    {
+        $data = [
+
+            'titulo' => 'CLIENTES EXCLUÍDOS',
+
+        ];
+
+        return view('Clientes/excluidos', $data);
+    }
+    
+
     // Método: Criar cliente
     public function criar()
     {
         $this->limpaInfoSessao();
 
-        $cliente = new Cliente();
+       $cliente = new Cliente();
 
         $data = [
 
             'titulo' => 'CADASTRAR NOVO CLIENTE',
             'cliente' => $cliente,
 
+
         ];
+
 
         return view('Clientes/criar', $data);
     }
@@ -144,10 +213,18 @@ class Clientes extends BaseController
 
             $this->criaUsuarioParaCliente($cliente);
 
+<<<<<<< HEAD
             // $this->enviaEmailCricaoEmailAcesso($cliente);
             
             session()->setFlashdata('sucesso_pause', 'Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '.$cliente->email.'<p><p>Senha inicial: obn1234</p><p>Um e-mail de notificação com estes dados foi enviado para o cliente</P>');
+=======
+            $this->enviaEmailCriacaoAcesso($cliente);
+>>>>>>> develop-plus
 
+            $btnCriar = anchor("Clientes/criar", 'Cadastrar mais clientes', ['class' => 'btn btn-primary mt2']);
+            session()->setFlashdata('sucesso_pause', "Dados salvos com sucesso! <br><br>Importante: Informe ao cliente os dados de acesso ao sistema: <p><b>E-mail: '$cliente->email'<p><p> Senha Inicial: obn3149</b></p><p> Geramos um E-mail de notificação com estes dados de acesso para o cliente</b></p><br> $btnCriar");
+
+            $retorno['id'] = $this->clienteModel->getInsertID();
 
             return $this->response->setJSON($retorno);
 
@@ -160,10 +237,15 @@ class Clientes extends BaseController
         // Retorno para o ajax request
         return $this->response->setJSON($retorno);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop-plus
     }
 
 
     // Método: Exibir cliente
+
     public function exibir(int $id = null)
     {
 
@@ -197,7 +279,10 @@ class Clientes extends BaseController
         return view('Clientes/editar', $data);
     }
 
+<<<<<<< HEAD
     // Método: Atualizar cliente
+=======
+>>>>>>> develop-plus
     public function atualizar()
     {
         if(!$this->request->isAJAX())
@@ -228,6 +313,14 @@ class Clientes extends BaseController
         {
             $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
             $retorno['erros_model'] = ['cep' => 'Informe um CEP válido'];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        if(session()->get('blockEmail') === true)
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['email' => 'Informe um E-mail válido'];
             
             return $this->response->setJSON($retorno);
         }
@@ -289,19 +382,68 @@ class Clientes extends BaseController
 
     }
 
-    // Método consultaCep
     public function consultaEmail()
     {
-        if (!$this->request->isAJAX())
-        {
+       if (!$this->request->isAJAX())
+       {
             return redirect()->back();
-        } 
+       } 
 
-        $email = $this->request->getGet('email');
+       $email = $this->request->getGet('email');
 
-        return $this->response->setJSON($this->checkEmail($email));
+       return $this->response->setJSON($this->checkEmail($email, true));
 
     }
+
+    public function excluir(int $id = null)
+    {
+
+        $cliente = $this->buscaClienteOu404($id);
+
+        if($cliente->deletado_em != null)
+        {
+            return redirect()->back()->with('info', "O cliente $cliente->nome Já está excluído");
+        }
+
+        if($this->request->getMethod() === 'post')
+        {
+            $this->clienteModel->delete($id);
+
+            return redirect()->to(site_url("clientes"))->with('sucesso', "$cliente->nome foi excluído com sucesso");
+        }
+
+        $data = [
+
+            'titulo' => "EXCLUIR O CLIENTE: ".esc($cliente->nome),
+            'cliente' => $cliente,
+
+        ];
+
+
+        return view('Clientes/excluir', $data);
+
+    }
+
+    public function desfazerExclusao(int $id = null)
+    {
+
+
+        $cliente = $this->buscaClienteOu404($id);
+
+        if($cliente->deletado_em == null){
+
+            return redirect()->back()->with('info', "Apenas clientes excluídos podem ser recuperados");
+
+        }
+
+        $cliente->deletado_em = null;
+        $this->clienteModel->protect(false)->save($cliente);
+
+        
+        return redirect()->back()->with('sucesso', "$cliente->nome foi reativado com sucesso!!!");
+
+    }
+
 
     /*---------- METODOS PRIVADOS ----------*/
 
@@ -317,6 +459,28 @@ class Clientes extends BaseController
         }
 
         return $cliente;
+
+    }
+
+    // Método enviaEmailCriacaoEmailAcesso: E-mail para o cliente informando alterações de acesso
+    private function enviaEmailCriacaoAcesso(object $cliente) : void
+    {
+
+        $email = service('email');
+        
+        $email->setFrom('no-replay@oberonsys.com', 'Oberon Sistema');
+        $email->setTo($cliente->email);
+        $email->setSubject('Dados de acesso ao sistema');
+
+        $data = [
+                    'cliente' => $cliente,
+            
+                ];
+
+        $mensagem = view('Clientes/email_dados_acesso', $data);
+
+        $email->setMessage($mensagem);
+        $email->send();
 
     }
 
@@ -349,6 +513,7 @@ class Clientes extends BaseController
         session()->remove('blockEmail');
     }
 
+<<<<<<< HEAD
     // Método: cria o usuário para o cliente recém cadastrado
     private function  criaUsuarioParaCliente(object $cliente) : void
     {
@@ -378,5 +543,37 @@ class Clientes extends BaseController
                         ->update();
     }
 
+=======
+
+    // Método: Criação do usuário do cliente recém cadastrado
+    private function criaUsuarioParaCliente(object $cliente) : void
+    {
+          // Montagem de dados de Usuário do Cliente
+          $usuario = [
+            'nome'      => $cliente->nome,
+            'email'     => $cliente->email,
+            'password'  => 'obn3149',
+            'ativo'     => true,
+        ];
+
+        // Inserção de dados do cliente na tabela de usuário
+        $this->usuarioModel->skipValidation(true)->protect(false)->insert($usuario);
+
+        $grupoUsuario = [
+            'grupo_id'      => 2, //Grupo 2 foi destinado aos clientes
+            'usuario_id'    => $this->usuarioModel->getInsertID(), // Pegar o último ID inserido e atribuindo ao usuario_id
+        ];
+
+        // Inserção de dados do usuário/cliente na tabela de grupos usuários
+        $this->grupoUsuarioModel->protect(false)->insert($grupoUsuario);
+
+        // Update na tabela usuario_id, com o valor do id do usuário recém criado
+        $this->clienteModel->protect(false)
+                    ->where('id', $this->clienteModel->getInsertID())
+                    ->set('usuario_id', $this->usuarioModel->getInsertID())
+                    ->update();
+
+    }
+>>>>>>> develop-plus
     
 }

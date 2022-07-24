@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <a href="<?php echo site_url("itens") ?>" class="btn btn-secondary btn-sm ml-2">Voltar</a>
+            <a href="<?php echo site_url('itens')?>" class="btn btn-secondary btn-sm ml-2">Voltar</a>
 
         </div> <!-- FIM DO DIV BLOCK -->
 

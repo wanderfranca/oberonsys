@@ -82,6 +82,4 @@ class Home extends BaseController
 
         return $this->response->setJSON($this->checkEmail($email));
     }
-
-
 }

@@ -1,6 +1,6 @@
 <?php echo $this->extend('Layout/principal') ?>
 
-<?php echo $this->section('titulo') ?> <?php echo $titulo; ?><?php $this->endSection() ?>
+<?php echo $this->section('titulo') ?> <?php echo strtoupper($titulo); ?> <?php $this->endSection() ?>
 
 <?php echo $this->section('estilos') ?>
 
@@ -19,7 +19,9 @@
     <div class="col-lg-12">
 
         <div class="block">
-            <a href="<?php echo site_url('itens/criar');?>" class="btn btn-primary mb-5"> NOVO </a>
+            <a href="<?php echo site_url('itens/criar');?>" class="btn btn-primary mb-5"><i class="fa fa-plus-circle"> NOVO PRODUTO </i></a>
+            <a href="<?php echo site_url('itens/produtosexcluidos');?>" class="btn btn-warning mb-5 text-white"> PRODUTOS EXCLUÍDOS </a>
+            <a href="<?php echo site_url('itens/servicosexcluidos');?>" class="btn btn-warning mb-5 text-white"> SERVIÇOS EXCLCUÍDOS </a>
 
                 <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                     <thead>

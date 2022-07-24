@@ -17,7 +17,7 @@
 
 <div class="col-lg-12">
                 <div class="block">
-                  <a href="<?php echo site_url('clientes/criar');?>" class="btn btn-primary mb-5"> NOVO </a>
+                  <a href="<?php echo site_url('clientes/criar');?>" class="btn btn-primary mb-5"> <i class="fa fa-plus"> NOVO CLIENTE </i></a>
                   <div class="table-responsive"> 
                     <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                       <thead>

@@ -28,8 +28,10 @@ class Login extends BaseController
         // Envio o hash do token do form
         $retorno['token'] = csrf_hash();
 
+        // Pegar E-mail, Password e Endereço IP
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
+        // $ip = $this->request->getIPAddress();
 
         // Serviço: instância autênticação
         $autenticacao = service('autenticacao');
@@ -39,7 +41,6 @@ class Login extends BaseController
         {
             $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
             $retorno['erros_model'] = ['credenciais' => 'Login ou senha inválido'];
-
             return $this->response->setJSON($retorno);
 
         }

@@ -41,7 +41,7 @@
 <script src="<?php echo site_url('recursos/vendor/mask/jquery.mask.min.js'); ?>"></script>
 <script src="<?php echo site_url('recursos/vendor/mask/app.js'); ?>"></script>
 
-    <?php if($item->tipo === 'servico'): ?>
+    <?php if($item->tipo === 'serviço'): ?>
 
     <script>
 

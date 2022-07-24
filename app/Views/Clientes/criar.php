@@ -30,8 +30,7 @@
 
                     <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary mr-2">
 
-                    <a href="<?php echo site_url("clientes/exibir/$cliente->id") ?>"
-                        class="btn btn-secondary ml-2">Voltar</a>
+                    <a href="<?php echo site_url("clientes") ?>" class="btn btn-secondary ml-2">Voltar</a>
 
                 </div>
 

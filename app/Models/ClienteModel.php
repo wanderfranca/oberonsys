@@ -35,7 +35,11 @@ class ClienteModel extends Model
     protected $validationRules = [
         'nome'                  => 'required|min_length[3]|max_length[100]',
         'email'                 => 'required|valid_email|min_length[5]|max_length[110]|is_unique[clientes.email,id,{id}]',
+<<<<<<< HEAD
         'email'                 => 'is_unique[usuarios.email,id,{id}]', // O e-mail precisa ser único TAMBÉM na tabela de usuários
+=======
+        'email'                 => 'is_unique[usuarios.email,id,{id}]', //Verificar e-mail na tabela de usuários (único para cliente e único para usuário)
+>>>>>>> develop-plus
         'telefone'              => 'required|exact_length[15]|is_unique[clientes.telefone,id,{id}]', //requerido pelo GERENCIANET
         'cpf'                   => 'required|exact_length[14]|validaCPF|is_unique[clientes.cpf,id,{id}]', 
         'cep'                   => 'required|exact_length[9]', 

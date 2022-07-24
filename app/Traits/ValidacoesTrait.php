@@ -99,7 +99,6 @@ trait ValidacoesTrait
             }
             
             $consulta = json_decode($resposta);
-
             session()->set('blockEmail', esc($consulta->block));
 
             if($consulta->block)
@@ -108,9 +107,8 @@ trait ValidacoesTrait
                 return $retorno;
             }
 
-
             return $retorno;
         
+    }
 
-        }
 }

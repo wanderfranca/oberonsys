@@ -114,7 +114,6 @@
                                                 </button>
                                             </h5>
                                         </div>
-
                                         <div id="collapse-<?php echo $key;?>"
                                             class="collapse <?php echo($key === 0 ? 'show' : ''); ?>"
                                             aria-labelledby="heading-<?php echo $key;?>" data-parent="#accordion">
@@ -130,19 +129,23 @@
                             <?php endforeach; ?>
 
                         </div>
+
+
             </div>
+
         </div>
-    </div>
 
-    <?php endforeach; ?>
-    </tbody>
-    </tbody>
-    </table>
-    <div class="mt-3 ml-1">
-        <?php echo $item->pager->links(); ?>
-    </div>
+        <?php endforeach; ?>
+        </tbody>
+        </tbody>
+        </table>
+        <div class="mt-3 ml-1">
+            <?php echo $item->pager->links(); ?>
+        </div>
 
-    <!-- /div -- Fim acordion  -->
+        <!-- /div -- Fim acordion  -->
+    </div>
+</div>
 </div>
 </div>
 

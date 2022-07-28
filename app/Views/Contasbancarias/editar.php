@@ -22,15 +22,15 @@
 
                 </div>
 
-                <?php echo form_open('/', ['id' => 'form'], ['id' => "$categoria->id"])  ?>
+                <?php echo form_open('/', ['id' => 'form'], ['id' => "$contabancaria->id"])  ?>
 
-                <?php echo $this->include('Categorias/_form'); ?>
+                <?php echo $this->include('contasbancarias/_form'); ?>
 
                 <div class="form-group mt-5 mb-2">
 
                     <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary mr-2">
 
-                    <a href="<?php echo site_url("categorias") ?>" class="btn btn-secondary ml-2">Voltar</a>
+                    <a href="<?php echo site_url("contasbancarias") ?>" class="btn btn-secondary ml-2">Voltar</a>
 
                 </div>
 
@@ -60,7 +60,7 @@ $(document).ready(function() {
                     $.ajax({
 
                             type: 'POST',
-                            url: '<?php echo site_url('categorias/atualizar'); ?>',
+                            url: '<?php echo site_url('contasbancarias/atualizar'); ?>',
                             data: new FormData(this),
                             dataType: 'json',
                             contentType: false,
@@ -90,7 +90,7 @@ $(document).ready(function() {
                                             // Tudo certo com a atualização do usuário
                                             // Podemos agora redirecioná-lo tranquilamente
 
-                                            window.location.href = "<?php echo site_url("categorias"); ?>";
+                                            window.location.href = "<?php echo site_url("contasbancarias"); ?>";
 
                                     }
 

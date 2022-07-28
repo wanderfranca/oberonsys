@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ContasBancariasModel extends Model
+class ContaBancariaModel extends Model
 {
     protected $table            = 'fin_contas_bancarias';
     protected $returnType       = 'App\Entities\ContaBancaria';
@@ -20,6 +20,11 @@ class ContasBancariasModel extends Model
         'banco_ativo',
 
     ];
+
+    // Dates
+    protected $createdField         = 'cadastrado_em';
+    protected $updatedField         = 'atualizado_em';
+    protected $deletedField         = 'deletado_em';
 
      // Validation
      protected $validationRules = [
@@ -50,19 +55,14 @@ class ContasBancariasModel extends Model
         return $this->select($atributos)->where('ativo',1)->findAll();
     }
 
-    public function recuperaInstituicoesBancarias(int $id){
+    public function recuperaInstituicoesBancarias(){
 
         $atributos = [
             'fin_instituicoes_bancarias.*',
             
         ];
 
-        return $this->select($atributos)
-                    ->join('fin_instituicoes_bancarias', 'banco_id = conta_id')
-                    ->where('fin_contas_bancarias.id', $id)
-                    ->groupBy('banco_nome')
-                    ->orderBy('fin_instituicoes_bancarias.id','ASC')
-                    ->findAll();
+        return $this->select($atributos)->findAll();
 
     }
 

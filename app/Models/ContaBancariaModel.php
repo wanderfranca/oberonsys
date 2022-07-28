@@ -53,11 +53,7 @@ class ContasBancariasModel extends Model
     public function recuperaInstituicoesBancarias(int $id){
 
         $atributos = [
-            'fin_contas_bancarias.id AS conta_id',
             'fin_instituicoes_bancarias.*',
-            'fin_contas_bancarias.id AS conta_id',
-            'fin_instituicoes_bancarias.id AS banco_id',
-            'fin_instituicoes_bancarias.instituicao_bancaria_nome AS banco_nome',
             
         ];
 

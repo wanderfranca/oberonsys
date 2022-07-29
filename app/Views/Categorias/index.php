@@ -17,7 +17,7 @@
 
 <div class="col-lg-12">
                 <div class="block">
-                  <a href="<?php echo site_url('categorias/criar');?>" class="btn btn-primary mb-5"> NOVO </a>
+                  <a href="<?php echo site_url('categorias/criar');?>" class="btn btn-primary text-white mb-5"> NOVA CATEGORIA </a>
                   <div class="table-responsive"> 
                     <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                       <thead>
@@ -55,8 +55,8 @@ const DATATABLE_PTBR = {
         "sZeroRecords": "Nenhum registro encontrado",
         "sSearch": "Pesquisar",
         "oPaginate": {
-            "sNext": "Próximo",
-            "sPrevious": "Anterior",
+            "sNext": ">",
+            "sPrevious": "<",
             "sFirst": "Primeiro",
             "sLast": "Último"
         },

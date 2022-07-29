@@ -17,8 +17,8 @@
 
 <div class="col-lg-12">
                 <div class="block">
-                  <a href="<?php echo site_url('fornecedores/criar');?>" class="btn btn-primary mb-5"><i class="fa fa-plus"> CADASTRAR FORNECEDOR </i></a>
-                  <a href="<?php echo site_url('fornecedores/excluidos');?>" class="btn btn-warning text-white mb-5"> FORNECEDORES EXCLUÍDOS </a>
+                  <a href="<?php echo site_url('fornecedores/criar');?>" class="btn btn-primary mb-5"> CADASTRAR FORNECEDOR </i></a>
+                  <a href="<?php echo site_url('fornecedores/excluidos');?>" class="btn btn-danger text-white mb-5"> FORNECEDORES EXCLUÍDOS </a>
                   <div class="table-responsive"> 
                     <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                       <thead>
@@ -57,8 +57,8 @@ const DATATABLE_PTBR = {
         "sZeroRecords": "Nenhum registro encontrado",
         "sSearch": "Pesquisar",
         "oPaginate": {
-            "sNext": "Próximo",
-            "sPrevious": "Anterior",
+            "sNext": ">",
+            "sPrevious": "<",
             "sFirst": "Primeiro",
             "sLast": "Último"
         },

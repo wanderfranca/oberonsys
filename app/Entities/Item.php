@@ -19,7 +19,7 @@ class Item extends Entity
             if($this->deletado_em != null){
                 // Item excluído
     
-                $icone = '<span class="text-white">Excluído</span> <i class="fa fa-undo"></i> Desfazer';
+                $icone = '<span class="text-dark">Excluído</span> <i class="fa fa-undo"></i> Desfazer';
                 
                 $situacao = anchor("itens/desfazerexclusao/$this->id", $icone, ['class'=> 'btn btn-outline-success btn-sm']);
     
@@ -53,7 +53,7 @@ class Item extends Entity
                     
             }else{
                 
-                $tipoItem = '<i class="fa fa-wrench text-white" aria-hidden="true"></i>&nbsp;Serviço'; 
+                $tipoItem = '<i class="fa fa-wrench text-dark" aria-hidden="true"></i>&nbsp;Serviço'; 
     
             }
 
@@ -63,7 +63,12 @@ class Item extends Entity
 
         public function exibeEstoque()
         {
-            return ($this->tipo === 'produto' ? $this->estoque : 'Não se aplica');
+            if($this->estoque < 0)
+            {
+                return ("<span class='text-danger'> $this->estoque </span>");
+            }
+
+            return ($this->tipo === 'produto' ? "<span class='text-success'>$this->estoque </span>" : '-');
         }
 
         public function recuperaAtributosAlterados() : string
@@ -72,61 +77,61 @@ class Item extends Entity
 
             if($this->hasChanged('nome'))
             {
-                $atributosAlterados['nome'] = "- <b class='text-white'>Nome</b> alterado para $this->nome";
+                $atributosAlterados['nome'] = "- <b class='text-dark'>Nome</b> alterado para $this->nome";
             }
             
             if($this->hasChanged('preco_custo'))
             {
-                $atributosAlterados['preco_custo'] = "- <b class='text-white'>Preço de custo</b> foi alterado para $this->preco_custo";
+                $atributosAlterados['preco_custo'] = "- <b class='text-dark'>Preço de custo</b> foi alterado para $this->preco_custo";
             }
 
             if($this->hasChanged('preco_venda'))
             {
-                $atributosAlterados['preco_venda'] = "- <b class='text-white'>Preço de venda</b> foi alterado para $this->preco_venda";
+                $atributosAlterados['preco_venda'] = "- <b class='text-dark'>Preço de venda</b> foi alterado para $this->preco_venda";
             }
             
             if($this->hasChanged('preco_venda'))
             {
-                $atributosAlterados['estoque'] = "- <b class='text-white'>Quantidade de estoque</b> foi alterado para $this->estoque";
+                $atributosAlterados['estoque'] = "- <b class='text-dark'>Quantidade de estoque</b> foi alterado para $this->estoque";
             }
 
             if($this->hasChanged('descricao'))
             {
-                $atributosAlterados['descricao'] = "- <b class='text-white'>Descrição</b> alterada para $this->descricao";
+                $atributosAlterados['descricao'] = "- <b class='text-dark'>Descrição</b> alterada para $this->descricao";
             }
 
             if($this->hasChanged('marca'))
             {
-                $atributosAlterados['marca'] = "- <b class='text-white'>Marca</b> alterada para $this->marca";
+                $atributosAlterados['marca'] = "- <b class='text-dark'>Marca</b> alterada para $this->marca";
             }
 
             if($this->hasChanged('modelo'))
             {
-                $atributosAlterados['modelo'] = "- <b class='text-white'>modelo</b> alterado para $this->modelo";
+                $atributosAlterados['modelo'] = "- <b class='text-dark'>modelo</b> alterado para $this->modelo";
             }
 
             if($this->hasChanged('categoria_id'))
             {
-                $atributosAlterados['categoria_id'] = "- <b class='text-white'>Categoria</b> foi alterada";
+                $atributosAlterados['categoria_id'] = "- <b class='text-dark'>Categoria</b> foi alterada";
             }
 
             if($this->hasChanged('ean'))
             {
-                $atributosAlterados['ean'] = "- <b class='text-white'>EAN/GETIN </b> foi alterado para $this->ean";
+                $atributosAlterados['ean'] = "- <b class='text-dark'>EAN/GETIN </b> foi alterado para $this->ean";
             }
 
             if($this->hasChanged('codigo_interno'))
             {
-                $atributosAlterados['codigo_interno'] = "- <b class='text-white'>Código SKU</b> alterado para $this->codigo_interno";
+                $atributosAlterados['codigo_interno'] = "- <b class='text-dark'>Código SKU</b> alterado para $this->codigo_interno";
             }
 
             if($this->hasChanged('controla_estoque')){
 
                 if($this->controla_estoque == true){
-                    $atributosAlterados['controla_estoque'] = "- <b class='text-white'>Controle de estoque foi </b><b class='text-success'> ativado </b>";
+                    $atributosAlterados['controla_estoque'] = "- <b class='text-dark'>Controle de estoque foi </b><b class='text-success'> ativado </b>";
                
                 } else {
-                    $atributosAlterados['controla_estoque'] = "- <b class='text-white'>Controle de estoque foi </b> <b class='text-danger'> desativado </b>";
+                    $atributosAlterados['controla_estoque'] = "- <b class='text-dark'>Controle de estoque foi </b> <b class='text-danger'> desativado </b>";
 
                 }
             }
@@ -134,11 +139,11 @@ class Item extends Entity
             if($this->hasChanged('situacao'))
             {
                 if($this->situacao == true){
-                    $atributosAlterados['situacao'] = "- <b class='text-white'>O item foi </b><b class='text-success'> ativado </b>";
+                    $atributosAlterados['situacao'] = "- <b class='text-dark'>O item foi </b><b class='text-success'> ativado </b>";
                 
                 } else {
 
-                        $atributosAlterados['situacao'] = "- <b class='text-white'>O item foi </b><b class='text-danger'> desativado </b>";
+                        $atributosAlterados['situacao'] = "- <b class='text-dark'>O item foi </b><b class='text-danger'> desativado </b>";
 
                 }
             }

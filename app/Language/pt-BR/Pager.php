@@ -13,8 +13,8 @@
 return [
     'pageNavigation'         => 'Navegação de páginas',
     'first'                  => 'Primeira',
-    'previous'               => 'Anterior',
-    'next'                   => 'Próxima',
+    'previous'               => '<',
+    'next'                   => '>',
     'last'                   => 'Última',
     'older'                  => 'Mais antiga',
     'newer'                  => 'Mais recente',

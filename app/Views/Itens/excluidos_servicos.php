@@ -58,8 +58,8 @@ const DATATABLE_PTBR = {
     "sZeroRecords": "Nenhum registro encontrado",
     "sSearch": "Pesquisar",
     "oPaginate": {
-        "sNext": "Próximo",
-        "sPrevious": "Anterior",
+        "sNext": ">",
+        "sPrevious": "<",
         "sFirst": "Primeiro",
         "sLast": "Último"
     },

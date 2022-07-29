@@ -200,7 +200,7 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="#" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h5">DESENVOLVIMENTO</h1>
+                        <h6>DESENVOLVIMENTO</h6>
                         <p>CEO Oberon</p>
                     </div>
                 </div>
@@ -215,9 +215,15 @@
                         <li class="<?php echo (url_is('fornecedores')  ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores'); ?>">Fornecedores</a></li>
                         <li class="<?php echo (url_is('clientes') ? 'active' : '') ?>"><a href="<?php echo site_url('clientes'); ?>">Clientes</a></li>
                     </ul>
-                    
-                    <li><a href="charts.html">Em dev...1 </a></li>
-                    <li><a href="forms.html"> Em dev...2 </a></li>
+
+                    <li>
+                    <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('contasbancarias') ? 'true' : 'false') ?>" data-toggle="collapse">Financeiro</a>
+                    <ul id="gestaoFinDropdown" class="<?php echo (url_is('contasbancarias')  ? '' : 'collapse') ?> list-unstyled ">
+                        <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">Contas a Pagar </a></li>
+                        <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">Contas a Receber </a></li>
+                        <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>
+                    </ul>
+
 
                     <li>
                     <a href="#gestaoDropdown" aria-expanded="<?php echo (url_is('fornecedores/excluidos') | url_is('itens/produtosexcluidos') | url_is('clientes/excluidos') ? 'true' : 'false') ?>" data-toggle="collapse">Gestão de Cadastros</a>
@@ -226,12 +232,6 @@
                         <li class="<?php echo (url_is('itens/produtosexcluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('itens/produtosexcluidos'); ?>">Produtos Excluídos</a></li>
                         <li class="<?php echo (url_is('itens/servicosexcluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('itens/servicosexcluidos'); ?>">Serviços Excluídos</a></li>
                         <li class="<?php echo (url_is('fornecedores/excluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores/excluidos'); ?>">Fornecedores Excluídos</a></li>
-                    </ul>
-
-                    <li>
-                    <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('contasbancarias') ? 'true' : 'false') ?>" data-toggle="collapse">Gestão Financeira</a>
-                    <ul id="gestaoFinDropdown" class="<?php echo (url_is('contasbancarias')  ? '' : 'collapse') ?> list-unstyled ">
-                        <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>
                     </ul>
                     
                     <li><a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') | url_is('itens') ? 'true' : 'false') ?>" data-toggle="collapse">Tabelas</a>
@@ -250,6 +250,9 @@
                         <li class="<?php echo (url_is('grupos/*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>">Grupos & Permissões </a></li>
                         <li class="<?php echo (url_is('usuarios/editarsenha') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios/editarsenha'); ?>">Alterar senha </a></li>
                     </ul>
+
+                    <li><a href="#"> Relatórios </a></li>
+                    <li><a href="#"> Configurações </a></li>
                
             </nav>
             <!-- Sidebar Navigation end-->

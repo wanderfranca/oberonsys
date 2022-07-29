@@ -19,17 +19,40 @@
     <div class="col-lg-12">
 
         <div class="block">
-            <a href="<?php echo site_url('itens/criar');?>" class="btn btn-primary mb-5"><i class="fa fa-plus-circle"> NOVO PRODUTO </i></a>
-            <a href="<?php echo site_url('itens/produtosexcluidos');?>" class="btn btn-warning mb-5 text-white"> PRODUTOS EXCLUÍDOS </a>
-            <a href="<?php echo site_url('itens/servicosexcluidos');?>" class="btn btn-warning mb-5 text-white"> SERVIÇOS EXCLCUÍDOS </a>
+            <div class="content-fluid mb-4">
+                <h5><?php echo $titulo_visaogeral; ?></h5>
+            </div>
+            <a href="<?php echo site_url('itens/criar');?>" class="btn btn-primary text-white mb-5"> NOVO PRODUTO </i></a>
+            <a href="<?php echo site_url('itens/produtosexcluidos');?>" class="btn btn-danger mb-5 text-white"> PRODUTOS EXCLUÍDOS </a>
+            <a href="<?php echo site_url('itens/servicosexcluidos');?>" class="btn btn-danger mb-5 text-white"> SERVIÇOS EXCLUÍDOS </a>
 
+            <div class="block">
                 <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                     <thead>
                         <tr>
+                            <th class="text-center">Produto</th>
+                            <th class="text-center">Código</th>
+                            <th class="text-center">Tipo</th>
+                            <th class="text-center">Estoque</th>
+                            <th class="text-center">Preço Venda</th>
+                            <th class="text-center">Situação</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+        <div class="block">
+            <h5 class="mb-3">Saldo Zerado</h5>
+        <table id="zeroEstoque" class="table table-striped table-sm" style="width: 100%;">
+                    <thead>
+                        <tr>
                             <th>Produto</th>
-                            <th>Cód.</th>
-                            <th>Tipo</th>
-                            <th>Estoque</th>
+                            <th>Código</th>
                             <th>Preço Venda</th>
                             <th>Situação</th>
                         </tr>
@@ -37,7 +60,28 @@
                 </table>
             </div>
         </div>
+  
+
+        <div class="col-lg-6">
+        <div class="block">
+            <h5 class="mb-3">Saldo Menor que zero</h5>
+        <table id="estoqueNegativo" class="table table-striped table-sm" style="width: 50%;">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Código</th>
+                            <th>Estoque</th>
+                            <th>Preço Venda</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+                </table>
+   
+        </div>
     </div>
+</div>
+
+
 </div>
 
 <?php $this->endSection() ?>
@@ -61,8 +105,8 @@ const DATATABLE_PTBR = {
     "sZeroRecords": "Nenhum registro encontrado",
     "sSearch": "Pesquisar",
     "oPaginate": {
-        "sNext": "Próximo",
-        "sPrevious": "Anterior",
+        "sNext": ">",
+        "sPrevious": "<",
         "sFirst": "Primeiro",
         "sLast": "Último"
     },
@@ -82,6 +126,7 @@ const DATATABLE_PTBR = {
 
 $(document).ready(function() {
 
+    // Tabela de itens em geral
     $('#ajaxTable').DataTable({
         "oLanguage": DATATABLE_PTBR,
 
@@ -113,6 +158,69 @@ $(document).ready(function() {
         "pagingType": $(window).width() < 768 ? "simple" : "simple_numbers",
 
     });
+
+    // Tabela de itens com saldo zerado
+    $('#zeroEstoque').DataTable({
+        "oLanguage": DATATABLE_PTBR,
+
+        "ajax": '<?php echo site_url('itens/recuperaitensestoquezerado'); ?>',
+        "columns": [{
+                data: 'nome'
+            },
+            {
+                data: 'codigo_interno'
+            },
+            {
+                data: 'preco_venda'
+            },
+            {
+                data: 'situacao'
+            },
+
+        ],
+        "order": [],
+        "deferRender": true,
+        "processing": true,
+        "responsive": true,
+        "pagingType": $(window).width() < 768 ? "simple" : "simple_numbers",
+        "filter": false,
+        "lengthChange": false
+    });
+
+    // Tabela de itens com saldo negativo
+    $('#estoqueNegativo').DataTable({
+        
+        "oLanguage": DATATABLE_PTBR,
+
+        "ajax": '<?php echo site_url('itens/recuperaitensnegativos'); ?>',
+        "columns": [{
+                data: 'nome'
+            },
+            {
+                data: 'codigo_interno'
+            },
+            {
+                data: 'estoque'
+            },
+            {
+                data: 'preco_venda'
+            },
+            {
+                data: 'situacao'
+            },
+
+        ],
+        
+        "order": [],
+        "deferRender": true,
+        "processing": true,
+        "responsive": true,
+        "pagingType": $(window).width() < 768 ? "simple" : "simple_numbers",
+        "filter": false,
+        "lengthChange": false
+    });
+
+
 
 });
 </script>

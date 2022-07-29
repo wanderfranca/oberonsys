@@ -14,7 +14,7 @@ class Grupo extends Entity
         if($this->deletado_em != null){
             // Grupo excluído
 
-            $icone = '<span class="text-white">Excluído</span> <i class="fa fa-undo"></i> Desfazer';
+            $icone = '<i class="fa fa-undo"></i> Desfazer exclusão';
             $situacao = anchor("grupos/desfazerexclusao/$this->id", $icone, ['class'=> 'btn btn-outline-success btn-sm']);
 
             return $situacao;

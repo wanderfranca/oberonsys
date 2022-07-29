@@ -859,7 +859,7 @@ nav#sidebar li.active::before {
 
 nav#sidebar li.active > a {
   background: #34373d;
-  color: #dddddd;
+  color: #007bff;
 }
 
 nav#sidebar li.active i {
@@ -2028,17 +2028,21 @@ input.input-material ~ label.is-invalid ~ label {
 *     TABLES
 * ==========================================================
 */
+
+th, td { text-align: center; }
+
 .table {
   margin-bottom: 0;
 }
 
 .table td,
 .table th {
-  border-color: #343a40;
+  border-color: #727272;
 }
 
 .table thead th {
   border: none;
+  color: #e7e7e7;
 }
 
 .table-striped tbody tr {

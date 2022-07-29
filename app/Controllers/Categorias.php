@@ -21,7 +21,7 @@ class Categorias extends BaseController
     {
         $data = [
 
-            'titulo' => 'Categorias',
+            'titulo' => 'CATEGORIAS',
 
         ];
 
@@ -85,7 +85,7 @@ class Categorias extends BaseController
 
         $data = [
 
-            'titulo' => "Cadastrar nova categoria",
+            'titulo' => "CADASTRAR CATEGORIA",
             'categoria' => $categoria,
 
         ];
@@ -139,7 +139,7 @@ class Categorias extends BaseController
 
         $data = [
 
-            'titulo' => "Editar categoria: $categoria->nome",
+            'titulo' => "EDITAR CATEGORIA: $categoria->nome",
             'categoria' => $categoria,
 
         ];
@@ -212,7 +212,7 @@ class Categorias extends BaseController
 
         $data = [
 
-            'titulo' => "Excluir categoria: ".esc($categoria->nome),
+            'titulo' => "EXCLUIR CATEGORIA: ".esc($categoria->nome),
             'categoria' => $categoria,
 
         ];

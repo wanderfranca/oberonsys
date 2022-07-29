@@ -35,7 +35,7 @@
                     <div class="dropdown-divider"></div>
 
                     <?php if($fornecedor->deletado_em == null): ?>
-                    <a class="dropdown-item" href="<?php echo site_url("fornecedores/excluir/$fornecedor->id"); ?>">Excluir fornecedor</a>
+                    <a class="dropdown-item" href="<?php echo site_url("fornecedores/excluir/$fornecedor->id"); ?>"><b class="text-danger">Excluir fornecedor</b></a>
 
                     <?php else:  ?>
                         <a class="dropdown-item" href="<?php echo site_url("fornecedores/desfazerexclusao/$fornecedor->id"); ?>">Restaurar fornecedor</a>

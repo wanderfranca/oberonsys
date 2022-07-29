@@ -26,9 +26,10 @@ class Itens extends BaseController
     {
         $data = [
 
-            'titulo' => 'Produtos e Serviços',
+            'titulo'                => 'Produtos e Serviços',
+            'titulo_visaogeral'     => 'Visão Geral',
+            'titulo_estoquezerado'  => 'Produtos com estoque zerado',
             
-
         ];
 
         return view('Itens/index', $data);
@@ -181,6 +182,109 @@ class Itens extends BaseController
         return $this->response->setJSON($retorno);
     }
 
+    // Método: Recuperar produtos com estoque zerado
+    public function recuperaItensEstoqueZerado()
+    {
+        if(!$this->request->isAJAX())
+        {return redirect()->back();}
+
+        $atributos = [
+            'id',
+            'nome',
+            'codigo_interno',
+            'estoque',
+            'tipo',
+            'preco_venda',
+            'situacao',
+            'deletado_em',
+
+        ];
+
+        $itens = $this->itemModel->select($atributos)
+                                    ->withDeleted(true)
+                                    ->where('estoque =', 0)
+                                    ->where('tipo', 'produto')
+                                    ->orderBy('id', 'DESC')
+                                    ->findAll();
+
+        $data = [];
+
+        foreach($itens as $item)
+        {
+            $data[] = [
+                'nome' => anchor("itens/exibir/$item->id", esc($item->nome), 'title= "Clique para visualizar o produto '.esc($item->nome).' "'),
+                'codigo_interno' => $item->codigo_interno,
+                'estoque' => $item->exibeEstoque(),
+                'preco_venda' =>'R$ '.$item->preco_venda,
+                'situacao' => $item->exibeSituacao(),
+
+            ];
+        }
+
+        $retorno = [
+            
+            'data' => $data,
+        ];
+
+        // echo '<pre>';
+        // print_r($data);
+        // exit;
+
+        return $this->response->setJSON($retorno);
+
+    }
+
+        // Método: Recuperar produtos com estoque zerado
+        public function recuperaItensNegativos()
+        {
+            if(!$this->request->isAJAX())
+            {
+                return redirect()->back();
+            }
+    
+            $atributos = [
+                'id',
+                'nome',
+                'codigo_interno',
+                'estoque',
+                'tipo',
+                'preco_venda',
+                'situacao',
+                'deletado_em',
+    
+            ];
+    
+            $itens = $this->itemModel->select($atributos)
+                                        ->withDeleted(true)
+                                        ->where('estoque <', 0)
+                                        ->where('tipo', 'produto')
+                                        ->orderBy('id', 'DESC')
+                                        ->findAll();
+    
+            $data = [];
+    
+            foreach($itens as $item)
+            {
+                $data[] = [
+                    'nome' => anchor("itens/exibir/$item->id", esc($item->nome), 'title= "Clique para visualizar o produto '.esc($item->nome).' "'),
+                    'codigo_interno' => $item->codigo_interno,
+                    'estoque' => $item->exibeEstoque(),
+                    'preco_venda' =>'R$ '.$item->preco_venda,
+                    'situacao' => $item->exibeSituacao(),
+    
+                ];
+            }
+    
+            $retorno = [
+                
+                'data' => $data,
+            ];
+    
+    
+            return $this->response->setJSON($retorno);
+    
+        }
+    
     // Método: exibe produtos excluídos
     public function produtosexcluidos()
     {

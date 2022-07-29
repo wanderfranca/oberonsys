@@ -38,7 +38,7 @@
 
             <?php endif; ?>
 
-            <h5 class="card-title mt-2 text-center"><?php echo esc($item->nome);?></h5>
+            <h5 class="card-title mt-2 mb-3 text-center text-white"><?php echo esc($item->nome);?></h5>
             <p class="contributions mt-0"><?php echo $item->exibeTipo(); ?></p>
             <p class="contributions mt-0">Estoque: <?php echo $item->exibeEstoque(); ?></p>
             <p class="contributions mt-0"><?php echo $item->exibeSituacao(); ?></p>
@@ -91,7 +91,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <p>
-                                <span class="text-white d-flex align-items-center justify-content-center">Ainda não
+                                <span class="text-dark d-flex align-items-center justify-content-center">Ainda não
                                     houve alterações no
                                     cadastro deste item</spam>
                             </p>
@@ -109,7 +109,7 @@
                                                 <button class="btn btn-link" data-toggle="collapse"
                                                     data-target="#collapse-<?php echo $key;?>" aria-expanded="true"
                                                     aria-controls="collapse-<?php echo $key;?>">
-                                                    <b class="text-white"><?php echo esc($historico['acao']) ?>
+                                                    <b class="text-dark"><?php echo esc($historico['acao']) ?>
                                                     </b><?php echo date('d/m/Y H:i', strtotime($historico['criado_em']))?>
                                                 </button>
                                             </h5>
@@ -119,7 +119,7 @@
                                             aria-labelledby="heading-<?php echo $key;?>" data-parent="#accordion">
                                             <div class="card-body">
 
-                                                <p><b class="text-white">Usuário: </b>
+                                                <p><b class="text-dark">Usuário: </b>
                                                     <?php echo $historico['nome_usuario'] ?></p>
                                                 <?php foreach($historico['atributos_alterados'] as $evento): ?>
                                                 <p><?php echo $evento ?></p>

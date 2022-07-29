@@ -65,7 +65,7 @@
         <div class="col-lg-6">
         <div class="block">
             <h5 class="mb-3">Saldo Menor que zero</h5>
-        <table id="estoqueNegativo" class="table table-striped table-sm" style="width: 50%;">
+        <table id="estoqueNegativo" class="table table-striped table-sm" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>Produto</th>

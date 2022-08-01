@@ -24,6 +24,7 @@
 
                 <?php echo form_open('/', ['id' => 'form'], ['id' => "$contabancaria->id"])  ?>
 
+             
                 <?php echo $this->include('contasbancarias/_form'); ?>
 
                 <div class="form-group mt-5 mb-2">

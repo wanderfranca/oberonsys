@@ -2,19 +2,19 @@
         <div class="col-md-12 mb-4 my-1">
             <label for="">Tipo de conta:</label>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="corrente" name="banco_tipo" value="Conta Corrente" checked>
+                <input type="radio" class="custom-control-input" id="corrente" name="banco_tipo" value="Conta Corrente" checked <?php echo ($contabancaria->banco_tipo == 'Conta Corrente' ? 'checked' : '' )?>>
                 <label class="custom-control-label" for="corrente">Corrente</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="poupança" name="banco_tipo" value="Conta Poupança">
+                <input type="radio" class="custom-control-input" id="poupança" name="banco_tipo" value="Conta Poupança" <?php echo ( $contabancaria->banco_tipo == 'Conta Poupança' ? 'checked' : '' )?>>
                 <label class="custom-control-label" for="poupança">Poupança</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="digital" name="banco_tipo" value="Conta Digital">
+                <input type="radio" class="custom-control-input" id="digital" name="banco_tipo" value="Conta Digital" <?php echo ( $contabancaria->banco_tipo == 'Conta Digital' ? 'checked' : '' )?>>
                 <label class="custom-control-label" for="digital">Digital</label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="cartaocredito" name="banco_tipo" value="Cartão de Crédito">
+                <input type="radio" class="custom-control-input" id="cartaocredito" name="banco_tipo" value="Cartão de Crédito" <?php echo ( $contabancaria->banco_tipo == 'Cartão de Crédito' ? 'checked' : '' )?>>
                 <label class="custom-control-label" for="cartaocredito">Cartão de Crédito</label>
             </div>
         </div>

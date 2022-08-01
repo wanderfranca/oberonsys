@@ -30,7 +30,9 @@
 
                     <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary mr-2">
 
-                    <a href="<?php echo site_url("contasbancarias") ?>" class="btn btn-secondary ml-2">Voltar</a>
+                    <a href="<?php echo site_url("contasbancarias") ?>" class="btn btn-secondary mr-2">Voltar</a>
+
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirCC">Excluir esta conta</button>
 
                 </div>
 
@@ -43,6 +45,29 @@
     </div>
 
 </div>
+
+<?php echo form_open("contasbancarias/excluir/$contabancaria->id")  ?>
+<!-- Modal -->
+<div class="modal fade" id="excluirCC" tabindex="-1" role="dialog" aria-labelledby="excluirCCLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="excluirCCLabel">Excluir conta bancária</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <p class="text-white"> Você realmente deseja excluir esta conta bancária do sistema?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <input id="btn-salvar" type="submit" value="Sim, desejo excluir" class="btn btn-danger btn-sm mr-1">
+      </div>
+    </div>
+  </div>
+</div>
+<?php echo form_close(); ?>
 
 
 <?php $this->endSection() ?>

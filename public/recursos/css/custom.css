@@ -3696,7 +3696,7 @@
   }
   
   .btn-danger {
-    --bs-btn-color: #000;
+    --bs-btn-color: rgb(255, 255, 255);
     --bs-btn-bg: #f91313;
     --bs-btn-border-color: #f91313;
     --bs-btn-hover-color: #000;

@@ -35,6 +35,13 @@ $routes->get('login', 'Login::novo');
 $routes->get('logout', 'Login::logout');
 $routes->get('esqueci', 'Password::esqueci');
 
+//Grupo de rotas: Contas Pagar
+$routes->group('cpagar', static function($routes) 
+{
+    $routes->get('/', 'ContasPagar::index');
+    $routes->get('blog', 'Admin\Blog::index');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

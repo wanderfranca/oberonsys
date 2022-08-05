@@ -44,10 +44,14 @@ class CriaTabelaContasPagar extends Migration
                 'constraint'        => '50',
                 'null'              => true,
             ],
+            'descricao_conta'       => [
+                'type'              => 'VARCHAR',
+                'constraint'        => '100',
+                'null'              => true,
+            ],
 
             'observacao'            => [
                 'type'              => 'VARCHAR',
-                'constraint'        => '100',
                 'null'              => true,
             ],
             'valor_conta'           => [

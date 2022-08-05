@@ -28,9 +28,12 @@
 
                 <div class="form-group mt-5 mb-2">
 
-                    <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary mr-2">
+                    <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary">
 
-                    <a href="<?php echo site_url("categorias") ?>" class="btn btn-secondary ml-2">Voltar</a>
+                    <a href="<?php echo site_url("categorias") ?>" class="btn btn-secondary">Voltar</a>
+
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirCategoria">Excluir esta conta</button>
+
 
                 </div>
 
@@ -43,6 +46,29 @@
     </div>
 
 </div>
+
+<?php echo form_open("categorias/excluir/$categoria->id")  ?>
+<!-- Modal -->
+<div class="modal fade" id="excluirCategoria" tabindex="-1" role="dialog" aria-labelledby="excluirCategoriaLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="excluirCategoriaLabel">Excluir categoria</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <p class="text-white"> Você realmente deseja excluir esta categoria do sistema?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <input id="btn-salvar" type="submit" value="Sim, desejo excluir" class="btn btn-danger btn-sm mr-1">
+      </div>
+    </div>
+  </div>
+</div>
+<?php echo form_close(); ?>
 
 
 <?php $this->endSection() ?>

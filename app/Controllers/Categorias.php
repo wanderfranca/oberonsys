@@ -207,7 +207,7 @@ class Categorias extends BaseController
         {
             $this->categoriaModel->delete($id);
 
-            return redirect()->to(site_url("categoria"))->with('sucesso', "$categoria->nome foi excluído com sucesso");
+            return redirect()->to(site_url("categorias"))->with('sucesso', "$categoria->nome foi excluído com sucesso");
         }
 
         $data = [

@@ -217,9 +217,9 @@
                     </ul>
 
                     <li>
-                    <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('contasbancarias') ? 'true' : 'false') ?>" data-toggle="collapse">Financeiro</a>
-                    <ul id="gestaoFinDropdown" class="<?php echo (url_is('contasbancarias')  ? '' : 'collapse') ?> list-unstyled ">
-                        <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">Contas a Pagar </a></li>
+                    <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('contasbancarias') || url_is('cpagar') ? 'true' : 'false') ?>" data-toggle="collapse">Financeiro</a>
+                    <ul id="gestaoFinDropdown" class="<?php echo (url_is('contasbancarias') || url_is('cpagar') ? '' : 'collapse') ?> list-unstyled ">
+                        <li class="<?php echo (url_is('cpagar') ? 'active' : '') ?>"><a href="<?php echo site_url('cpagar'); ?>">Contas a Pagar </a></li>
                         <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">Contas a Receber </a></li>
                         <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>
                     </ul>

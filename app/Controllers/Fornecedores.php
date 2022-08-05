@@ -31,18 +31,6 @@ class Fornecedores extends BaseController
         return view('Fornecedores/index', $data);
     }
 
-    // Método: Exibe na tela fornecedores excluídos
-    public function excluidos()
-    {
-        $data = [
-
-            'titulo' => 'FORNECEDORES EXCLUÍDOS',
-
-        ];
-
-        return view('Fornecedores/excluidos_fornecedores', $data);
-    }
-
     // Método: Recupera todos os fornecedores (deletado_em = null)
     public function recuperaFornecedores()
     {
@@ -93,6 +81,18 @@ class Fornecedores extends BaseController
 
             return $this->response->setJSON($retorno);
 
+    }
+
+    // Método: Exibe na tela fornecedores excluídos
+    public function excluidos()
+    {
+        $data = [
+
+            'titulo' => 'FORNECEDORES EXCLUÍDOS',
+
+        ];
+
+        return view('Fornecedores/excluidos_fornecedores', $data);
     }
 
     // Método: Recupera fornecedores deletados

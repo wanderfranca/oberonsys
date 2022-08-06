@@ -6,37 +6,36 @@ use CodeIgniter\Model;
 
 class DespesaModel extends Model
 {
-    protected $DBGroup          = 'default';
     protected $table            = 'fin_despesas';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
-    protected $insertID         = 0;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $returnType       = 'object';
+    protected $allowedFields    = [
+        'despesa_nome',
+        'despesa_descricao',
 
-    // Dates
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    ];
 
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+    protected $validationRules = [
+        'despesa_nome'        => 'required|min_length[2]|max_length[90]|is_unique[fin_despesas.despesa_nome,id,{id}]',
+       
 
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    ];
+    protected $validationMessages = [
+        'despesa_nome' => [
+            'required'      => 'Insira um nome único para sua despesa',
+            'min_length'    => 'insira pelo menos 2 caracteres.',
+            'max_length'    => 'O máximo permitido é 90 caractéres.',
+            'is_unique'     => 'Já existe uma despesa com este nome',
+        ],
+
+    ];
+
+    public function despesasAtivas()
+    {
+        $atributos = [
+            'fin_despesas.*'
+        ];
+
+        return $this->select($atributos)->findAll();
+    }
 }

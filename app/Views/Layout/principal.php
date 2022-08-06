@@ -217,11 +217,10 @@
                     </ul>
 
                     <li>
-                    <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('contasbancarias') || url_is('cpagar') ? 'true' : 'false') ?>" data-toggle="collapse">Financeiro</a>
-                    <ul id="gestaoFinDropdown" class="<?php echo (url_is('contasbancarias') || url_is('cpagar') ? '' : 'collapse') ?> list-unstyled ">
+                    <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('creceber') || url_is('cpagar') ? 'true' : 'false') ?>" data-toggle="collapse">Financeiro</a>
+                    <ul id="gestaoFinDropdown" class="<?php echo (url_is('creceber') || url_is('cpagar') ? '' : 'collapse') ?> list-unstyled ">
                         <li class="<?php echo (url_is('cpagar') ? 'active' : '') ?>"><a href="<?php echo site_url('cpagar'); ?>">Contas a Pagar </a></li>
                         <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">Contas a Receber </a></li>
-                        <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>
                     </ul>
 
 
@@ -234,12 +233,14 @@
                         <li class="<?php echo (url_is('fornecedores/excluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores/excluidos'); ?>">Fornecedores Excluídos</a></li>
                     </ul>
                     
-                    <li><a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') | url_is('itens') ? 'true' : 'false') ?>" data-toggle="collapse">Tabelas</a>
-                    <ul id="tabelasDropdown" class="collapse list-unstyled ">
+                    <li><a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') |url_is('contasbancarias') |url_is('itens') | url_is('despesas') ? 'true' : 'false') ?>" data-toggle="collapse">Tabelas</a>
+                    <ul id="tabelasDropdown" class="<?php echo (url_is('categorias') | url_is('contasbancarias') | url_is('despesas') ? '' : 'collapse') ?> list-unstyled ">
                       <!-- Sidebar Navidation Menus--><span class="heading">Produtos</span>    
                         <li class="<?php echo (url_is('categorias/*') ? 'active' : '') ?>"><a href="<?php echo site_url('categorias'); ?>">Categorias </a></li>
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
+
+                            <!-- Sidebar Navidation Menus--><span class="heading">Financeiro</span>
+                        <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>    
+                        <li class="<?php echo (url_is('despesas') ? 'active' : '') ?>"><a href="<?php echo site_url('despesas'); ?>">Despesas </a></li>
                         </ul>
                     </li>
 

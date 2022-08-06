@@ -8,5 +8,3 @@ class Despesa extends Entity
 {
     
 }
-
-

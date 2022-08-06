@@ -38,7 +38,6 @@ class ContaBancariaModel extends Model
             'required'      => 'Insira o número da sua conta',
             'min_length'    => 'insira pelo menos 2 caracteres.',
             'max_length'    => 'O máximo permitido é 15 caractéres.',
-            'is_unique'     => 'Já existe uma categoria com este nome',
         ],
         'banco_agencia' => [
             'required'

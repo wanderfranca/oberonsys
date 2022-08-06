@@ -54,6 +54,8 @@ class ContasPagar extends BaseController
                     'valor_conta'   => 'R$ ' .esc($conta->valor_conta),
                     'situacao'      => $conta->exibeSituacao(),
                     'tipo_documento_nome' => $conta->tipo_documento_nome,
+                    'despesa_nome' => $conta->despesa_nome,
+                    'banco_nome' => $conta->banco_nome,
                 ];
 
             }

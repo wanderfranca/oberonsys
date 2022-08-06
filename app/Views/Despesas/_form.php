@@ -4,5 +4,5 @@
 </div>
 <div class="form-group">
     <label for="exampleFormControlTextarea1">Descrição</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="descricao" rows="3"><?php echo $despesa->despesa_descricao?></textarea>
-  </div>
+    <textarea class="form-control" id="exampleFormControlTextarea1" name="despesa_descricao" rows="3"><?php echo $despesa->despesa_descricao?></textarea>
+</div>

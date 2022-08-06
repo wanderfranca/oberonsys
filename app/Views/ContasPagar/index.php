@@ -27,6 +27,8 @@
                           <th>Valor</th>
                           <th>Situação</th>
                           <th>Documento</th>
+                          <th>Despesa</th>
+                          <th>Banco</th>
                         </tr>
                       </thead>
                     </table>
@@ -87,6 +89,8 @@ const DATATABLE_PTBR = {
                 { data: 'valor_conta' },
                 { data: 'situacao' },
                 { data: 'tipo_documento_nome' },
+                { data: 'despesa_nome' },
+                { data: 'banco_nome' },
 
             ],
             "order": [],

@@ -36,12 +36,6 @@ class CriaTabelaDespesas extends Migration
                 'default'           => null,
             ],
 
-            'deletado_em'           => [
-                'type'              => 'DATETIME',
-                'null'              => true,
-                'default'           => null,
-            ],
-
         ]);
 
         $this->forge->addKey('id', true);

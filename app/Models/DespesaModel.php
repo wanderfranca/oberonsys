@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class DespesaModel extends Model
 {
     protected $table            = 'fin_despesas';
-    protected $returnType       = 'object';
+    protected $returnType       = 'App\Entities\Despesa';
     protected $allowedFields    = [
         'despesa_nome',
         'despesa_descricao',

@@ -142,7 +142,7 @@ class ContasBancarias extends BaseController
 
         //Retornar os erros de validação do formulário
         $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-        $retorno['erros_model'] = $this->contabancariaModel->errors();
+        $retorno['erros_model'] = $this->contaBancariaModel->errors();
 
 
         // Retorno para o ajax request

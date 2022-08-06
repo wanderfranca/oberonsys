@@ -1,5 +1,5 @@
     <div class="form-row">
-        <div class="col-md-12 mb-4 my-1">
+        <div class="col-md-8 mb-4 my-1">
             <label for="">Tipo de conta:</label>
             <div class="custom-control custom-radio">
                 <input type="radio" class="custom-control-input" id="corrente" name="banco_tipo" value="Conta Corrente" checked <?php echo ($contabancaria->banco_tipo == 'Conta Corrente' ? 'checked' : '' )?>>
@@ -13,14 +13,14 @@
                 <input type="radio" class="custom-control-input" id="digital" name="banco_tipo" value="Conta Digital" <?php echo ( $contabancaria->banco_tipo == 'Conta Digital' ? 'checked' : '' )?>>
                 <label class="custom-control-label" for="digital">Digital</label>
             </div>
-            <div class="custom-control custom-radio">
+            <!-- <div class="custom-control custom-radio">
                 <input type="radio" class="custom-control-input" id="cartaocredito" name="banco_tipo" value="Cartão de Crédito" <?php echo ( $contabancaria->banco_tipo == 'Cartão de Crédito' ? 'checked' : '' )?>>
                 <label class="custom-control-label" for="cartaocredito">Cartão de Crédito</label>
-            </div>
+            </div> -->
         </div>
 
     <div class="row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="form-control-label">Insituição Bancária</label>
             <select name="banco_id" class="form-control mb-3 mb-3">
                 <?php foreach( $bancos as $banco): ?>
@@ -33,31 +33,37 @@
         </div>
     </div>
 
+    <div class="form-group col-md-10">
+            <label class="form-control-label">Finalidade</label>
+            <input type="text" name="banco_finalidade" placeholder="Finalidade da conta" require maxlength="80" class="form-control"
+                value="<?php echo esc($contabancaria->banco_finalidade) ?>">
+        </div>
+
     <div class="form-group col-md-4">
             <label class="form-control-label">Agência</label>
-            <input type="text" name="banco_agencia" placeholder="000000" require maxlength="20" class="form-control"
+            <input type="text" name="banco_agencia" placeholder="000000" maxlength="20" class="form-control number"
                 value="<?php echo esc($contabancaria->banco_agencia) ?>">
         </div>
 
         <div class="form-group col-md-4">
             <label class="form-control-label">Conta</label>
-            <input type="text" name="banco_conta" placeholder="00000-0" require maxlength="20" class="form-control"
+            <input type="text" name="banco_conta" placeholder="00000-0" maxlength="20" class="form-control"
                 value="<?php echo esc($contabancaria->banco_conta) ?>">
         </div>
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="form-control-label">Chave Pix 1</label>
             <input type="text" name="banco_pix1" placeholder="chave pix" maxlength="100" class="form-control"
                 value="<?php echo esc($contabancaria->banco_pix1) ?>">
         </div>
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="form-control-label">Chave Pix 2</label>
             <input type="text" name="banco_pix2" placeholder="chave pix" maxlength="100" class="form-control"
                 value="<?php echo esc($contabancaria->banco_pix2) ?>">
         </div>
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="form-control-label">Telefone de contato</label>
             <input type="text" name="banco_telefone" placeholder="(00) 9999-99999" class="form-control sp_celphones"
                 value="<?php echo esc($contabancaria->banco_telefone) ?>">

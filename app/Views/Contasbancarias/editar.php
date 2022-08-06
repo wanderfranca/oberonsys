@@ -11,7 +11,7 @@
 
 <div class="row">
 
-    <div class="col-lg-6">
+    <div class="col-lg-5">
 
         <div class="block">
 
@@ -74,6 +74,8 @@
 
 <!-- Scripts -->
 <?php echo $this->section('scripts') ?>
+<script src="<?php echo site_url('recursos/vendor/mask/app.js'); ?>"></script>
+<script src="<?php echo site_url('recursos/vendor/mask/jquery.mask.min.js'); ?>"></script>
 
 <script>
 $(document).ready(function() {

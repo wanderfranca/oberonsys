@@ -21,6 +21,10 @@ class CriaTabelaContasBancarias extends Migration
                 'unsigned'          => true,
                 'null'              => true,
             ],
+            'banco_finalidade'      => [
+                'type'              => 'VARCHAR',
+                'constraint'        => '100',
+            ],
             'banco_conta'           => [
                 'type'              => 'VARCHAR',
                 'constraint'        => '20',

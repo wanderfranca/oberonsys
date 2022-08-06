@@ -10,7 +10,6 @@ class FornecedorNotaFiscalModel extends Model
 
     protected $returnType       = 'object';
     protected $allowedFields    = [
-
         'fornecedor_id',
         'valor_nota',
         'descricao_itens',

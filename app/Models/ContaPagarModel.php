@@ -58,18 +58,20 @@ class ContaPagarModel extends Model
             'contas_pagar.*',
             'fornecedores.razao',
             'fornecedores.cnpj',
-            // 'fin_despesas.despesa_nome',
+            'fin_despesas.despesa_nome AS despesa_nome',
             'tipos_documentos.tipo_documento_nome',
-            // 'fin_contas_bancarias.id AS conta_id',
-            // 'fin_contas_bancarias.banco_id',
+            'fin_contas_bancarias.id AS conta_id',
+            'fin_contas_bancarias.banco_id',
+            'fin_instituicoes_bancarias.instituicao_bancaria_nome AS banco_nome',
             
         ];
 
         return $this->select($atributos)
                     ->join('fornecedores', 'fornecedores.id = contas_pagar.fornecedor_id')
-                    // ->join('fin_despesas','fin_despesas.id = contas_pagar.despesa_id')
+                    ->join('fin_despesas','fin_despesas.id = contas_pagar.despesa_id')
                     ->join('tipos_documentos','tipos_documentos.id = contas_pagar.documento_id')
-                    // ->join('fin_contas_bancarias','fin_contas_bancarias.id = contas_pagar.conta_bancaria_id')
+                    ->join('fin_instituicoes_bancarias','fin_instituicoes_bancarias.id = fin_contas_bancarias.banco_id')
+                    ->join('fin_contas_bancarias','fin_contas_bancarias.id = contas_pagar.conta_bancaria_id')
                     ->orderBy('contas_pagar.id', 'DESC') // 0 - contas em aberto e depois contas pagas
                     ->findAll(); 
     }

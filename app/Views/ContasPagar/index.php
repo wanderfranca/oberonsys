@@ -87,17 +87,10 @@ const DATATABLE_PTBR = {
                 { data: 'descricao_conta' },
                 { data: 'razao' },
                 { data: 'valor_conta' },
-                { data: 'situacao' },
-                { data: 'tipo_documento_nome' },
                 { data: 'despesa_nome' },
                 { data: 'banco_nome' },
 
             ],
-            "order": [],
-            "deferRender": true,
-            "processing": true,
-            "responsive": true,
-            "pagingType": $(window).width() < 768 ? "simple" : "simple_numbers",
 
         });
     })

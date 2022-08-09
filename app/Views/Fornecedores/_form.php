@@ -21,7 +21,7 @@
 
     <div class="form-group col-md-6">
         <label class="form-control-label">E-mail</label>
-        <input type="text" name="email" placeholder="E-mail" require maxlength="50" class="form-control "value="<?php echo esc($fornecedor->email) ?>">
+        <input type="text" name="email" placeholder="E-mail" require maxlength="50" class="form-control" value="<?php echo esc($fornecedor->email) ?>">
     </div>
 
     <div class="form-group col-md-3">

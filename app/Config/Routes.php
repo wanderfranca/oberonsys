@@ -39,7 +39,8 @@ $routes->get('esqueci', 'Password::esqueci');
 $routes->group('cpagar', static function($routes) 
 {
     $routes->get('/', 'ContasPagar::index');
-    $routes->get('blog', 'Admin\Blog::index');
+    $routes->get('recuperacontaspagar', 'ContasPagar::recuperaContasPagar');
+    $routes->get('exibir/(:segment)', 'ContasPagar::exibir/$1');
 });
 
 /*

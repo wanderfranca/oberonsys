@@ -5037,7 +5037,7 @@
   .card-body {
     flex: 1 1 auto;
     padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
-    background-color: white;
+    background-color: #3e3e3e;
   }
   
   
@@ -5621,7 +5621,7 @@
   
   .list-group {
     --bs-list-group-color: inherit;
-    --bs-list-group-bg: #fff;
+    --bs-list-group-bg: #2d3035;
     --bs-list-group-border-color: rgba(0, 0, 0, 0.125);
     --bs-list-group-border-width: 1px;
     --bs-list-group-border-radius: 0.5rem;

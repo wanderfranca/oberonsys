@@ -24,8 +24,6 @@
         <link rel="shortcut icon" href="<?php echo site_url('recursos/');?>img/favicon.ico">
 
         
-
-
         <!-- Tweaks for older IEs-->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -293,9 +291,7 @@
         </div>
         <!-- JavaScript files-->
         <script src="<?php echo site_url('recursos/');?>vendor/jquery/jquery.min.js"></script>
-        <script src="<?php echo site_url('recursos/');?>vendor/popper.js/umd/popper.min.js.map"> </script>
         <script src="<?php echo site_url('recursos/');?>vendor/popper.js/umd/popper.min.js"> </script>
-        
         <script src="<?php echo site_url('recursos/');?>vendor/bootstrap/js/bootstrap.min.js"></script>
         <script src="<?php echo site_url('recursos/');?>js/front.js"></script>
         <script src="<?php echo site_url('recursos/');?>js/close-alert.js"></script>

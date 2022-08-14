@@ -28,8 +28,6 @@ class ContasPagar extends BaseController
 
         ];
 
-        
-
         return view('Contaspagar/index', $data);
 
     }

@@ -24,13 +24,13 @@
                 <div class="col-sm-3">
                     <label class="control-label">Data Inicial</label>
                     <input class="form-control datepicker datepickershow ptdate" type="text" name="initial_date"
-                        id="initial_date" value="" autocomplete="off" readonly placeholder="dd-mm-aaaa"
+                        id="initial_date" value="" autocomplete="off" required  readonly placeholder="dd-mm-aaaa"
                         style="height: 40px;" />
                 </div>
                 <div class="col-sm-3">
                     <label class="control-label">Data Final</label>
                     <input class="form-control datepicker datepickershow ptdate" type="text" name="final_date"
-                        id="final_date" value="" autocomplete="off" readonly placeholder="dd-mm-aaaa"
+                        id="final_date" value="" autocomplete="off" required readonly placeholder="dd-mm-aaaa"
                         style="height: 40px;" />
                 </div>
                 <div class="col-sm-2">

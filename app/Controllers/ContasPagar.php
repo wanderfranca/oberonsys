@@ -41,7 +41,13 @@ class ContasPagar extends BaseController
             return redirect()->back();
         }
 
-            $contas = $this->contaPagarModel->recuperaContasPagar();
+        $post = $this->request->getGet();
+        $data_inicial = $post['initial_date'];
+        $data_final = $post['final_date'];
+
+
+
+            $contas = $this->contaPagarModel->recuperaContasPagar($data_inicial, $data_final);
 
             $data = [];
 
@@ -53,6 +59,7 @@ class ContasPagar extends BaseController
                     'valor_conta'   => 'R$ ' .esc(number_format($conta->valor_conta, 2)),
                     // 'tipo_documento_nome' => $conta->tipo_documento_nome,
                     'despesa_nome' => esc($conta->despesa_nome),
+                    'data_vencimento' => date('d/m/Y',strtotime($conta->data_vencimento)),
                     // 'banco_finalidade' => $conta->banco_finalidade,
                     'opcoes'        => "<div class='btn-group dropleft'>
                                         <button type='button' class='btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -72,6 +79,8 @@ class ContasPagar extends BaseController
                 'data' => $data,
 
             ];
+
+            
 
 
             return $this->response->setJSON($retorno);

@@ -52,9 +52,10 @@ class ContaPagarModel extends Model
 
     ];
 
-    public function recuperaContasPagar()
+    public function recuperaContasPagar(string $data_inicial, string $data_final) : array
     {
-        $atributos = [
+
+     $atributos = [
             'contas_pagar.*',
             'fornecedores.razao',
             'fornecedores.cnpj',
@@ -70,6 +71,7 @@ class ContaPagarModel extends Model
                     ->join('fin_despesas','fin_despesas.id = contas_pagar.despesa_id')
                     ->join('tipos_documentos','tipos_documentos.id = contas_pagar.documento_id')
                     ->join('fin_contas_bancarias','fin_contas_bancarias.id = contas_pagar.conta_bancaria_id')
+                    ->where('data_vencimento >= '. "'$data_inicial'" . ' AND data_vencimento <= '. "'$data_final'")
                     ->orderBy('contas_pagar.id', 'DESC') // 0 - contas em aberto e depois contas pagas
                     ->findAll(); 
     }

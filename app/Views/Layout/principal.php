@@ -20,10 +20,11 @@
         <link rel="stylesheet" href="<?php echo site_url('recursos/');?>css/style.blue.css" id="theme-stylesheet">
         <!-- Custom stylesheet - for your changes-->
         <link rel="stylesheet" href="<?php echo site_url('recursos/');?>css/custom.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css">
         <!-- Favicon-->
         <link rel="shortcut icon" href="<?php echo site_url('recursos/');?>img/favicon.ico">
 
-        
+
         <!-- Tweaks for older IEs-->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -290,9 +291,17 @@
             </div>
         </div>
         <!-- JavaScript files-->
-        <script src="<?php echo site_url('recursos/');?>vendor/jquery/jquery.min.js"></script>
+        <script src="<?php echo site_url('recursos/');?>vendor/jquery/jquery.min.js"></script> 
         <script src="<?php echo site_url('recursos/');?>vendor/popper.js/umd/popper.min.js"> </script>
         <script src="<?php echo site_url('recursos/');?>vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src = "https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> 
+        <script src = "https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script> 
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" ></script> 
+        <script src = "https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js" ></script> 
+        <script src = "https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js" ></script> 
+        <script src = "https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js" ></script> 
         <script src="<?php echo site_url('recursos/');?>js/front.js"></script>
         <script src="<?php echo site_url('recursos/');?>js/close-alert.js"></script>
 
@@ -307,6 +316,8 @@
 
             });
         })
+
+    
 
         $("#alert-danger").fadeTo(7000, 700).slideUp(700, function() {
             $("#alert-danger").slideUp(700);

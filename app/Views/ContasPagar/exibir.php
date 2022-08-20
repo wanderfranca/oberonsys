@@ -42,7 +42,7 @@
                                             </p>
                                         </li>
                                         <li class="list-group-item bgblock">
-                                            <p class="card-text"><b class="text-white">Documento: </b> <?php echo esc($conta->tipo_documento_nome); ?> &nbsp;<b class="text-white">N°: </b><?php echo esc($conta->numero_documento); ?> &nbsp; <b class="text-white"> Data de Vencimento: </b><?php echo esc($conta->data_vencimento); ?></p>
+                                            <p class="card-text"><b class="text-white">Documento: </b> <?php echo esc($conta->tipo_documento_nome); ?> &nbsp;<b class="text-white">N°: </b><?php echo esc($conta->numero_documento); ?> &nbsp; <b class="text-white"> Data de Vencimento: </b><?php echo date('d-m-Y', strtotime($conta->data_vencimento)); ?></p>
                                         </li>
 
                                          <li class="list-group-item bgblock">
@@ -78,15 +78,15 @@
                     Ações
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="<?php echo site_url("contas/editar/$conta->id"); ?>">Editar conta</a>
+                    <a class="dropdown-item" href="<?php echo site_url("cpagar/editar/$conta->id"); ?>">Editar conta</a>
                     <div class="dropdown-divider"></div>
 
                     <?php if($conta->deletado_em == null): ?>
-                    <a class="dropdown-item" href="<?php echo site_url("contas/excluir/$conta->id"); ?>"><b class="text-danger">Excluir conta</b></a>
+                    <a class="dropdown-item" href="<?php echo site_url("cpagar/excluir/$conta->id"); ?>"><b class="text-danger">Excluir conta</b></a>
 
                     <?php else:  ?>
                     <a class="dropdown-item"
-                        href="<?php echo site_url("contas/desfazerexclusao/$conta->id"); ?>">Restaurar conta</a>
+                        href="<?php echo site_url("cpagar/desfazerexclusao/$conta->id"); ?>">Restaurar conta</a>
 
                     <?php endif;  ?>
 

@@ -5,17 +5,22 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Entities\ContaPagar;
 use App\Entities\ContaBancaria;
+use App\Entities\Despesa;
 
 class ContasPagar extends BaseController
 {
     private $contaPagarModel;
     private $contaBancariaModel;
+    private $despesaModel;
+    private $tipoDocumentoModel;
 
     public function __construct()
     {
         $this->contaPagarModel = new \App\Models\ContaPagarModel();
         $this->fornecedorModel = new \App\Models\FornecedorModel();
         $this->contaBancariaModel = new \App\Models\ContaBancariaModel();
+        $this->despesaModel = new \App\Models\DespesaModel();
+        $this->tipoDocumentoModel = new \App\Models\TipoDocumentoModel();
     }
 
     public function index()
@@ -93,8 +98,8 @@ class ContasPagar extends BaseController
 
         $data = [
 
-            'titulo' => "CONTA A PAGAR - $fornecedorDaConta" ,
-            'conta' => $conta,
+            'titulo'    => "CONTA A PAGAR - $fornecedorDaConta" ,
+            'conta'     => $conta,
 
         ];
 
@@ -102,8 +107,30 @@ class ContasPagar extends BaseController
         return view('ContasPagar/exibir', $data);
 
         
+    }
 
-        return view('Contaspagar/index', $data);
+    public function editar(int $id = null)
+    {
+        $conta = $this->contaPagarModel->buscaContaOu404($id);
+        $despesasAtivas = $this->despesaModel->despesasAtivas(); //Todas as despesas ativas
+        $contasBancariasAtivas = $this->contaBancariaModel->contasBancariasAtivas(); //Todas as contas bancárias ativas da empresa
+        $tiposDocumentosAtivos = $this->tipoDocumentoModel->tiposDocumentosAtivos(); //Todas as despesas ativas
+        $fornecedorDaConta = strtoupper($conta->razao);
+
+        $data = [
+
+            'titulo' => "EDITAR CONTA DO FORNECEDOR - $fornecedorDaConta" ,
+            'despesasAtivas' => $despesasAtivas,
+            'contasBancariasAtivas' => $contasBancariasAtivas,
+            'tiposDocumentosAtivos' => $tiposDocumentosAtivos,
+            'conta' => $conta,
+            
+
+        ];
+
+        // dd($conta);
+        return view('ContasPagar/editar', $data);
+
 
     }
 }

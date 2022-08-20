@@ -65,6 +65,12 @@ class CriaTabelaContasPagar extends Migration
             'data_vencimento'       => [
                 'type'              => 'DATE',
             ],
+
+            'data_pagamento'       => [
+                'type'              => 'DATE',
+                'default'           => null,
+            ],
+
             'criado_em'             => [
                 'type'              => 'DATETIME',
                 'null'              => true,

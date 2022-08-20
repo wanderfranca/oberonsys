@@ -9,7 +9,6 @@ use App\Entities\ContaBancaria;
 class ContasPagar extends BaseController
 {
     private $contaPagarModel;
-    private $fornecedorModel;
     private $contaBancariaModel;
 
     public function __construct()

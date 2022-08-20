@@ -464,7 +464,6 @@ class Itens extends BaseController
     {
 
         $item = $this->buscaItemOu404($id);
-        // $categoria_id = $item->categoria_id;
         $categoriasAtivas = $this->categoriaModel->categoriasAtivas(); //Todas as categorias
         $categoriaItem = $this->itemModel->recuperaCategoriaDeItens($id);
 

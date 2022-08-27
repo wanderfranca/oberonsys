@@ -18,6 +18,7 @@ class ContaPagarModel extends Model
         'valor_conta',
         'data_vencimento',
         'descricao_conta',
+        'data_pagamento',
         'observacao',
         'situacao',
     ];
@@ -51,6 +52,23 @@ class ContaPagarModel extends Model
         ],
 
     ];
+
+        // Callbacks
+        protected $beforeInsert   = ['removeVirgulaValores'];
+        protected $beforeUpdate   = ['removeVirgulaValores'];
+    
+    
+        // Função: remover a vírgula dos preços
+        protected function removeVirgulaValores(array $data)
+        {
+            if (isset($data['data']['valor_conta'])) {
+    
+                $data['data']['valor_conta'] = str_replace(",", "", $data['data']['valor_conta']);
+     
+            }
+    
+                return $data;
+        }
 
     public function recuperaContasPagar(string $data_inicial, string $data_final) : array
     {

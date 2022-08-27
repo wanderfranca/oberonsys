@@ -1827,14 +1827,14 @@ input[type='submit'] {
 
 .input-group .dropdown-menu {
   padding: 15px;
-  color: #777;
+  color: rgb(255, 255, 255) !important;
   border-radius: 0;
   margin-top: 5px;
 }
 
 .input-group .dropdown-menu a {
   padding: 5px 0;
-  color: inherit;
+  color: #fcf8e3 !important;
   text-decoration: none;
   display: block;
 }

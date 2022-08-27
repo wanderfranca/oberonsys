@@ -4219,7 +4219,7 @@
     padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
     clear: both;
     font-weight: 400;
-    color: #1c1c1c !important;
+    color: var(--bs-dropdown-link-color);
     text-align: inherit;
     white-space: nowrap;
     background-color: transparent;
@@ -4229,7 +4229,7 @@
   
   .dropdown-item:hover,
   .dropdown-item:focus {
-    color: #f2f2f2;
+    color: var(--bs-dropdown-link-hover-color);
     background-color: var(--bs-dropdown-link-hover-bg);
   }
   

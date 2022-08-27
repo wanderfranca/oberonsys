@@ -331,13 +331,13 @@ class Clientes extends BaseController
             if($cliente->hasChanged('email'))
             {
                 $this->usuarioModel->atualizaEmailDoCliente($cliente->usuario_id, $cliente->email);
-             
+        
                 $this->enviaEmailAlteracaoEmailAcesso($cliente);
             
-            $btnCriar = anchor("Fornecedores/criar", 'Cadastrar mais fornecedores', ['class' => 'btn btn-primary mt2']);
-            session()->setFlashdata('sucesso', "Novo fornecedor cadastrado! Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente<br><br> $btnCriar");
+            $btnCriar = anchor("Clientes/criar", 'Cadastrar mais clientes', ['class' => 'btn btn-primary mt2']);
+            session()->setFlashdata('sucesso', "Cliente cadastrado com sucesso! Dados salvos com sucesso! <br><br>Importante: Informe ao cliente o novo e-mail de acesso ao sistema: <p> E-mail: '.$cliente->email.'<p> Um e-mail de notificação foi enviado para o cliente<br><br> $btnCriar");
 
-            $retorno['id'] = $this->fornecedorModel->getInsertID();
+            $retorno['id'] = $this->clienteModel->getInsertID();
             
             return $this->response->setJSON($retorno);
 

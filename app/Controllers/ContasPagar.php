@@ -69,7 +69,7 @@ class ContasPagar extends BaseController
                                         <button type='button' class='btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                         <i class='fa fa-chevron-down text-primary' aria-hidden='true'></i>
                                         </button>
-                                        <div class='dropdown-menu bg-white'>
+                                        <div class='dropdown-menu'>
                                             <a class='dropdown-item' href='cpagar/exibir/$conta->id'>Visualizar</a>
                                             <a class='dropdown-item' href='cpagar/editar/$conta->id'>Editar</a>
                                             <a class='dropdown-item' href='cpagar/imprimir/$conta->id'>Imprimir</a>
@@ -131,6 +131,66 @@ class ContasPagar extends BaseController
         // dd($conta);
         return view('ContasPagar/editar', $data);
 
+
+    }
+
+    public function atualizar()
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        // Recupero o post da requisição
+        $post = $this->request->getPost();
+
+        $conta = $this->contaPagarModel->buscaContaOu404($post['id']);
+
+        $conta->fill($post);
+
+        if($conta->hasChanged() === false)
+        {
+            $retorno['info'] = 'Não há dados para atualizar!';
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        // Remover a virgula do valor da conta, para passar pelo form validation
+        // Se não remover a virgula aqui, o form_validation(greater_than[0]) diz que valores como 2,100.00 são menores que zero (pois são strig com virgula)
+        $conta->valor_conta = str_replace(",", "", $conta->valor_conta);
+
+        //Validação: Se a situação for ABERTA, set a data de pagamento como NULL
+        if($conta->situacao == 0)
+        {
+            $conta->data_pagamento = null;
+        }
+
+        //Validação: Se a data de pagamento for superior ao dia de hoje
+        if($conta->data_pagamento > date('Y-m-d'))
+        {
+            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
+            return $this->response->setJSON($retorno);
+        }
+
+
+        if($this->contaPagarModel->save($conta)){
+
+            session()->setFlashdata('sucesso', "Conta atualizada com sucesso!");
+
+            return $this->response->setJSON($retorno);
+
+        }
+
+            //Erros de validação
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = $this->contaPagarModel->errors();
+
+            //Retorno para o AJAX
+            return $this->response->setJSON($retorno);
 
     }
 }

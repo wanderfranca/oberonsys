@@ -42,6 +42,11 @@ $routes->group('cpagar', static function($routes)
     $routes->get('recuperacontaspagar', 'ContasPagar::recuperaContasPagar');
     $routes->get('exibir/(:segment)', 'ContasPagar::exibir/$1');
     $routes->get('editar/(:segment)', 'ContasPagar::editar/$1');
+    $routes->get('criar/', 'ContasPagar::criar');
+
+    //POST
+    $routes->post('cadastrar', 'ContasPagar::cadastrar');
+    $routes->post('atualizar', 'ContasPagar::atualizar');
 });
 
 /*

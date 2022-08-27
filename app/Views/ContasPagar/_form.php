@@ -52,7 +52,7 @@
         <!-- Número do documento  -->
         <div class="form-group col-md-5">
             <label class="form-control-label">Número do Doc</label>
-            <input type="text" name="valor_conta" placeholder="Insira o valor" class="form-control" value="<?php echo esc($conta->numero_documento) ?>">
+            <input type="text" name="numero_documento" placeholder="Insira o valor" class="form-control" value="<?php echo esc($conta->numero_documento) ?>">
         </div>
         <!-- Valor da conta -->
         <div class="form-group col-md-3">
@@ -90,11 +90,12 @@
         <!-- Data de pagamento -->
         <div class="form-group col-md-5 ml-2 pagamento" id="dataPagamento">
             <label class="form-control-label">Data do pagamento</label>
-            <input type="date" name="data_pagamento" placeholder="dd-mm-aaaa" class="form-control" value="<?php echo esc($conta->data_pagamento) ?>">
+            <input type="date" id="datapg" name="data_pagamento" placeholder="dd-mm-aaaa" class="form-control" value="<?php echo esc($conta->data_pagamento) ?>">
         </div>
+
         <?php else: ?>
-        <div class="form-group col-md-5 ml-2 pagamento" id="dataPagamento">
+        <div class="form-group col-md-5 ml-2 pagamento" id="dataPagamento" >
             <label class="form-control-label">Data do pagamento</label>
-            <input type="date" readonly name="data_pagamento" placeholder="dd-mm-aaaa" class="form-control" value="<?php echo esc($conta->data_pagamento) ?>">
+            <input type="date" id="datapg" readonly name="data_pagamento" placeholder="dd-mm-aaaa" class="form-control" value="<?php echo esc($conta->data_pagamento) ?>">
         </div>
         <?php endif; ?>

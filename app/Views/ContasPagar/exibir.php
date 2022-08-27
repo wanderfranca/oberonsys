@@ -63,21 +63,21 @@
                         </div>
                 </li>
       
+                
                 <li class="list-group-item bgblock">
-                    <p class="card-text"><?php echo $conta->exibeSituacao();  echo ( $conta->situacao == 1 ? '<b class="text-white"> EM: '.$conta->data_pagamento.'</b>' : '')?></p>
+                    <p class="card-text"><?php echo $conta->exibeSituacao();  echo ( $conta->situacao == 1 ? '<b class="text-white"> EM: '.date('d-m-Y', strtotime($conta->data_pagamento)).'</b>' : '')?></p>
                 </li>
                 <li class="list-group-item bgblock">
-                    <p class="card-text"><b>Criado em: </b><?php echo date('d-m-Y', strtotime($conta->criado_em)) .' / <b>Atualizado: </b>'. date('d-m-Y', strtotime($conta->atualizado_em)); ?></p>
+                    <p class="card-text float-md-right"><b>Criado em: </b><?php echo date('d-m-Y', strtotime($conta->criado_em)) .' / <b>Atualizado: </b>'. date('d-m-Y', strtotime($conta->atualizado_em)); ?></p>
                 </li>
             </ul>
-
+            
             <!-- Example single danger button -->
             <div class="btn-group mt-3">
-                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Ações
                 </button>
-                <div class="dropdown-menu bg-white">
+                <div class="dropdown-menu">
                     <a class="dropdown-item" href="<?php echo site_url("cpagar/editar/$conta->id"); ?>">Editar conta</a>
                     <div class="dropdown-divider"></div>
 

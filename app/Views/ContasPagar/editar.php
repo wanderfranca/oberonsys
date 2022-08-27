@@ -29,8 +29,9 @@
 
                 <div class="form-group mt-5 mb-2">
 
+                <?php if($conta->situacao == 0): ?>
                     <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary mr-2">
-
+                <?php endif; ?>
                     <a href="<?php echo site_url("cpagar/exibir/$conta->id") ?>" class="btn btn-secondary ml-2">Voltar</a>
 
                 </div>
@@ -54,18 +55,22 @@
 <!-- Scripts -->
 <?php echo $this->section('scripts') ?>
 
-<?php if($conta->situacao == false): ?>
+<script src="<?php echo site_url('recursos/vendor/mask/jquery.mask.min.js'); ?>"></script>
+<script src="<?php echo site_url('recursos/vendor/mask/app.js'); ?>"></script>
 
 
 <script>
 $(document).ready(function() 
 {
+    $("#datapg").attr("readonly", true); 
+
     $("[name=situacao]").on("click", function() {
 
         if($(this).val()=="1")
         {
             $("#dataPagamento").show("slow");
             $(".pagamento").addClass('show');
+            $("#datapg").attr("readonly", false); 
             
         
         }else // A conta em aberto

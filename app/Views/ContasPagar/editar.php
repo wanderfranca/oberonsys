@@ -57,9 +57,6 @@
 <?php if($conta->situacao == false): ?>
 
 
-
-<?php endif; ?>
-
 <script>
 $(document).ready(function() 
 {

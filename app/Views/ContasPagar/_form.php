@@ -39,10 +39,10 @@
             <!-- Tipos de Documentos -->
             <div class="form-group col-md-3">
                 <label class="form-control-label">Documento</label>
-                <select name="despesa_id" class="form-control">
+                <select name="documento_id" class="form-control">
                     <?php foreach( $tiposDocumentosAtivos as $doc): ?>
                     <option class="text-black" value="<?php echo $despesa->id ?>"
-                        <?php echo ($doc->id == $conta->ddocumento_id ? 'selected' : '') ?>>
+                        <?php echo ($doc->id == $conta->documento_id ? 'selected' : '') ?>>
                         <?php echo $doc->tipo_documento_nome ?>
                     </option>
                     <?php endforeach; ?>

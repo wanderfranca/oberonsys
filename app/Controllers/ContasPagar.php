@@ -91,13 +91,32 @@ class ContasPagar extends BaseController
 
     }
 
+    public function criar()
+    {
+        $conta = new ContaPagar();
+
+        $data = [
+
+            'titulo'    => "NOVA CONTA A PAGAR" ,
+            'conta'     => $conta,
+            'fornecedores'  => $this->fornecedorModel->where('ativo', true)->findAll()
+
+        ];
+
+        // dd($conta);
+        return view('ContasPagar/criar', $data);
+
+        
+    }
+
+    // Método: Exibir contas a pagar
     public function exibir(int $id = null)
     {
         $conta = $this->contaPagarModel->buscaContaOu404($id);
 
         $data = [
 
-            'titulo'    => "CONTA A PAGAR - $fornecedorDaConta" ,
+            'titulo'    => "CONTA A PAGAR " ,
             'conta'     => $conta,
 
         ];
@@ -108,6 +127,7 @@ class ContasPagar extends BaseController
         
     }
 
+    // Método: Editar contas a pagar
     public function editar(int $id = null)
     {
         $conta = $this->contaPagarModel->buscaContaOu404($id);
@@ -133,6 +153,7 @@ class ContasPagar extends BaseController
 
     }
 
+    // Método: Atualizar no banco de dados conta a pagar
     public function atualizar()
     {
         if(!$this->request->isAJAX())
@@ -162,18 +183,18 @@ class ContasPagar extends BaseController
         $conta->valor_conta = str_replace(",", "", $conta->valor_conta);
 
         //Validação: Se a situação for ABERTA, set a data de pagamento como NULL
-        if($conta->situacao == 0)
-        {
-            $conta->data_pagamento = null;
-        }
+        // if($conta->situacao == 0)
+        // {
+        //     $conta->data_pagamento = null;
+        // }
 
-        //Validação: Se a data de pagamento for superior ao dia de hoje
-        if($conta->data_pagamento > date('Y-m-d'))
-        {
-            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-            $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
-            return $this->response->setJSON($retorno);
-        }
+        // //Validação: Se a data de pagamento for superior ao dia de hoje
+        // if($conta->data_pagamento > date('Y-m-d'))
+        // {
+        //     $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        //     $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
+        //     return $this->response->setJSON($retorno);
+        // }
 
 
         if($this->contaPagarModel->save($conta)){

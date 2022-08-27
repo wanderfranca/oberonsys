@@ -86,8 +86,15 @@
             <label class="custom-control-label" for="paga">Esta conta está paga</label>
         </div>
 
+        <?php if($conta->situacao == false): ?>
         <!-- Data de pagamento -->
-        <div class="form-group col-md-5 ml-2" id="dataPagamento">
+        <div class="form-group col-md-5 ml-2 pagamento" id="dataPagamento">
             <label class="form-control-label">Data do pagamento</label>
-            <input type="date" <?php echo ($conta->data_pagamento == true ? "readonly" : '') ?> name="data_pagamento" placeholder="dd-mm-aaaa" class="form-control" value="<?php echo esc($conta->data_pagamento) ?>">
+            <input type="date" name="data_pagamento" placeholder="dd-mm-aaaa" class="form-control" value="<?php echo esc($conta->data_pagamento) ?>">
         </div>
+        <?php else: ?>
+        <div class="form-group col-md-5 ml-2 pagamento" id="dataPagamento">
+            <label class="form-control-label">Data do pagamento</label>
+            <input type="date" readonly name="data_pagamento" placeholder="dd-mm-aaaa" class="form-control" value="<?php echo esc($conta->data_pagamento) ?>">
+        </div>
+        <?php endif; ?>

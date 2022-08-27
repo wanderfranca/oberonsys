@@ -21,16 +21,17 @@
         <div class="block">
             <a href="<?php echo site_url('cpagar/criar');?>" class="btn btn-primary mb-5"> NOVA CONTA A PAGAR </i></a>
             <div class="row datepicker">
+
                 <div class="col-sm-3">
                     <label class="control-label">Data Inicial</label>
-                    <input class="form-control datepicker datepickershow ptdate" type="text" name="initial_date"
-                        id="initial_date" value="" autocomplete="off" required  readonly placeholder="dd-mm-aaaa"
+                    <input class="form-control datepicker datepickershow ptdate" required type="text" name="initial_date"
+                        id="initial_date" autocomplete="off" readonly   placeholder="dd-mm-aaaa"
                         style="height: 40px;" />
                 </div>
                 <div class="col-sm-3">
                     <label class="control-label">Data Final</label>
-                    <input class="form-control datepicker datepickershow ptdate" type="text" name="final_date"
-                        id="final_date" value="" autocomplete="off" required readonly placeholder="dd-mm-aaaa"
+                    <input class="form-control datepicker datepickershow ptdate" required type="text" name="final_date"
+                        id="final_date" autocomplete="off" readonly  placeholder="dd-mm-aaaa"
                         style="height: 40px;" />
                 </div>
                 <div class="col-sm-2">
@@ -44,6 +45,7 @@
             </div>
             <div class="form-group col-1">
             </div>
+           
             <div class="table-responsive">
 
                 <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
@@ -54,15 +56,15 @@
                             <th>Fornecedor</th>
                             <th>Valor</th>
                             <th>Despesa</th>
-                            <th>Data de Vencimento</th>
-                            <th>Opções</th>
+                            <th>Vencimento</th>
+                            <th data-orderable="false"></th>
                         </tr>
                     </thead>
                 </table>
             </div>
         </div>
     </div>
-
+ 
 
 
 </div>
@@ -119,10 +121,10 @@ load_data(); // first load
 function load_data(initial_date, final_date) {
     var ajax_url = '<?php echo site_url('cpagar/recuperacontaspagar'); ?>';
 
-
     $('#ajaxTable').DataTable({
         "oLanguage": DATATABLE_PTBR,
         "order": [],
+        "responsive" : true,  
         dom: 'Blfrtip', // Add the Copy, Print and export to CSV, Excel and PDF buttons
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -134,13 +136,11 @@ function load_data(initial_date, final_date) {
             "type": "GET",
             "data": {
                 "action": "ajaxTable",
-                "initial_date": (initial_date == '' ? $("#initial_date").val('2022-08-03') : $("#initial_date")
-                    .val()),
-                "final_date": (final_date == '' ? $("#final_date").val('2022-08-01') : $("#final_date").val()),
+                "initial_date": $("#initial_date").val(),
+                "final_date":  $("#final_date").val(),
                 "stateSave": true,
                 "bDestroy": true
             },
-
 
         },
         "columns": [{
@@ -174,7 +174,7 @@ $("#filter").click(function() {
     var initial_date = $("#initial_date").val();
     var final_date = $("#final_date").val();
 
-    if (initial_date == '' && final_date == '') {
+    if (initial_date == undefined && final_date == undefined) {
         $('#ajaxTable').DataTable().destroy();
     } else {
         var date1 = new Date(initial_date);
@@ -182,7 +182,7 @@ $("#filter").click(function() {
         var diffTime = Math.abs(date2 - date1);
         var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-        if (initial_date == '' || final_date == '') {
+        if (initial_date == undefined && final_date == undefined) {
             $("#error_log").html("<span>Informe um período inicial e final</span>");
         } else {
             if (date1 > date2) {

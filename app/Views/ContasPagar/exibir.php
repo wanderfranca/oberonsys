@@ -64,10 +64,10 @@
                 </li>
       
                 <li class="list-group-item bgblock">
-                    <p class="card-text"><?php echo $conta->exibeSituacao(); ?></p>
+                    <p class="card-text"><?php echo $conta->exibeSituacao();  echo ( $conta->situacao == 1 ? '<b class="text-white"> EM: '.$conta->data_pagamento.'</b>' : '')?></p>
                 </li>
                 <li class="list-group-item bgblock">
-                    <p class="card-text"><b>Criado: </b><?php echo $conta->criado_em->humanize() .' / <b>Atualizado: </b>'. $conta->atualizado_em->humanize(); ?></p>
+                    <p class="card-text"><b>Criado em: </b><?php echo date('d-m-Y', strtotime($conta->criado_em)) .' / <b>Atualizado: </b>'. date('d-m-Y', strtotime($conta->atualizado_em)); ?></p>
                 </li>
             </ul>
 
@@ -77,7 +77,7 @@
                     aria-haspopup="true" aria-expanded="false">
                     Ações
                 </button>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu bg-white">
                     <a class="dropdown-item" href="<?php echo site_url("cpagar/editar/$conta->id"); ?>">Editar conta</a>
                     <div class="dropdown-divider"></div>
 

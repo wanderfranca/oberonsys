@@ -54,24 +54,27 @@
 <!-- Scripts -->
 <?php echo $this->section('scripts') ?>
 
+<?php if($conta->situacao == false): ?>
+
+
+
+<?php endif; ?>
+
 <script>
 $(document).ready(function() 
 {
     $("[name=situacao]").on("click", function() {
 
-        if($(this).val()==="1"){
-
+        if($(this).val()=="1")
+        {
             $("#dataPagamento").show("slow");
-            $("[name=data_pagamento]").prop("disabled", false);
+            $(".pagamento").addClass('show');
+            
         
-        }else 
+        }else // A conta em aberto
             {
-                $("#dataPagamento").show("slow");
-
-                $("[name=data_pagamento]").prop("disabled", true);
+                $("#dataPagamento").hide("slow");       
             }
-
-        
 
     })
 

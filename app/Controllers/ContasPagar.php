@@ -94,7 +94,6 @@ class ContasPagar extends BaseController
     public function exibir(int $id = null)
     {
         $conta = $this->contaPagarModel->buscaContaOu404($id);
-        $fornecedorDaConta = strtoupper($conta->razao);
 
         $data = [
 

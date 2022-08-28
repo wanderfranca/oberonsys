@@ -97,7 +97,7 @@ class ContasPagar extends BaseController
 
         $data = [
 
-            'titulo'    => "CONTA A PAGAR - $fornecedorDaConta" ,
+            'titulo'    => "CONTA A PAGAR" ,
             'conta'     => $conta,
 
         ];
@@ -164,22 +164,24 @@ class ContasPagar extends BaseController
         //Validação: Se a situação for ABERTA, set a data de pagamento como NULL
         if($conta->situacao == 0)
         {
-            $conta->data_pagamento = null;
+            $conta->data_pagamento = '';
         }
 
         //Validação: Se a data de pagamento for superior ao dia de hoje
-        if($conta->data_pagamento > date('Y-m-d'))
-        {
-            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-            $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
-            return $this->response->setJSON($retorno);
+        if($conta->data_pagamento != null){
+
+            if($conta->data_pagamento > date('Y-m-d'))
+            {
+                $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+                $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
+                return $this->response->setJSON($retorno);
+            }
         }
 
 
         if($this->contaPagarModel->save($conta)){
 
             session()->setFlashdata('sucesso', "Conta atualizada com sucesso!");
-
             return $this->response->setJSON($retorno);
 
         }

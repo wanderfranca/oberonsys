@@ -59,9 +59,6 @@
 <script src="<?php echo site_url('recursos/vendor/mask/app.js'); ?>"></script>
 
 
-
-<?php endif; ?>
-
 <script>
 $(document).ready(function() 
 {

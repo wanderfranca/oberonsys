@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class TipoDocumentoModel extends Model
 {
     protected $table            = 'tipos_documentos';
-    protected $returnType       = 'array';
+    protected $returnType       = 'object';
     protected $allowedFields    = [
         'tipo_documento_nome',
         'tipo_documento_descricao',

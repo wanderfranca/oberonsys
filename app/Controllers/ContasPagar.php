@@ -148,7 +148,16 @@ class ContasPagar extends BaseController
 
         $conta = $this->contaPagarModel->buscaContaOu404($post['id']);
 
+        //Validação: Se a situação for ABERTA, UNSET(REMOVA) a data de pagamento
+        if($post['situacao'] == 0)
+        {
+            unset($post['data_pagamento']);
+            // $conta->data_pagamento = null;
+        
+        }
+
         $conta->fill($post);
+
 
         if($conta->hasChanged() === false)
         {
@@ -157,27 +166,31 @@ class ContasPagar extends BaseController
             return $this->response->setJSON($retorno);
         }
 
+        //Validação: Se a data de pagamento for superior ao dia de hoje
+        if($conta->data_pagamento != null){
+
+        if($conta->data_pagamento > date('Y-m-d'))
+        {
+            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
+            return $this->response->setJSON($retorno);
+        }
+
+    }
+
         // Remover a virgula do valor da conta, para passar pelo form validation
         // Se não remover a virgula aqui, o form_validation(greater_than[0]) diz que valores como 2,100.00 são menores que zero (pois são strig com virgula)
         $conta->valor_conta = str_replace(",", "", $conta->valor_conta);
 
-        //Validação: Se a situação for ABERTA, set a data de pagamento como NULL
-        if($conta->situacao == 0)
-        {
-            $conta->data_pagamento = '';
-        }
 
-
-            if($conta->data_pagamento > date('Y-m-d'))
-            {
-                $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-                $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
-                return $this->response->setJSON($retorno);
-            }
-        }
+        // echo '<pre>';
+        // print_r($post);
+        // exit;
 
 
         if($this->contaPagarModel->save($conta)){
+
+         
 
             session()->setFlashdata('sucesso', "Conta atualizada com sucesso!");
             return $this->response->setJSON($retorno);

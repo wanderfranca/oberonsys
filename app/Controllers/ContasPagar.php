@@ -167,8 +167,6 @@ class ContasPagar extends BaseController
             $conta->data_pagamento = '';
         }
 
-        //Validação: Se a data de pagamento for superior ao dia de hoje
-        if($conta->data_pagamento != null){
 
             if($conta->data_pagamento > date('Y-m-d'))
             {

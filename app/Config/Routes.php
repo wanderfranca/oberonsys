@@ -40,6 +40,7 @@ $routes->group('cpagar', static function($routes)
 {
     $routes->get('/', 'ContasPagar::index');
     $routes->get('recuperacontaspagar', 'ContasPagar::recuperaContasPagar');
+    $routes->get('buscaFornecedores', 'ContasPagar::buscaFornecedores');
     $routes->get('exibir/(:segment)', 'ContasPagar::exibir/$1');
     $routes->get('editar/(:segment)', 'ContasPagar::editar/$1');
     $routes->get('criar/', 'ContasPagar::criar');

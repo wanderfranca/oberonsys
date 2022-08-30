@@ -91,6 +91,71 @@ class ContasPagar extends BaseController
 
     }
 
+    public function criar()
+    {
+        $conta = new ContaPagar();
+        $despesasAtivas = $this->despesaModel->despesasAtivas(); //Todas as despesas ativas
+        $contasBancariasAtivas = $this->contaBancariaModel->contasBancariasAtivas(); //Todas as contas bancárias ativas da empresa
+        $tiposDocumentosAtivos = $this->tipoDocumentoModel->tiposDocumentosAtivos(); //Todas as despesas ativas
+
+        $data = [
+
+            'titulo'                => "CRIAR NOVA CONTA A PAGAR" ,
+            'conta'                 => $conta,
+            'despesasAtivas'        => $despesasAtivas,
+            'contasBancariasAtivas' => $contasBancariasAtivas,
+            'tiposDocumentosAtivos' => $tiposDocumentosAtivos,
+            
+            //FORNECEDORES ESTÃO SENDO ENVIADO VIA AJAXREQUEST NO MÉTODO buscaFornecedores
+
+        ];
+
+        // dd($conta);
+        return view('ContasPagar/criar', $data);
+
+        
+    }
+
+        
+    /**
+     * Método: buscaFornecedores via ajaxrequest para o Selectize
+     *
+     * @return response
+     */
+    public function buscaFornecedores()
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        $atributos = [
+            'id',
+            'CONCAT(razao, " CNPJ ", cnpj) AS razao',
+            'cnpj',
+        ];
+
+        $termo = $this->request->getGet('termo');
+
+        $fornecedores = $this->fornecedorModel->select($atributos)
+                                              ->asArray()
+                                              ->like('razao', $termo)
+                                              ->orLike('cnpj', $termo)
+                                              ->where('ativo', true)
+                                              ->orderby('razao', 'ASC')
+                                              ->findAll();
+    
+        return $this->response->setJSON($fornecedores);
+                                                
+
+    }
+    
+    /**
+     * Método: Exibir Contas a pagar
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function exibir(int $id = null)
     {
         $conta = $this->contaPagarModel->buscaContaOu404($id);
@@ -167,16 +232,16 @@ class ContasPagar extends BaseController
         }
 
         //Validação: Se a data de pagamento for superior ao dia de hoje
-        if($conta->data_pagamento != null){
+            if($conta->data_pagamento != null){
 
-        if($conta->data_pagamento > date('Y-m-d'))
-        {
-            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-            $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
-            return $this->response->setJSON($retorno);
+            if($conta->data_pagamento > date('Y-m-d'))
+            {
+                $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+                $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
+                return $this->response->setJSON($retorno);
+            }
+
         }
-
-    }
 
         // Remover a virgula do valor da conta, para passar pelo form validation
         // Se não remover a virgula aqui, o form_validation(greater_than[0]) diz que valores como 2,100.00 são menores que zero (pois são strig com virgula)

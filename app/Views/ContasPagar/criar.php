@@ -4,6 +4,31 @@
 
 <!-- Estilos -->
 <?php echo $this->section('estilos') ?>
+<link rel="stylesheet" type="text/css"
+    href="<?php echo site_url('recursos/vendor/selectize/selectize.bootstrap4.css'); ?>" />
+
+<style>
+/* Estilizando o select para acompanhar a formatação do template */
+
+.selectize-input,
+.selectize-control.single .selectize-input.input-active {
+    background: #2d3035 !important;
+}
+
+.selectize-dropdown,
+.selectize-input,
+.selectize-input input {
+    color: #fbfbfb;
+    background-color: #303030;
+}
+
+.selectize-input {
+    /*        height: calc(2.4rem + 2px);*/
+    border: 1px solid #444951;
+    border-radius: 0;
+}
+</style>
+
 <?php $this->endSection() ?>
 
 <!-- Conteúdo -->
@@ -32,7 +57,7 @@
                 <?php if($conta->situacao == 0): ?>
                     <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary mr-2">
                 <?php endif; ?>
-                    <a href="<?php echo site_url("cpagar/exibir/$conta->id") ?>" class="btn btn-secondary ml-2">Voltar</a>
+                    <a href="<?php echo site_url("cpagar") ?>" class="btn btn-secondary ml-2">Voltar</a>
 
                 </div>
 
@@ -55,6 +80,7 @@
 <!-- Scripts -->
 <?php echo $this->section('scripts') ?>
 
+<script type="text/javascript" src="<?php echo site_url('recursos/vendor/selectize/selectize.min.js'); ?>"></script>
 <script src="<?php echo site_url('recursos/vendor/mask/jquery.mask.min.js'); ?>"></script>
 <script src="<?php echo site_url('recursos/vendor/mask/app.js'); ?>"></script>
 
@@ -62,6 +88,44 @@
 <script>
 $(document).ready(function() 
 {
+   var $select = $(".selectize").selectize({
+            create: false,
+            // sortField: "text",
+
+            maxItem: 1,
+            valueField: 'id',
+            labelField: 'razao',
+            searchField: ['razao', 'cnpj'],
+
+            load: function(query, callback)
+            {
+                if(query.length < 2)
+                {
+                    return callback();
+                }
+
+                $.ajax({
+
+                    url: '<?php echo site_url("cpagar/buscaFornecedores/") ?>?termo=' + encodeURIComponent(query),
+                    success: function(response)
+                    {
+                        $select.options = response;
+
+                        callback(response);
+                    },
+
+                    error: function() {
+                        alert(
+                            'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!');
+
+                        }
+
+
+                });
+            }
+
+        });
+
     $("#datapg").attr("readonly", true); 
 
     $("[name=situacao]").on("click", function() {
@@ -87,7 +151,7 @@ $(document).ready(function()
                     $.ajax({
 
                             type: 'POST',
-                            url: '<?php echo site_url('cpagar/atualizar'); ?>',
+                            url: '<?php echo site_url('cpagar/cadastrar'); ?>',
                             data: new FormData(this),
                             dataType: 'json',
                             contentType: false,
@@ -108,18 +172,9 @@ $(document).ready(function()
 
                                 if (!response.erro) {
 
-                                    if (response.info) {
-
-                                        $("#response").html('<div class="alert alert-info">'+ response.info +'</div>');
-
-                                        } else {
-
-                                            // Tudo certo com a atualização do usuário
-                                            // Podemos agora redirecioná-lo tranquilamente
-
-                                            window.location.href = "<?php echo site_url("cpagar/exibir/$conta->id"); ?>";
-
-                                    }
+                                    // Tudo certo com a atualização do usuário
+                                    // Podemos agora redirecioná-lo tranquilamente
+                                    window.location.href = "<?php echo site_url("cpagar/exibir/"); ?>" + response.id;
 
                                 }
                                     
@@ -146,8 +201,8 @@ $(document).ready(function()
 
                                     alert(
                                         'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!');
-                                    $("#btn-salvar").val('Salvar');
-                                    $("#btn-salvar").removeAttr("disabled");
+                                        $("#btn-salvar").val('Salvar');
+                                        $("#btn-salvar").removeAttr("disabled");
                                 }
 
                             });

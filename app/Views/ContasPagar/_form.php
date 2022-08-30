@@ -1,16 +1,34 @@
 <div class="form-row">
         <?php if($conta->id === null): ?>
-
-            Nova conta
+            <!-- Fornecedores  -->
+            <div class="form-group col-md-12">
+            <label class="form-control-label">Fornecedor</label>
+                <select name="fornecedor_id" class="selectize">
+                    <option value="">Selecione o fornecedor...</option>
+                </select>
+            </div>
+            <!-- Conta bancária -->
+            <div class="form-group col-md-12">
+                        <label class="form-control-label">Conta Bancária</label>
+                        <select name="despesa_id" class="form-control">
+                            <?php foreach( $contasBancariasAtivas as $cbancaria): ?>
+                            <option class="text-black" value="<?php echo $cbancaria->id ?>"
+                                <?php echo ($cbancaria->id == $conta->conta_bancaria_id ? 'selected' : '') ?>>
+                                <?php echo $cbancaria->banco_finalidade ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+            
 
         <?php else: ?>
 
-            <div class="form-group col-md-7">
+            <div class="form-group col-md-12">
             <label class="form-control-label">Fornecedor</label>
             <input type="text" disabled readonly class="form-control"value="<?php echo esc($conta->razao) ?>">
         </div>
 
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-12">
                         <label class="form-control-label">Conta Bancária</label>
                         <select name="despesa_id" class="form-control" disabled readonly>
                             <?php foreach( $contasBancariasAtivas as $cbancaria): ?>

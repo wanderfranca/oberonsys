@@ -2030,7 +2030,7 @@ input.input-material ~ label.is-invalid ~ label {
 * ==========================================================
 */
 
-th, td { text-align: center; }
+th, td { text-align: left !important; }
 
 .table {
   margin-bottom: 0;
@@ -2043,7 +2043,7 @@ th, td { text-align: center; }
 
 .table thead th {
   border: none;
-  color: #e7e7e7;
+  color: #f7f7f7;
 }
 
 .table-striped tbody tr {
@@ -2057,6 +2057,10 @@ th, td { text-align: center; }
 
 .table-striped tbody tr:nth-of-type(odd):hover {
   background-color: #26292d;
+}
+
+.table thead th{
+  background-color: #2d3035 !important;
 }
 
 .table-bordered td,

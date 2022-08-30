@@ -5448,7 +5448,6 @@
     position: relative;
     padding: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
     margin-bottom: var(--bs-alert-margin-bottom);
-    color: var(--bs-alert-color);
     background-color: var(--bs-alert-bg);
     border: var(--bs-alert-border);
     border-radius: var(--bs-alert-border-radius, 0);

@@ -48,6 +48,10 @@ $routes->group('cpagar', static function($routes)
     //POST
     $routes->post('cadastrar', 'ContasPagar::cadastrar');
     $routes->post('atualizar', 'ContasPagar::atualizar');
+
+    //GET e POST
+    $routes->match(['get','post'], 'excluir/(:segment)', 'ContasPagar::excluir/$1');
+
 });
 
 /*

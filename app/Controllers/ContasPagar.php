@@ -65,15 +65,15 @@ class ContasPagar extends BaseController
                     'despesa_nome' => esc($conta->despesa_nome),
                     'data_vencimento' => date('d/m/Y',strtotime($conta->data_vencimento)),
                     // 'banco_finalidade' => $conta->banco_finalidade,
-                    'opcoes'        => "<div class='btn-group dropleft'>
-                                        <button type='button' class='btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                        <i class='fa fa-chevron-down text-primary' aria-hidden='true'></i>
-                                        </button>
-                                        <div class='dropdown-menu'>
-                                            <a class='dropdown-item' href='cpagar/exibir/$conta->id'>Visualizar</a>
-                                            <a class='dropdown-item' href='cpagar/editar/$conta->id'>Editar</a>
-                                            <a class='dropdown-item' href='cpagar/imprimir/$conta->id'>Imprimir</a>
-                                        </div></div></div>",
+                    // 'opcoes'        => "<div class='btn-group dropleft'>
+                    //                     <button type='button' class='btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                    //                     <i class='fa fa-chevron-down text-primary' aria-hidden='true'></i>
+                    //                     </button>
+                    //                     <div class='dropdown-menu'>
+                    //                         <a class='dropdown-item' href='cpagar/exibir/$conta->id'>Visualizar</a>
+                    //                         <a class='dropdown-item' href='cpagar/editar/$conta->id'>Editar</a>
+                    //                         <a class='dropdown-item' href='cpagar/imprimir/$conta->id'>Imprimir</a>
+                    //                     </div></div></div>",
                 ];
 
             }
@@ -116,6 +116,62 @@ class ContasPagar extends BaseController
         
     }
 
+    public function cadastrar()
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        // Recupero o post da requisição
+        $post = $this->request->getPost();
+
+        // Instanciando uma nova
+        $conta = new ContaPagar($post);
+
+        //Validação: Se a situação for ABERTA, UNSET(REMOVA) a data de pagamento
+        if($post['situacao'] == 0)
+        {
+            unset($post['data_pagamento']);
+        
+        }
+
+        // Remover a virgula do valor da conta, para passar pelo form validation
+        // Se não remover a virgula aqui, o form_validation(greater_than[0]) diz que valores como 2,100.00 são menores que zero (pois são strig com virgula)
+        $conta->valor_conta = str_replace(",", "", $conta->valor_conta);
+
+        //Validação: Se a data de pagamento for superior ao dia de hoje
+        if($conta->data_pagamento != null)
+        {
+            if($conta->data_pagamento > date('Y-m-d'))
+            {
+                $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+                $retorno['erros_model'] = ['data_pagamento' => '* A data de pagamento não pode ser superior a Hoje'];                    
+                return $this->response->setJSON($retorno);
+            }
+        }
+
+        if($this->contaPagarModel->save($conta)){
+
+            session()->setFlashdata('sucesso', "Conta atualizada com sucesso!");
+
+            $retorno['id'] = $this->contaPagarModel->getInsertID(); 
+
+            return $this->response->setJSON($retorno);
+
+        }
+
+            //Erros de validação
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = $this->contaPagarModel->errors();
+
+            //Retorno para o AJAX
+            return $this->response->setJSON($retorno);
+
+    }
         
     /**
      * Método: buscaFornecedores via ajaxrequest para o Selectize
@@ -268,6 +324,35 @@ class ContasPagar extends BaseController
 
             //Retorno para o AJAX
             return $this->response->setJSON($retorno);
+
+    }
+
+    public function excluir(int $id = null)
+    {
+
+        $conta = $this->contaPagarModel->buscaContaOu404($id);
+
+        if($conta === null)
+        {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("conta a pagar não encontrada");
+        }
+
+
+        if($this->request->getMethod() === 'post')
+        {
+            $this->contaPagarModel->delete($id);
+
+            return redirect()->to(site_url("cpagar"))->with('sucesso', "Conta excluída com sucesso!!");
+        }
+
+        $data = [
+
+            'titulo' => "EXCLUIR A CONTA A PAGAR ",
+            'conta' => $conta,
+
+        ];
+
+        return view('ContasPagar/excluir', $data);
 
     }
 }

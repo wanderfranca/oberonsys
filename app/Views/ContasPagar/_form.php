@@ -10,7 +10,7 @@
             <!-- Conta bancária -->
             <div class="form-group col-md-12">
                         <label class="form-control-label">Conta Bancária</label>
-                        <select name="despesa_id" class="form-control">
+                        <select name="conta_bancaria_id" class="form-control">
                             <?php foreach( $contasBancariasAtivas as $cbancaria): ?>
                             <option class="text-black" value="<?php echo $cbancaria->id ?>"
                                 <?php echo ($cbancaria->id == $conta->conta_bancaria_id ? 'selected' : '') ?>>
@@ -30,7 +30,7 @@
 
         <div class="form-group col-md-12">
                         <label class="form-control-label">Conta Bancária</label>
-                        <select name="despesa_id" class="form-control" disabled readonly>
+                        <select name="conta_bancaria_id" class="form-control" disabled readonly>
                             <?php foreach( $contasBancariasAtivas as $cbancaria): ?>
                             <option class="text-black" value="<?php echo $cbancaria->id ?>"
                                 <?php echo ($cbancaria->id == $conta->conta_bancaria_id ? 'selected' : '') ?>>
@@ -75,19 +75,19 @@
         <!-- Valor da conta -->
         <div class="form-group col-md-3">
             <label class="form-control-label">Valor da conta</label>
-            <input type="text" name="valor_conta" placeholder="Insira o valor" class="form-control money" value="<?php echo esc($conta->valor_conta) ?>">
+            <input type="text" name="valor_conta" placeholder="Insira o valor" class="form-control money" required value="<?php echo esc($conta->valor_conta) ?>">
         </div>
 
         <!-- Data de vencimento -->
         <div class="form-group col-md-5">
             <label class="form-control-label">Data de vencimento</label>
-            <input type="date" name="data_vencimento" placeholder="dd-mm-aaaa" class="form-control" value="<?php echo esc($conta->data_vencimento) ?>">
+            <input type="date" name="data_vencimento" placeholder="dd-mm-aaaa" required class="form-control" value="<?php echo esc($conta->data_vencimento) ?>">
         </div>
         
         <!-- Descrição -->
         <div class="form-group col-md-8">
             <label class="form-control-label">Descrição</label>
-            <textarea class="form-control" name="descricao_conta"><?php echo esc($conta->descricao_conta) ?></textarea>
+            <textarea class="form-control" name="descricao_conta" placeholder="Desreva a finalidade da conta"><?php echo esc($conta->descricao_conta) ?></textarea>
         </div>
     </div>
 

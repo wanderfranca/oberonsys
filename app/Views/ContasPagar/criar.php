@@ -85,7 +85,10 @@
 <script src="<?php echo site_url('recursos/vendor/mask/app.js'); ?>"></script>
 
 
+
 <script>
+    $("#dataPagamento").hide("slow");
+
 $(document).ready(function() 
 {
    var $select = $(".selectize").selectize({

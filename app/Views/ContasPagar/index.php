@@ -47,7 +47,6 @@
             </div>
            
             <div class="table-responsive">
-
                 <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                     <thead>
                         <tr>
@@ -57,7 +56,6 @@
                             <th>Valor</th>
                             <th>Despesa</th>
                             <th>Vencimento</th>
-                            <th data-orderable="false"></th>
                         </tr>
                     </thead>
                 </table>
@@ -121,7 +119,7 @@ load_data(); // first load
 function load_data(initial_date, final_date) {
     var ajax_url = '<?php echo site_url('cpagar/recuperacontaspagar'); ?>';
 
-    $('#ajaxTable').DataTable({
+   var tabela = $('#ajaxTable').DataTable({
         "oLanguage": DATATABLE_PTBR,
         "order": [],
         "responsive" : true,  
@@ -161,9 +159,7 @@ function load_data(initial_date, final_date) {
             {
                 data: 'data_vencimento'
             },
-            {
-                data: 'opcoes'
-            },
+
         ]
 
 
@@ -175,14 +171,14 @@ $("#filter").click(function() {
     var final_date = $("#final_date").val();
 
     if (initial_date == undefined && final_date == undefined) {
-        $('#ajaxTable').DataTable().destroy();
+        $("#error_log").html("<span>Informe um período inicial e final</span>");
     } else {
         var date1 = new Date(initial_date);
         var date2 = new Date(final_date);
         var diffTime = Math.abs(date2 - date1);
         var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-        if (initial_date == undefined && final_date == undefined) {
+        if (initial_date == undefined || final_date == undefined) {
             $("#error_log").html("<span>Informe um período inicial e final</span>");
         } else {
             if (date1 > date2) {
@@ -191,6 +187,7 @@ $("#filter").click(function() {
                 $("#error_log").html("");
                 $('#ajaxTable').DataTable().destroy();
                 load_data(initial_date, final_date);
+                
             }
         }
     }

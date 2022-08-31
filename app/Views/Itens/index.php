@@ -22,20 +22,20 @@
             <div class="content-fluid mb-4">
                 <h5><?php echo $titulo_visaogeral; ?></h5>
             </div>
-            <a href="<?php echo site_url('itens/criar');?>" class="btn btn-primary text-white mb-5"> NOVO PRODUTO </i></a>
-            <a href="<?php echo site_url('itens/produtosexcluidos');?>" class="btn btn-danger mb-5 text-white"> PRODUTOS EXCLUÍDOS </a>
-            <a href="<?php echo site_url('itens/servicosexcluidos');?>" class="btn btn-danger mb-5 text-white"> SERVIÇOS EXCLUÍDOS </a>
+            <a href="<?php echo site_url('itens/criar');?>" class="btn btn-primary text-white mb-5 mr-1"> NOVO PRODUTO </i></a>
+            <a href="<?php echo site_url('itens/produtosexcluidos');?>" class="btn btn-danger mb-5 mr-1 text-white"> PRODUTOS EXCLUÍDOS </a>
+            <a href="<?php echo site_url('itens/servicosexcluidos');?>" class="btn btn-danger mb-5 mr-1 text-white"> SERVIÇOS EXCLUÍDOS </a>
 
             <div class="block">
                 <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th class="text-center">Produto</th>
-                            <th class="text-center">Código</th>
-                            <th class="text-center">Tipo</th>
-                            <th class="text-center">Estoque</th>
-                            <th class="text-center">Preço Venda</th>
-                            <th class="text-center">Situação</th>
+                            <th>Produto</th>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Estoque</th>
+                            <th>Preço Venda</th>
+                            <th>Situação</th>
                         </tr>
                     </thead>
                 </table>

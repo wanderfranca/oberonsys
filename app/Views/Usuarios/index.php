@@ -24,6 +24,7 @@
                               <th>Imagem</th>
                               <th>Nome</th>
                               <th>E-mail</th>
+                              <th>Grupos de acesso</th>
                               <th>Situação</th>
                             </tr>
                           </thead>
@@ -83,6 +84,13 @@ const DATATABLE_PTBR = {
                 { data: 'imagem' },
                 { data: 'nome' },
                 { data: 'email' },
+                
+                { data: 'grupos[, ]', 
+                render: function(data, tyoe, row)
+                {
+                  return data.split(",").join("<br>");
+                }},
+
                 { data: 'ativo' },
 
             ],

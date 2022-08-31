@@ -33,12 +33,10 @@ class Usuarios extends BaseController
 
     public function recuperaUsuarios()
     {
-
-
-        if(!$this->request->isAJAX()){
-            
-            return redirect()->back();
-        }
+        // if(!$this->request->isAJAX())
+        // { 
+        //     return redirect()->back();
+        // }
 
             $atributos = [
                 
@@ -52,9 +50,26 @@ class Usuarios extends BaseController
 
             // SELECT EM TODOS OS USUÁRIOS
             $usuarios = $this->usuarioModel->select($atributos)
+                                            ->asArray()
                                             ->withDeleted(true) //Buscar também os dados deletados
                                             ->orderBy('id', 'DESC')
                                             ->findAll();
+
+
+
+            // Recuperar usuários e seus grupos
+            $gruposUsuarios = $this->grupoUsuarioModel->recuperaGrupos();
+
+            foreach($usuarios as $key => $usuario)
+            {
+                foreach($gruposUsuarios as $grupo)
+                {
+                    if($usuario['id'] === $grupo['usuario_id'])
+                    {
+                        $usuarios[$key]['grupos'][] = $grupo['nome'];
+                    }
+                }
+            }
 
 
             //Receberá o array de objetos de usuários
@@ -62,15 +77,13 @@ class Usuarios extends BaseController
 
             foreach($usuarios as $usuario){
 
-                $nomeUsuario = esc($usuario->nome);
-
                 //Caminho da imagem do usuário
-                if($usuario->imagem != null){
+                if($usuario['imagem'] != null){
 
                     $imagem = [
-                        'src' => site_url("usuarios/imagem/$usuario->imagem"),
+                        'src' => site_url("usuarios/imagem/".$usuario['imagem']),
                         'class' => 'rounded-circle img-fluid',
-                        'alt' => esc($usuario->nome),
+                        'alt' => esc($usuario['nome']),
                         'width'=> '50',
                     ];
 
@@ -86,13 +99,20 @@ class Usuarios extends BaseController
                     ];
                 }
 
+                if(isset($usuario['grupos']) === false)
+                {
+                    $usuario['grupos'] = ['<span class="text-warning">Sem grupos de acesso</span>'];
+                }
+
 
                 $data[] = [
 
-                    'imagem'    => $usuario->imagem = img($imagem),
-                    'nome'      => anchor("usuarios/exibir/$usuario->id", esc($usuario->nome), 'title="Exibir usuário '.$nomeUsuario.'"'),
-                    'email'     => esc($usuario->email),
-                    'ativo'     => $usuario->exibeSituacao(),
+                    'imagem'    => $usuario['imagem'] = img($imagem),
+                    'nome'      => anchor("usuarios/exibir/".$usuario['id'], esc($usuario['nome']), 'title="Exibir usuário '.esc($usuario['nome']).' "'),
+                    'email'     => esc($usuario['email']),
+                    'grupos'     => $usuario['grupos'],
+                    // 'ativo'     => $usuario->exibeSituacao(),
+                    'ativo'     => 'teste',
                 ];
 
             }

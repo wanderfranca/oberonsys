@@ -52,4 +52,22 @@ class GrupoUsuarioModel extends Model
 
     }
 
+    public function recuperaGrupos(){
+
+        $atributos = [
+            'grupos_usuarios.usuario_id ',
+            'grupos.id AS grupo_id',
+            'grupos.nome',
+        ];
+
+        return $this->select($atributos)
+                    ->asArray()
+                    ->join('grupos', 'grupos.id = grupos_usuarios.grupo_id')
+                    ->join('usuarios', 'usuarios.id = grupos_usuarios.usuario_id')
+                    ->where('grupos.deletado_em', null)
+                    ->findAll();
+
+    }
+
+
 }

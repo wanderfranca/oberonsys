@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CriaTabelaTiposDeDocumentos extends Migration
+class CriaTabelaInstituicoesBancarias extends Migration
 {
     public function up()
     {

@@ -476,7 +476,7 @@ class Usuarios extends BaseController
         $grupoCliente = 2;
         if(in_array($grupoCliente, array_column($usuario->grupos, 'grupo_id'))){
             return redirect()->to(site_url("usuarios/exibir/$usuario->id"))
-                            ->with('info', 'Não é possível esse usuário a outros grupos ou removê-los pois trata-se de um cliente');
+                            ->with('info', 'Este usuário é um cliente, então não é possível gerir seus grupos');
 
         }
 
@@ -574,7 +574,7 @@ class Usuarios extends BaseController
                                         ->delete();
 
                 session()->setFlashdata('sucesso', 'Dados salvos com sucesso!');
-                session()->setFlashdata('info', 'Percebi que o grupo ADMINISTRADORES foi escolhido, portanto, não há necessidade de escolher outros grupos, pois os administradores já possuem acesso total ao sistema');
+                session()->setFlashdata('info', 'O grupo ADMINISTRADORES foi escolhido, portanto, não há necessidade de escolher outros grupos, pois os administradores já possuem acesso total ao sistema');
 
                 return $this->response->setJSON($retorno);
 

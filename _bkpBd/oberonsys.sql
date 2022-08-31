@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01-Set-2022 às 01:11
+-- Tempo de geração: 01-Set-2022 às 01:36
 -- Versão do servidor: 10.4.20-MariaDB
 -- versão do PHP: 7.4.22
 
@@ -46,7 +46,7 @@ INSERT INTO `categorias` (`id`, `nome`, `descricao`, `ativo`, `criado_em`, `atua
 (2, 'Hardwares', 'Placas de vídeo, photoshop e muito mais', 1, '2022-08-05 23:43:11', '2022-08-05 23:43:11.000000', NULL),
 (3, 'Serviço Técnico', 'Serviços de montagem, manutenção, reparo.', 1, '2022-07-12 19:52:39', NULL, NULL),
 (4, 'Acessórios', 'Chaveiros, capas, cadeados', 1, '2022-07-13 00:04:22', '2022-07-13 00:04:22.000000', NULL),
-(6, 'Papelaria', '', 1, '2022-08-05 21:33:02', '2022-08-05 21:33:02.000000', NULL),
+(6, 'Papelaria', 'Itens de escritório, papelaria e organização', 1, '2022-08-31 23:16:14', '2022-08-31 23:16:14.133668', NULL),
 (8, 'Alimentos', 'chocolates, biscoitos, quitutes', 1, '2022-08-05 21:36:03', '2022-08-05 21:36:03.000000', NULL);
 
 -- --------------------------------------------------------
@@ -9756,7 +9756,11 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 (10, '2022-07-17-162500', 'App\\Database\\Migrations\\CriaTabelaItensHistorico', 'default', 'App', 1658075616, 10),
 (11, '2022-07-18-125032', 'App\\Database\\Migrations\\CriaTabelaItensImagens', 'default', 'App', 1658148899, 11),
 (12, '2022-07-19-124905', 'App\\Database\\Migrations\\CriaTabelaClientes', 'default', 'App', 1658237442, 12),
-(13, '2022-07-19-124906', 'App\\Database\\Migrations\\CriaTabelaDespesas', 'default', 'App', 1658237443, 13);
+(13, ' 2022-07-24-172003 ', 'App\\Database\\Migrations\\CriaTabelaDespesas', 'default', 'App', 1658237443, 13),
+(14, '2022-07-24-173723', 'App\\Database\\Migrations\\CriaTabelaTiposDeDocumentos', 'default', 'App', 1658237443, 14),
+(15, '2022-07-24-183725', 'App\\Database\\Migrations\\CriaTabelaInstituicoesBancarias', 'default', 'App', 1758237448, 15),
+(16, '2022-07-24-185005', 'App\\Database\\Migrations\\CriaTabelaContasBancarias', 'default', 'App', 1758237452, 16),
+(17, '2022-07-24-185343', 'App\\Database\\Migrations\\CriaTabelaContasPagar', 'default', 'App', 1758237452, 17);
 
 -- --------------------------------------------------------
 
@@ -13083,7 +13087,7 @@ ALTER TABLE `itens_imagens`
 -- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT de tabela `permissoes`

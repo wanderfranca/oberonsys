@@ -146,8 +146,18 @@
 
                 <?php endif; ?>
                 <div class="title">
-                    <h6>DESENVOLVIMENTO</h6>
-                    <p>CEO Oberon</p>
+                    <h1 class="h5"><?php echo esc(usuario_logado()->nome); ?></h1>
+                    <?php if(usuario_logado()->is_admin): ?>
+                    <p>Administrador</p>
+                    <?php endif; ?>
+
+                    <?php if(!usuario_logado()->is_admin && !usuario_logado()->is_cliente): ?>
+                    <p>Operacional</p>
+                    <?php endif; ?>
+
+                    <?php if(usuario_logado()->is_cliente): ?>
+                    <p>Cliente</p>
+                    <?php endif; ?>
                 </div>
             </div>
             <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>

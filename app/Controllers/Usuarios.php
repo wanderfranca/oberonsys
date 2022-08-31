@@ -25,7 +25,6 @@ class Usuarios extends BaseController
         $data = [
 
             'titulo' => 'Usuários do sistema',
-
         ];
 
         return view('Usuarios/index', $data);
@@ -33,10 +32,10 @@ class Usuarios extends BaseController
 
     public function recuperaUsuarios()
     {
-        // if(!$this->request->isAJAX())
-        // { 
-        //     return redirect()->back();
-        // }
+        if(!$this->request->isAJAX())
+        { 
+            return redirect()->back();
+        }
 
             $atributos = [
                 
@@ -55,8 +54,6 @@ class Usuarios extends BaseController
                                             ->orderBy('id', 'DESC')
                                             ->findAll();
 
-
-
             // Recuperar usuários e seus grupos
             $gruposUsuarios = $this->grupoUsuarioModel->recuperaGrupos();
 
@@ -71,7 +68,6 @@ class Usuarios extends BaseController
                 }
             }
 
-
             //Receberá o array de objetos de usuários
             $data = [];
 
@@ -79,14 +75,12 @@ class Usuarios extends BaseController
 
                 //Caminho da imagem do usuário
                 if($usuario['imagem'] != null){
-
                     $imagem = [
                         'src' => site_url("usuarios/imagem/".$usuario['imagem']),
                         'class' => 'rounded-circle img-fluid',
                         'alt' => esc($usuario['nome']),
                         'width'=> '50',
                     ];
-
 
                 } else {
 
@@ -104,15 +98,13 @@ class Usuarios extends BaseController
                     $usuario['grupos'] = ['<span class="text-warning">Sem grupos de acesso</span>'];
                 }
 
-
+                $usuario = new usuario($usuario);
                 $data[] = [
-
-                    'imagem'    => $usuario['imagem'] = img($imagem),
-                    'nome'      => anchor("usuarios/exibir/".$usuario['id'], esc($usuario['nome']), 'title="Exibir usuário '.esc($usuario['nome']).' "'),
-                    'email'     => esc($usuario['email']),
-                    'grupos'     => $usuario['grupos'],
-                    // 'ativo'     => $usuario->exibeSituacao(),
-                    'ativo'     => 'teste',
+                    'imagem'    => $usuario->imagem = img($imagem),
+                    'nome'      => anchor("usuarios/exibir/".$usuario->id, esc($usuario->nome), 'title="Exibir usuário '.esc($usuario->nome).' "'),
+                    'email'     => esc($usuario->email),
+                    'grupos'     => $usuario->grupos,
+                    'ativo'     => $usuario->exibeSituacao(),
                 ];
 
             }
@@ -131,8 +123,6 @@ class Usuarios extends BaseController
     {
 
         $usuario = new Usuario();
-
-        // dd($usuario);
 
         $data = [
 
@@ -210,11 +200,9 @@ class Usuarios extends BaseController
     public function editar(int $id = null)
     {
 
-
         $usuario = $this->buscaUsuarioOu404($id);
 
           $data = [
-
             'titulo' => "Editando o usuário ".esc($usuario->nome),
             'usuario' => $usuario,
 

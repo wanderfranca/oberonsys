@@ -179,6 +179,8 @@
                     <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">Contas a Receber </a></li>
                 </ul>
 
+                <li class="<?php echo (url_is('eventos') ? 'active' : '') ?>"><a href="<?php echo site_url('eventos'); ?>"><i class="fa fa-calendar"></i>Eventos </a></li>
+
 
                 <li>
                 <a href="#gestaoDropdown" aria-expanded="<?php echo (url_is('fornecedores/excluidos') | url_is('itens/produtosexcluidos') | url_is('clientes/excluidos') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="icon-windows"></i>Gestão de Cadastros</a>
@@ -247,19 +249,26 @@
     <script src="<?php echo site_url('recursos/');?>vendor/jquery/jquery.min.js"></script> 
     <script src="<?php echo site_url('recursos/');?>vendor/popper.js/umd/popper.min.js"> </script>
     <script src="<?php echo site_url('recursos/');?>vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src = "https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> 
-    <script src = "https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script> 
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" ></script> 
-    <script src = "https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js" ></script> 
-    <script src = "https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js" ></script> 
-    <script src = "https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js" ></script> 
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> 
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script> 
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script> 
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script> 
     <script src="<?php echo site_url('recursos/');?>js/front.js"></script>
     <script src="<?php echo site_url('recursos/');?>js/close-alert.js"></script>
 
-    <!-- ESPAÇO RESERVADO PARA RENDERIZAR OS SCRIPTS DE CADA VIEW E EXTENDER O LAYOUT -->
+    <!-- SCRIPTS -->
     <?php echo $this->renderSection('scripts'); ?>
+
+    <?php if(url_is('eventos')): ?>
+    <!-- carregar no Full Calendar -->
+    <script src="<?php echo site_url('recursos/vendor/fullcalendar/fullcalendar.min.js');?>"></script>
+    <script src="<?php echo site_url('recursos/vendor/fullcalendar/toastr.min.js');?>"></script>
+    <script src="<?php echo site_url('recursos/vendor/fullcalendar/moment.min.js');?>"></script>
+    <?php endif; ?>
 
     <script>
     $(function() {

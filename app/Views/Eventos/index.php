@@ -102,8 +102,7 @@ a:not([href]):not([tabindex]){
                 } // fim if title
             },
 
-
-            //Atualiza evento
+            //ATUALIZAR EVENTO ----
             eventDrop: function(event, delta, revertFunc)
             {
                 if(event.contapagar_id || event.ordem_id)
@@ -130,7 +129,7 @@ a:not([href]):not([tabindex]){
 
                     }); // fim Ajax Atualização
                 } // fim else
-            },
+            }, // Fim atualiza evento
         });
     });
 

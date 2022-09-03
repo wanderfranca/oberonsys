@@ -4,7 +4,7 @@
             <div class="form-group col-md-12">
             <label class="form-control-label">Fornecedor</label>
                 <select name="fornecedor_id" class="selectize">
-                    <option value="">Selecione o fornecedor...</option>
+                    <option value="">Busque o Fornecedor ou CNPJ</option>
                 </select>
             </div>
             <!-- Conta bancária -->
@@ -70,7 +70,7 @@
         <!-- Número do documento  -->
         <div class="form-group col-md-5">
             <label class="form-control-label">Número do Doc</label>
-            <input type="text" name="numero_documento" placeholder="Insira o valor" class="form-control" value="<?php echo esc($conta->numero_documento) ?>">
+            <input type="text" name="numero_documento" placeholder="Nr Doc" class="form-control" value="<?php echo esc($conta->numero_documento) ?>">
         </div>
         <!-- Valor da conta -->
         <div class="form-group col-md-3">

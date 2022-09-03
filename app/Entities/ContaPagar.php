@@ -38,6 +38,13 @@ class ContaPagar extends Entity
             return '<i class="fa fa-exclamation-circle text-danger"></i>&nbsp;<b class="text-white">EM ATRASO</b>';
         }
     }
+
+    public function defineDataVencimentoEvento() : int
+    {
+        $dataAtualConvertida = $this->mutateDate(date('Y-m-d'));
+
+        return $dataAtualConvertida->difference($this->data_vencimento)->getDays();
+    }
 }
 
 

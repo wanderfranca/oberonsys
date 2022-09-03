@@ -74,7 +74,7 @@
             
             <!-- Example single danger button -->
             <div class="btn-group mt-3">
-                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" adata-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Ações
                 </button>
                 <div class="dropdown-menu">
@@ -108,4 +108,7 @@
 
 <!-- Scripts -->
 <?php echo $this->section('scripts') ?>
+
+<script>$('.dropdown-toggle').dropdown() </script>
+
 <?php $this->endSection() ?>

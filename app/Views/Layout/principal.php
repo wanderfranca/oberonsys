@@ -247,8 +247,8 @@
     </div>
     <!-- JavaScript files-->
     <script src="<?php echo site_url('recursos/');?>vendor/jquery/jquery.min.js"></script> 
-    <script src="<?php echo site_url('recursos/');?>vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="<?php echo site_url('recursos/');?>vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="<?php echo site_url('recursos/');?>vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> 
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 

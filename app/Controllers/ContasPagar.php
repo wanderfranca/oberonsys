@@ -4,8 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Entities\ContaPagar;
-// use App\Entities\ContaBancaria;
-// use App\Entities\Despesa;
+
 
 class ContasPagar extends BaseController
 {
@@ -159,7 +158,7 @@ class ContasPagar extends BaseController
         // Cadastrar a conta a pagar no banco de dados
         if($this->contaPagarModel->save($conta)){
 
-            // Cadastrar a conta na tabela de eventos
+            // Cadastrar evento da conta em Eventos
             $this->cadastraEventoDaConta($conta);
 
             session()->setFlashdata('sucesso', "Conta atualizada com sucesso!");
@@ -312,7 +311,12 @@ class ContasPagar extends BaseController
         if($this->contaPagarModel->save($conta)){
 
             // Atualizar evento da conta quando a mesma estiver em aberto
-            $this->atualizaEventoDaConta($conta);
+            if($conta->hasChanged('data_vencimento') && $conta->situacao == '0')
+        {
+            $dias = $conta->defineDataVencimentoEvento();
+
+            $this->eventoModel->atualizaEvento('contapagar_id', $conta->id, $dias);
+        }
 
             session()->setFlashdata('sucesso', "Conta atualizada com sucesso!");
             return $this->response->setJSON($retorno);
@@ -361,7 +365,7 @@ class ContasPagar extends BaseController
     private function cadastraEventoDaConta(object $conta)
     {
         // Cadastrar o Evento - no banco de dados Eventos
-        if($conta->sitaucao == '0')
+        if($conta->sitaucao == 0)
         {
             $fornecedor = $this->fornecedorModel->select('razao, cnpj')->find($conta->fornecedor_id);
 

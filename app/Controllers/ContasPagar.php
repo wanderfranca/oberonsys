@@ -156,7 +156,6 @@ class ContasPagar extends BaseController
             }
         }
 
-
         // Cadastrar a conta a pagar no banco de dados
         if($this->contaPagarModel->save($conta)){
 

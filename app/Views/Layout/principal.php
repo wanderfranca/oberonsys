@@ -176,7 +176,7 @@
                 <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('creceber') || url_is('cpagar') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="fa fa-money"></i>Financeiro</a>
                 <ul id="gestaoFinDropdown" class="<?php echo (url_is('creceber') || url_is('cpagar') ? '' : 'collapse') ?> list-unstyled ">
                     <li class="<?php echo (url_is('cpagar') ? 'active' : '') ?>"><a href="<?php echo site_url('cpagar'); ?>">Contas a Pagar </a></li>
-                    <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">Contas a Receber </a></li>
+                    <!-- <li class="<?php echo (url_is('#') ? 'active' : '') ?>"><a href="<?php echo site_url('#'); ?>">Contas a Receber </a></li> -->
                 </ul>
 
                 <li class="<?php echo (url_is('eventos') ? 'active' : '') ?>"><a href="<?php echo site_url('eventos'); ?>"><i class="fa fa-calendar"></i>Eventos </a></li>

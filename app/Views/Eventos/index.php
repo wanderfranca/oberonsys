@@ -123,13 +123,51 @@ a:not([href]):not([tabindex]){
                         },
                         success: function(response)
                         {
-                            exibeMensagem('Evento atualizado com sucesso!');
+                            exibeMensagem('Atualizado com sucesso!');
 
                         }, // Fim success
 
                     }); // fim Ajax Atualização
                 } // fim else
             }, // Fim atualiza evento
+
+            //Exclusão de evento
+            eventClick: function(event)
+            {
+                if (event.contapagar_id || event.ordem_id)
+                {
+                    alert(event.title);
+                } else 
+                    {
+                        var exibeEvento = confirm(event.title + '\r\n\r' + 'Deseja remover esteve evento?');
+
+                        if(exibeEvento)
+                        {
+                            var confirmaExclusao = confirm("A exclusão não poderá ser desfeita, tem certeza?")
+                            
+                            if(confirmaExclusao)
+                            {
+                                $.ajax({
+                                    url: '<?php echo site_url('eventos/excluir'); ?>', 
+                                    type: 'GET',
+                                    data:{
+                                        id: event.id,
+                                    },
+                                    success: function(response)
+                                    {
+                                        calendario.fullCalendar('removeEvents', event.id)
+                                        exibeMensagem('Evento removido com sucesso!');
+
+                                    }, // Fim success
+
+                                }); // fim Ajax exclusão
+                            
+                            } // fim confirma exclusão
+                        
+                        } // fim exibe evento
+                    
+                    } // fim else
+                } // fim eventClicl   
         });
     });
 

@@ -34,7 +34,7 @@ class OrdemModel extends Model
     // Validações
     protected $validationRules = [
         'cliente_id' => 'required',
-        'codigo' => 'required|max_length[29]',
+        'codigo' => 'required|max_length[29]|is_unique[ordens.codigo,id,{id}]',
         'equipamento' => 'required|max_length[145]',
     ];
     protected $validationMessages = [
@@ -44,6 +44,7 @@ class OrdemModel extends Model
         'codigo' => [
             'required' => '* Informe o código da OS',
             'max_length' => '* O máximo de caracteres é 29',
+            'is_unique' => '* Já existe uma ordem com esse código',
         ],
         'equipamento' => [
             'required' => '* o equipamento',
@@ -52,16 +53,16 @@ class OrdemModel extends Model
     ];
 
     /**
-     * Método: Gerar código interno da OS automaticamente
-     * 
+     * Método: Gerar código (protocolo de atendimento) da OS automaticamente
+     * Formato: Dia + Mês + Ano + hora + minuto + 4 caracter alfanum maisculos aleatórios
      */
     public function geraCodigoOrdem() : string
     {
         do{
 
-            $codigo = random_string('alnum', 20);
+            $codigo = 'OS' . date('dmYHis') . strtoupper(random_string('alnum', 4));
 
-            $this->sleect('codigo')->where('codigo', $codigo);
+            $this->select('codigo')->where('codigo', $codigo);
 
          }while($this->countAllResults() > 1);
 

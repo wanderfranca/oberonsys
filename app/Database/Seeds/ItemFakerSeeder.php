@@ -10,7 +10,7 @@ class ItemFakerSeeder extends Seeder
     {
         $itemModel = new \App\Models\ItemModel();
         
-        // Fakeseeder
+        // Fakeseeder em PT-BR
         $faker = \Faker\Factory::create('pt-BR');
 
         $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));

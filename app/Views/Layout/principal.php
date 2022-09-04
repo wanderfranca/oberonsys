@@ -266,6 +266,7 @@
     <?php if(url_is('eventos')): ?>
     <!-- carregar no Full Calendar -->
     <script src="<?php echo site_url('recursos/vendor/fullcalendar/fullcalendar.min.js');?>"></script>
+    <script src="<?php echo site_url('recursos/vendor/fullcalendar/locale/pt-br.js');?>"></script>
     <script src="<?php echo site_url('recursos/vendor/fullcalendar/toastr.min.js');?>"></script>
     <script src="<?php echo site_url('recursos/vendor/fullcalendar/moment.min.js');?>"></script>
     <?php endif; ?>

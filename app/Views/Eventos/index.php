@@ -3,35 +3,36 @@
 <?php echo $this->section('titulo') ?> <?php echo $titulo; ?><?php $this->endSection() ?>
 
 <!-- Estilos -->
-<?php echo $this->section('estilos') ?> 
+<?php echo $this->section('estilos') ?>
 
 <link rel="stylesheet" href="<?php echo site_url('recursos/vendor/fullcalendar/fullcalendar.min.css');?>">
 <link rel="stylesheet" href="<?php echo site_url('recursos/vendor/fullcalendar/toastr.min.css');?>">
- <style>
-
-/* .fc-event, .fc-event-dot {
-    
-} */
-
-a:not([href]):not([tabindex]){
-    color: azure;
+<style>
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-list-heading td,
+.fc-unthemed .fc-popover .fc-header {
+    background-color: #191b50;
 }
 
+a:not([href]):not([tabindex]) {
+    color: azure;
+}
 </style>
 
 
 <?php $this->endSection() ?>
 
 <!-- Conteúdo -->
-<?php echo $this->section('conteudo') ?> 
+<?php echo $this->section('conteudo') ?>
 
 
 <div id="calendario" class="container-fluid">
-<!-- Calendario -->
+    <!-- Calendario -->
 
 
 
-</div> <!--fim do calendario -->
+</div>
+<!--fim do calendario -->
 
 
 
@@ -42,141 +43,151 @@ a:not([href]):not([tabindex]){
 <?php echo $this->section('scripts') ?>
 
 <script src="<?php echo site_url('recursos/vendor/fullcalendar/fullcalendar.min.js');?>"></script>
+<script src="<?php echo site_url('recursos/vendor/fullcalendar/locale/pt-br.js');?>"></script>
 <script src="<?php echo site_url('recursos/vendor/fullcalendar/toastr.min.js');?>"></script>
 <script src="<?php echo site_url('recursos/vendor/fullcalendar/moment.min.js');?>"></script>
 
 <script>
-    $(document).ready(function(){
+$(document).ready(function() {
 
-        var calendario = $("#calendario").fullCalendar({
+    var calendario = $("#calendario").fullCalendar({
+        locale: 'pt-br',
+        lang: 'pt-br',
+        header: {
+            left: 'prev, next, today',
+            center: 'title',
+            right: 'month, list',
 
-            header: {
+        },
 
-                left: 'prev, next, today',
-                center: 'title',
-                right: 'month',
+        buttonText: {
+            today: 'Hoje',
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Hoje',
+            list: 'Lista'
+        },
 
-            },
+        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
+            'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ],
+        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov',
+            'Dez'
+        ],
+        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
+        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
 
-            height: 580,
-            editable: true,
-            events: '<?php echo site_url('eventos/eventos') ?>',
-            displayEventTime: false,
-            selectable: true,
-            selectHelper: true,
-            select: function(start, end, allDay){
+        height: 600,
+        editable: true,
+        navLinks: true,
+        events: '<?php echo site_url('eventos/eventos') ?>',
+        displayEventTime: false,
+        selectable: true,
+        selectHelper: true,
+        select: function(start, end, allDay) {
 
-                var title = prompt('Informe o título do evento');
+            var title = prompt('Informe o título do evento');
 
-                if(title)
-                {
-                    var start = $.fullCalendar.formatDate(start, 'Y-MM-DD'); // Formatação do moment.js
-                    var end = $.fullCalendar.formatDate(end, 'Y-MM-DD'); // Formatação do moment.js
+            if (title) {
+                var start = $.fullCalendar.formatDate(start, 'Y-MM-DD'); // Formatação do moment.js
+                var end = $.fullCalendar.formatDate(end, 'Y-MM-DD'); // Formatação do moment.js
 
-                    $.ajax({
+                $.ajax({
 
-                        url: '<?php echo site_url('eventos/cadastrar'); ?>',
-                        type: 'GET',
-                        data:{
-                            title:title,
-                            start:start,
-                            end:end,
-                        },
+                    url: '<?php echo site_url('eventos/cadastrar'); ?>',
+                    type: 'GET',
+                    data: {
+                        title: title,
+                        start: start,
+                        end: end,
+                    },
 
-                        success: function(response)
-                        {
-                            exibeMensagem('Evento criado com sucesso!');
+                    success: function(response) {
+                        exibeMensagem('Evento criado com sucesso!');
 
-                            calendario.fullCalendar('renderEvent', {
-                                id:response.id,
-                                title:title,
-                                start:start,
-                                end:end,
-                                allDay:allDay,
-                            }, true);
-                            calendario.fullCalendar('unselect');
-                        }, // Fim success
+                        calendario.fullCalendar('renderEvent', {
+                            id: response.id,
+                            title: title,
+                            start: start,
+                            end: end,
+                            allDay: allDay,
+                        }, true);
+                        calendario.fullCalendar('unselect');
+                    }, // Fim success
 
-                    }); // fim Ajax Cadastro
-                    
-                } // fim if title
-            },
+                }); // fim Ajax Cadastro
 
-            //ATUALIZAR EVENTO ----
-            eventDrop: function(event, delta, revertFunc)
-            {
-                if(event.contapagar_id || event.ordem_id)
-                {
-                    alert('Não é possível alterar um evento Financeiro ou O.S');
-                    revertFunc();
-                }else {
-                    //Evento editável
-                    var start = $.fullCalendar.formatDate(event.start, 'Y-MM-DD'); // Formatação do moment.js
-                    var end = $.fullCalendar.formatDate(event.end, 'Y-MM-DD'); // Formatação do moment.js
+            } // fim if title
+        },
 
-                    $.ajax({
-                        url: '<?php echo site_url('eventos/atualizar/'); ?>'+ event.id, //Id do evento a ser atualizado
-                        type: 'GET',
-                        data:{
-                            start:start,
-                            end:end,
-                        },
-                        success: function(response)
-                        {
-                            exibeMensagem('Atualizado com sucesso!');
+        //ATUALIZAR EVENTO ----
+        eventDrop: function(event, delta, revertFunc) {
+            if (event.contapagar_id || event.ordem_id) {
+                alert('Não é possível alterar um evento Financeiro ou O.S');
+                revertFunc();
+            } else {
+                //Evento editável
+                var start = $.fullCalendar.formatDate(event.start,
+                'Y-MM-DD'); // Formatação do moment.js
+                var end = $.fullCalendar.formatDate(event.end,
+                'Y-MM-DD'); // Formatação do moment.js
 
-                        }, // Fim success
+                $.ajax({
+                    url: '<?php echo site_url('eventos/atualizar/'); ?>' + event
+                    .id, //Id do evento a ser atualizado
+                    type: 'GET',
+                    data: {
+                        start: start,
+                        end: end,
+                    },
+                    success: function(response) {
+                        exibeMensagem('Atualizado com sucesso!');
 
-                    }); // fim Ajax Atualização
-                } // fim else
-            }, // Fim atualiza evento
+                    }, // Fim success
 
-            //Exclusão de evento
-            eventClick: function(event)
-            {
-                if (event.contapagar_id || event.ordem_id)
-                {
-                    alert(event.title);
-                } else 
-                    {
-                        var exibeEvento = confirm(event.title + '\r\n\r' + 'Deseja remover esteve evento?');
+                }); // fim Ajax Atualização
+            } // fim else
+        }, // Fim atualiza evento
 
-                        if(exibeEvento)
-                        {
-                            var confirmaExclusao = confirm("A exclusão não poderá ser desfeita, tem certeza?")
-                            
-                            if(confirmaExclusao)
-                            {
-                                $.ajax({
-                                    url: '<?php echo site_url('eventos/excluir'); ?>', 
-                                    type: 'GET',
-                                    data:{
-                                        id: event.id,
-                                    },
-                                    success: function(response)
-                                    {
-                                        calendario.fullCalendar('removeEvents', event.id)
-                                        exibeMensagem('Evento removido com sucesso!');
+        //Exclusão de evento
+        eventClick: function(event) {
+            if (event.contapagar_id || event.ordem_id) {
+                alert(event.title);
+            } else {
+                var exibeEvento = confirm(event.title + '\r\n\r' + 'Deseja remover esteve evento?');
 
-                                    }, // Fim success
+                if (exibeEvento) {
+                    var confirmaExclusao = confirm(
+                        "A exclusão não poderá ser desfeita, tem certeza?")
 
-                                }); // fim Ajax exclusão
-                            
-                            } // fim confirma exclusão
-                        
-                        } // fim exibe evento
-                    
-                    } // fim else
-                } // fim eventClicl   
-        });
+                    if (confirmaExclusao) {
+                        $.ajax({
+                            url: '<?php echo site_url('eventos/excluir'); ?>',
+                            type: 'GET',
+                            data: {
+                                id: event.id,
+                            },
+                            success: function(response) {
+                                calendario.fullCalendar('removeEvents', event.id)
+                                exibeMensagem('Evento removido com sucesso!');
+
+                            }, // Fim success
+
+                        }); // fim Ajax exclusão
+
+                    } // fim confirma exclusão
+
+                } // fim exibe evento
+
+            } // fim else
+        } // fim eventClicl   
     });
+});
 
-    // Função para exibir msg
-    function exibeMensagem(mensagem)
-    {
-        toastr.success(mensagem, 'Evento');
-    }
-
+// Função para exibir msg
+function exibeMensagem(mensagem) {
+    toastr.success(mensagem, 'Evento');
+}
 </script>
 
 

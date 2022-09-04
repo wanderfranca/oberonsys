@@ -26,11 +26,11 @@ class FormaPagamentoModel extends Model
     ];
     protected $validationMessages = [
         'nome' => [
-            'required' => 'É necessário preencher o nome do grupo',
-            'is_unique'=> 'Já existe uma forma de pagamento com este nome, por favor escolha outro'
+            'required' => '* Forma de pagamento obrigatória',
+            'is_unique'=> '* Já existe uma forma de pagamento com este nome'
         ],
         'descricao' => [
-            'required' => 'A descrição do grupo é obrigatória',
+            'required' => '* A descrição do grupo é obrigatória',
         ],
 
     ];

@@ -45,7 +45,7 @@ class FormasPagamentos extends BaseController
                 $data[] = [
                     'nome' => anchor("formas/exibir/$forma->id", esc($forma->nome), 'title="Abrir forma a pagar' . esc($forma->nome).'"'),
                     'descricao' => esc($forma->descricao),
-                    'criado_em' => esc($forma->criado_em->humanize()),
+                    'criado_em' => date('d/m/Y', strtotime($forma->criado_em)),
                     'situacao' => $forma->exibeSituacao(),
                 ];
             }
@@ -57,6 +57,53 @@ class FormasPagamentos extends BaseController
             ];
 
             return $this->response->setJSON($retorno);
+
+    }
+
+    public function exibir(int $id = null)
+    {
+        $forma = $this->buscaFormaOu404($id);
+
+        $data = [
+
+            'titulo' => 'FORMA DE PAGAMENTO ' . esc($forma->nome),
+            'forma' => $forma,
+
+        ];
+
+        return view('FormasPagamentos/exibir', $data);
+    }
+
+    public function editar(int $id = null)
+    {
+        $forma = $this->buscaFormaOu404($id);
+
+        if($forma->id < 3)
+        {
+            return redirect()->to(site_url("formas/exibir/$forma->id"))->with("info", "Esta forma de pagamento não pode ser excluída e nem editada. <br> Em casa de duvidas, entre em contato com o suporte técnico");
+        }
+
+        $data = [
+
+            'titulo' => 'EDITANDO A FORMA DE PAGAMENTO ' . esc($forma->nome),
+            'forma' => $forma,
+
+        ];
+
+        return view('FormasPagamentos/editar', $data);
+    }
+
+    // Método: Recupera a forma de pagamento
+    private function buscaFormaOu404(int $id = null)
+    {
+
+        if (!$id || !$forma = $this->formaPagamentoModel->find($id)){
+
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("forma de pagamento não encontrada");
+
+        }
+
+        return $forma;
 
     }
 }

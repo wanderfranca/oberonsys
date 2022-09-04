@@ -62,6 +62,17 @@ $routes->group('formas', static function($routes)
     $routes->add('/', 'FormasPagamentos::index');
     $routes->get('recuperaFormas', 'FormasPagamentos::recuperaFormas');
 
+    $routes->get('exibir/(:segment)', 'FormasPagamentos::exibir/$1');
+    $routes->get('editar/(:segment)', 'FormasPagamentos::editar/$1');
+    $routes->get('criar/', 'FormasPagamentos::criar');
+
+    //POST
+    $routes->post('cadastrar', 'FormasPagamentos::cadastrar');
+    $routes->post('atualizar', 'FormasPagamentos::atualizar');
+
+    //GET e POST
+    $routes->match(['get','post'], 'excluir/(:segment)', 'FormasPagamentos::excluir/$1');
+
 }); 
 
 

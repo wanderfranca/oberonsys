@@ -194,12 +194,13 @@
                 
                 <!-- TABELAS -->
             <li>
-                <a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') |url_is('contasbancarias') |url_is('formas') | url_is('despesas') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="fa fa-table"></i>Tabelas</a>
-                <ul id="tabelasDropdown" class="<?php echo (url_is('categorias') | url_is('contasbancarias') | url_is('despesas') ? '' : 'collapse') ?> list-unstyled ">
-                <!-- Sidebar Navidation Menus--><span class="heading">Produtos</span>    
-                    <li class="<?php echo (url_is('categorias/*') ? 'active' : '') ?>"><a href="<?php echo site_url('categorias'); ?>">Categorias </a></li>
+                <a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') |url_is('contasbancarias') | url_is('formas') | url_is('despesas') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="fa fa-table"></i>Tabelas</a>
+                <ul id="tabelasDropdown" class="<?php echo (url_is('categorias') | url_is('contasbancarias') |url_is('formas') | url_is('despesas') ? '' : 'collapse') ?> list-unstyled ">
+                    
+                    <!-- DIVISAO Menus--><span class="heading">Produtos</span>    
+                    <li class="<?php echo (url_is('categorias') ? 'active' : '') ?>"><a href="<?php echo site_url('categorias'); ?>">Categorias </a></li>
 
-                    <!-- Sidebar Navidation Menus--><span class="heading">Financeiro</span>
+                    <!-- DIVISAO Menus--><span class="heading">Financeiro</span>
                     <li class="<?php echo (url_is('despesas') ? 'active' : '') ?>"><a href="<?php echo site_url('despesas'); ?>">Despesas </a></li>
                     <li class="<?php echo (url_is('formas') ? 'active' : '') ?>"><a href="<?php echo site_url('formas'); ?>">Formas de Pagamentos </a></li>
                     <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>    

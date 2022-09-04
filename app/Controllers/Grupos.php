@@ -150,6 +150,7 @@ class Grupos extends BaseController
 
     }
 
+    // Método: Tela de edição do grupo
     public function editar(int $id = null){
 
 
@@ -173,19 +174,18 @@ class Grupos extends BaseController
 
     }
 
+    // Método: Atualizar cadastro do grupo
     public function atualizar(){
 
         if(!$this->request->isAJAX()){
             return redirect()->back();
         }
 
-
         // Envio o hash do token do form
         $retorno['token'] = csrf_hash();
 
         // Recupero o post da requisição
         $post = $this->request->getPost();
-
 
         //Validamos a existência do Grupo
         $grupo = $this->buscaGrupoOu404($post['id']);
@@ -200,11 +200,11 @@ class Grupos extends BaseController
             // Retorno para o ajax request
             return $this->response->setJSON($retorno);
         }
-
         
         //Preenchemos os atributos do grupo com os valores do POST
         $grupo->fill($post);
         
+        // Verificação: Houve mudança nos dados
         if($grupo->hasChanged() == false){
 
             $retorno['info'] = 'Não há dados para serem atualizados';
@@ -215,8 +215,6 @@ class Grupos extends BaseController
         if($this->grupoModel->protect(false)->save($grupo)){
 
             session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
-
-            //
             return $this->response->setJSON($retorno);
 
         }
@@ -224,7 +222,6 @@ class Grupos extends BaseController
         //Retornar os erros de validação do formulário
         $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
         $retorno['erros_model'] = $this->grupoModel->errors();
-
 
         // Retorno para o ajax request
         return $this->response->setJSON($retorno);

@@ -5524,9 +5524,9 @@
   }
   
   .alert-danger {
-    --bs-alert-color: #932037;
-    --bs-alert-bg: #fdd7de;
-    --bs-alert-border-color: #fcc3ce;
+    --bs-alert-color: #ffffff;
+    --bs-alert-bg: #d40229;
+    --bs-alert-border-color: #d40229;
   }
   
   .alert-danger .alert-link {

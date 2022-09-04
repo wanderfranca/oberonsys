@@ -93,6 +93,55 @@ class FormasPagamentos extends BaseController
         return view('FormasPagamentos/editar', $data);
     }
 
+    public function atualizar()
+    {
+        if(!$this->request->isAJAX()){
+            return redirect()->back();
+        }
+
+
+        // Envio o hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        // Recupero o post da requisição
+        $post = $this->request->getPost();
+
+        // Buscar a forma de pagamento por id
+        $forma = $this->buscaFormaOu404($post['id']);
+
+        // Defesa: Proibir a atualização da forma de pagamento 1 e 2
+        if($forma->id < 3)
+        {
+            $retorno['erro'] = 'Verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['forma' => "* A forma de pagamento <b class='text-warning'>$forma->nome </b> não pode ser editar ou excluída"];
+
+            return $this->response->setJSON($retorno);
+        }
+
+        $forma->fill($post);
+
+        if ($forma->hasChanged() === false)
+        {
+            $retorno['info'] = 'Não há dados para atualizar';
+            return $this->response->setJSON($retorno);
+        }
+
+        if($this->formaPagamentoModel->protect(false)->save($forma)){
+
+            session()->setFlashdata('sucesso', 'Dados salvos com sucesso.');
+            return $this->response->setJSON($retorno);
+        }
+
+        // Retornar os erros de validação do formulário
+        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $this->formaPagamentoModel->errors();
+
+        // Retorno para o ajax request
+        return $this->response->setJSON($retorno);
+
+
+    }
+
     // Método: Recupera a forma de pagamento
     private function buscaFormaOu404(int $id = null)
     {

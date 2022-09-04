@@ -172,7 +172,8 @@
                     <li class="<?php echo (url_is('clientes') ? 'active' : '') ?>"><a href="<?php echo site_url('clientes'); ?>">Clientes</a></li>
                 </ul>
 
-                <li>
+                <!-- FINANCEIRO  -->
+            <li>
                 <a href="#gestaoFinDropdown" aria-expanded="<?php echo (url_is('creceber') || url_is('cpagar') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="fa fa-money"></i>Financeiro</a>
                 <ul id="gestaoFinDropdown" class="<?php echo (url_is('creceber') || url_is('cpagar') ? '' : 'collapse') ?> list-unstyled ">
                     <li class="<?php echo (url_is('cpagar') ? 'active' : '') ?>"><a href="<?php echo site_url('cpagar'); ?>">Contas a Pagar </a></li>
@@ -181,8 +182,8 @@
 
                 <li class="<?php echo (url_is('eventos') ? 'active' : '') ?>"><a href="<?php echo site_url('eventos'); ?>"><i class="fa fa-calendar"></i>Eventos </a></li>
 
-
-                <li>
+                <!-- GESTÃO DE CADASTROS  -->
+            <li>
                 <a href="#gestaoDropdown" aria-expanded="<?php echo (url_is('fornecedores/excluidos') | url_is('itens/produtosexcluidos') | url_is('clientes/excluidos') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="icon-windows"></i>Gestão de Cadastros</a>
                 <ul id="gestaoDropdown" class="<?php echo (url_is('fornecedores/excluidos') | url_is('itens/produtosexcluidos') | url_is('itens/servicosexcluidos') | url_is('clientes/excluidos') ? '' : 'collapse') ?> list-unstyled ">
                     <li class="<?php echo (url_is('clientes/excluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('clientes/excluidos'); ?>">Clientes Excluídos </a></li>
@@ -191,25 +192,30 @@
                     <li class="<?php echo (url_is('fornecedores/excluidos') ? 'active' : '') ?>"><a href="<?php echo site_url('fornecedores/excluidos'); ?>">Fornecedores Excluídos</a></li>
                 </ul>
                 
-                <li><a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') |url_is('contasbancarias') |url_is('itens') | url_is('despesas') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="fa fa-table"></i>Tabelas</a>
+                <!-- TABELAS -->
+            <li>
+                <a href="#tabelasDropdown" aria-expanded="<?php echo (url_is('categorias') |url_is('contasbancarias') |url_is('formas') | url_is('despesas') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="fa fa-table"></i>Tabelas</a>
                 <ul id="tabelasDropdown" class="<?php echo (url_is('categorias') | url_is('contasbancarias') | url_is('despesas') ? '' : 'collapse') ?> list-unstyled ">
                 <!-- Sidebar Navidation Menus--><span class="heading">Produtos</span>    
                     <li class="<?php echo (url_is('categorias/*') ? 'active' : '') ?>"><a href="<?php echo site_url('categorias'); ?>">Categorias </a></li>
 
-                        <!-- Sidebar Navidation Menus--><span class="heading">Financeiro</span>
-                    <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>    
+                    <!-- Sidebar Navidation Menus--><span class="heading">Financeiro</span>
                     <li class="<?php echo (url_is('despesas') ? 'active' : '') ?>"><a href="<?php echo site_url('despesas'); ?>">Despesas </a></li>
+                    <li class="<?php echo (url_is('formas') ? 'active' : '') ?>"><a href="<?php echo site_url('formas'); ?>">Formas de Pagamentos </a></li>
+                    <li class="<?php echo (url_is('contasbancarias') ? 'active' : '') ?>"><a href="<?php echo site_url('contasbancarias'); ?>">Informações Bancárias </a></li>    
+                    
                     </ul>
                 </li>
 
-                <li>
+                <!-- USUÁRIOS -->
+            <li>
                 <a href="#usuariosDropdown" aria-expanded="<?php echo (url_is('usuarios') | url_is('usuarios/editarsenha') | url_is('grupos') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="fa fa-users"></i>Usuários</a>
                 <ul id="usuariosDropdown" class="<?php echo (url_is('usuarios') | url_is('usuarios/editarsenha') | url_is('grupos') ? '' : 'collapse') ?> list-unstyled ">
                     <li class="<?php echo (url_is('usuarios') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios'); ?>">Usuários </a></li>
                     <li class="<?php echo (url_is('grupos/*') ? 'active' : '') ?>"><a href="<?php echo site_url('grupos'); ?>">Grupos & Permissões </a></li>
                     <li class="<?php echo (url_is('usuarios/editarsenha') ? 'active' : '') ?>"><a href="<?php echo site_url('usuarios/editarsenha'); ?>">Alterar senha </a></li>
                 </ul>
-
+                <!-- /USUÁRIOS -->
                 <li><a href="#"><i class="icon-chart"></i> Relatórios </a></li>
                 <li><a href="#"><i class="icon-settings"></i> Configurações </a></li>
         

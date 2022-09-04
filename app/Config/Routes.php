@@ -54,6 +54,17 @@ $routes->group('cpagar', static function($routes)
 
 });
 
+
+// Grupo de rodas: Formas de pagamentos
+$routes->group('formas', static function($routes)
+{
+
+    $routes->add('/', 'FormasPagamentos::index');
+    $routes->get('recuperaFormas', 'FormasPagamentos::recuperaFormas');
+
+}); 
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

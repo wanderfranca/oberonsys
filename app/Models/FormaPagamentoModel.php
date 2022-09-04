@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class FormaPagamentoModel extends Model
 {
     protected $table            = 'formas_pagamentos';
-    protected $returnType       = 'App/Entities/FormaPagamento';
+    protected $returnType       = 'App\Entities\FormaPagamento';
     protected $allowedFields    = [
         'nome',
         'descricao',

@@ -163,7 +163,7 @@
             <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
             <ul class="list-unstyled">
             <li class="<?php echo (url_is('/') ? 'active' : '') ?>"><a href="<?php echo site_url('/'); ?>"><i class="icon-home"></i>Início </a></li>
-
+            <li class="<?php echo (url_is('ordens') ? 'active' : '') ?>"><a href="<?php echo site_url('ordens'); ?>"><i class="icon-list"></i>Ordens de Serviço </a></li>
             <li>
                 <a href="#cadastrosDropdown" aria-expanded="<?php echo (url_is('fornecedores') | url_is('itens') | url_is('clientes') ? 'true' : 'false') ?>" data-toggle="collapse"><i class="fa fa-folder"></i>Cadastros</a>
                 <ul id="cadastrosDropdown" class="<?php echo (url_is('fornecedores') | url_is('itens')| url_is('clientes') ? '' : 'collapse') ?> list-unstyled ">

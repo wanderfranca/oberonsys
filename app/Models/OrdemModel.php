@@ -52,6 +52,23 @@ class OrdemModel extends Model
 
     ];
 
+    public function recuperaOrdens()
+    {
+        $atributos = [
+            'ordens.codigo',
+            'ordens.criado_em',
+            'ordens.situacao',
+            'clientes.nome',
+            'clientes.cpf',
+        ];
+
+        return $this->select($atributos)
+                    ->join('clientes', 'clientes.id = ordens.cliente_id')
+                    ->orderBy('ordens.id', 'DESC')
+                    ->withDeleted(true)
+                    ->findAll();
+    }
+
     /**
      * Método: Gerar código (protocolo de atendimento) da OS automaticamente
      * Formato: Dia + Mês + Ano + hora + minuto + 4 caracter alfanum maisculos aleatórios
@@ -68,6 +85,4 @@ class OrdemModel extends Model
 
         return $codigo;
     }
-
-
 }

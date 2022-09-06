@@ -25,7 +25,7 @@ class Ordens extends BaseController
         return view('Ordens/index', $data);
     }
 
-        // Método: Recuperar ordens
+        // Método: Recuperar Todas as OS
         public function recuperaOrdens()
         {
     
@@ -46,7 +46,7 @@ class Ordens extends BaseController
     
                     $data[] = [
     
-                        'codigo'         => anchor("ordens/exibir/$ordem->codigo", esc($ordem->codigo), 'title="Exibir ordem '.esc($ordem->codigo).'"'),
+                        'codigo'         => anchor("ordens/detalhes/$ordem->codigo", esc($ordem->codigo), 'title="Exibir ordem '.esc($ordem->codigo).'"'),
                         'nome'          => esc($ordem->nome),
                         'cpf'        => esc($ordem->cpf),
                         'criado_em'     => esc(date('d/m/Y', strtotime($ordem->criado_em))),
@@ -63,5 +63,11 @@ class Ordens extends BaseController
     
                 return $this->response->setJSON($retorno);
     
+        }
+
+        // Método: Recuperar detalhes da OS
+        public function detalhes(string $codigo = null)
+        {
+            
         }
 }

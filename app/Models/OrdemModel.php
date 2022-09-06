@@ -69,6 +69,56 @@ class OrdemModel extends Model
                     ->findAll();
     }
 
+    
+    /**
+     * buscaOrdemOu404
+     * Método: Buscar uma ordem de serviço
+     * @param  string|null $codigo
+     * @return object|PageNotFoundException
+     */
+    public function buscaOrdemOu404(string $codigo)
+    {
+        if($codigo === null)
+            {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Ordem de serviço não encontrada");
+            }
+
+            $atributos = [
+                'ordens.*',
+                // Usuário que abriu
+                'u_aber.id AS usuario_abertura_id', // ID do Usuário que abriu a OS
+                'u_aber.nome AS usuario_abertura', // Nome do Usuário que abriu a OS
+                // Usuário responsável
+                'u_res.id AS usuario_responsavel_id', // ID do Usuário que trabalhou na OS
+                'u_res.nome AS usuario_responsavel', // Nome do Usuário que trabalhou na OS
+                // Usuário que encerrou
+                'u_ence.id AS usuario_encerramento_id', // ID do Usuário que fechou a OS
+                'u_ence.nome AS usuario_encerramento', // ID do Usuário que fechou a OS
+                //Clientes
+                'clientes.usuario_id AS cliente_usuario_id', // Para o acesso do cliente ao sistema
+                'clientes.nome',
+                'clientes.cpf', // Obrigatório (gerencianet)
+                'clientes.telefone', // Obrigatório (gerencianet)
+                'clientes.email', // Obrigatório (gerencianet)
+            ];
+
+            $ordem = $this->select($atributos)
+                            ->join('ordens_responsaveis', 'ordens_responsaveis.ordem_id = ordens.id')
+                            ->join('clientes', 'clientes.id = ordens.cliente_id')
+                            ->join('usuarios AS u_cliente', 'u_cliente.id = clientes.usuario_id')
+                            ->join('usuarios AS u_aber', 'u_aber.id = ordens_responsaveis.usuario_abertura_id')
+                            ->join('usuarios AS u_res', 'u_res.id = ordens_responsaveis.usuario_responsavel_id', 'LEFT')
+                            ->join('usuarios AS u_ence', 'u_ence.id = ordens_responsaveis.usuario_encerramento_id', 'LEFT')
+                            ->where('ordens.codigo', $codigo)
+                            ->withDeleted(true)
+                            ->first();
+
+            if($ordem === null)
+            {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Ordem de serviço não encontrada");
+            }
+    }
+
     /**
      * Método: Gerar código (protocolo de atendimento) da OS automaticamente
      * Formato: Dia + Mês + Ano + hora + minuto + 4 caracter alfanum maisculos aleatórios

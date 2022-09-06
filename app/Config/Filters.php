@@ -81,6 +81,11 @@ class Filters extends BaseConfig
                 'cpagar(/*)?',
                 'contaspagar(/*)?',
                 'itens(/*)?',
+                'ordens(/*)?',
+                'basecontroller(/*)?',
+                'eventos(/*)?',
+                'formaspagamentos(/*)?',
+                'transacoes(/*)?',
             ],
         ],
 

@@ -33,7 +33,7 @@ class Ordem extends Entity
 
             if($this->situacao === 'aberta')
             {
-                return '<span class="text-warning"><i class="fa fa-unlock" aria-hidden="true"></i>&nbsp;'.ucfirst($this->situacao);
+                return '<span class="text-info"><i class="fa fa-unlock" aria-hidden="true"></i>&nbsp;'.ucfirst($this->situacao);
             }
             if($this->situacao === 'encerrada')
             {

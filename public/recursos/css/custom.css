@@ -100,14 +100,6 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   
-  hr {
-    margin: 1rem 0;
-    color: inherit;
-    border: 0;
-    border-top: 1px solid;
-    opacity: 0.25;
-  }
-  
   h1,
   .h1,
   h2,
@@ -4204,15 +4196,14 @@
   .dropstart .dropdown-toggle::before {
     vertical-align: 0;
   }
-  
+
   .dropdown-divider {
     height: 0;
-    margin: var(--bs-dropdown-divider-margin-y) 0;
+    margin: 0.5rem 0;
     overflow: hidden;
-    border-top: 1px solid var(--bs-dropdown-divider-bg);
-    opacity: 1;
+    border-top: 1px solid #4f545c;
   }
-  
+   
   .dropdown-item {
     display: block;
     width: 100%;
@@ -4482,29 +4473,6 @@
     border-top-right-radius: 0;
   }
   
-  .nav-pills {
-    --bs-nav-pills-border-radius: 0.75rem;
-    --bs-nav-pills-link-active-color: #4c88ff;
-    --bs-nav-pills-link-active-bg: #fff;
-  }
-  
-  .nav-pills .nav-link {
-    background: none;
-    border: 0;
-    border-radius: var(--bs-nav-pills-border-radius);
-  }
-  
-  .nav-pills .nav-link:disabled {
-    color: var(--bs-nav-link-disabled-color);
-    background-color: transparent;
-    border-color: transparent;
-  }
-  
-  .nav-pills .nav-link.active,
-  .nav-pills .show>.nav-link {
-    color: var(--bs-nav-pills-link-active-color);
-    background-color: var(--bs-nav-pills-link-active-bg);
-  }
   
   .nav-fill>.nav-link,
   .nav-fill .nav-item {
@@ -8492,7 +8460,7 @@
   }
   
   .border-secondary {
-    border-color: #8392ab !important;
+    border-color: #4f545c !important;
   }
   
   .border-success {
@@ -19950,109 +19918,7 @@
       height: auto;
     }
   }
-  
-  .nav.nav-pills {
-    background: #f8f9fa;
-    border-radius: 0.75rem;
-    position: relative;
-  }
-  
-  .nav.nav-pills.nav-pills-vertical {
-    border-radius: 1.1875rem;
-  }
-  
-  .nav.nav-pills.nav-pills-vertical .nav-link.active {
-    border-radius: 0.875rem;
-  }
-  
-  .nav.nav-pills .nav-link {
-    z-index: 3;
-    color: #4c88ff;
-    border-radius: 0.5rem;
-    background-color: inherit;
-  }
-  
-  .nav.nav-pills .nav-link.active {
-    animation: 0.2s ease;
-  }
-  
-  .nav.nav-pills .nav-link:hover:not(.active) {
-    color: #4c88ff;
-  }
-  
-  .nav.nav-pills.nav-pills-primary {
-    background: #fff;
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-primary .nav-link.active {
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-primary .moving-tab .nav-link.active {
-    background: #5e72e4;
-    color: #5e72e4;
-  }
-  
-  .nav.nav-pills.nav-pills-info {
-    background: #fff;
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-info .nav-link.active {
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-info .moving-tab .nav-link.active {
-    background: #1171ef;
-    color: #1171ef;
-  }
-  
-  .nav.nav-pills.nav-pills-success {
-    background: #fff;
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-success .nav-link.active {
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-success .moving-tab .nav-link.active {
-    background: #2dce89;
-    color: #2dce89;
-  }
-  
-  .nav.nav-pills.nav-pills-warning {
-    background: #fff;
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-warning .nav-link.active {
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-warning .moving-tab .nav-link.active {
-    background: #fad103;
-    color: #fad103;
-  }
-  
-  .nav.nav-pills.nav-pills-danger {
-    background: #fff;
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-danger .nav-link.active {
-    color: #fff;
-  }
-  
-  .nav.nav-pills.nav-pills-danger .moving-tab .nav-link.active {
-    background: #f5365c;
-    color: #f5365c;
-  }
-  
-  .nav.nav-pills .nav-item {
-    z-index: 3;
-  }
+    
   
   .moving-tab {
     z-index: 1 !important;

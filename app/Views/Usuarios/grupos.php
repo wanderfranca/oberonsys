@@ -35,7 +35,7 @@
 
 <div class="row">
 
-    <div class="col-lg-6">
+    <div class="col-lg-5">
         <div class="user-block block">
 
             <?php if(empty($gruposDisponiveis)): ?>
@@ -73,7 +73,7 @@
 
                 </select>
             </div>
-            <div class="form-group mt-5 mb-2">
+            <div class="form-group mt-3 mb-2">
                 <input id="btn-salvar" type="submit" value="salvar" class="btn btn-primary mr-2">
                 <a href="<?php echo site_url("usuarios/exibir/$usuario->id") ?>" class="btn btn-secondary ml-2">Voltar</a>
             </div>
@@ -82,7 +82,7 @@
             <?php endif; ?>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-7">
         <div class="user-block block">
             <?php if(empty($usuario->grupos)): ?>
 
@@ -90,10 +90,10 @@
 
             <?php else: ?>
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-sm">
+                <table class="table table-striped table-hover table-bordered table-sm">
                     <thead>
                         <tr>
-                            <th>Grupo de acesso</th>
+                            <th>Grupo</th>
                             <th>Descrição</th>
                             <th>Excluir</th>
                         </tr>

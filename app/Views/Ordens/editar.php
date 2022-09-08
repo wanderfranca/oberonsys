@@ -39,14 +39,8 @@
                 <?php echo form_close(); ?>
 
             </div>
-
-
         </div> <!-- FIM DO DIV BLOCK -->
-
-
-
     </div>
-
 </div>
 
 

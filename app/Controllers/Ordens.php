@@ -92,6 +92,26 @@ class Ordens extends BaseController
         return view('Ordens/detalhes', $data);
     }
 
+    // Método: Recuperar detalhes da OS
+    public function editar(string $codigo = null)
+    {
+        $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
+        
+
+        if($ordem->situacao === 'encerrada')
+        {
+            return redirect()->back()->with("info", "Esta O.S não pode ser editada, pois está " . ucfirst($ordem->situaca));
+        }
+
+
+        $data = [
+            'titulo' => "EDITAR O.S - $ordem->codigo",
+            'ordem' => $ordem,
+        ];
+
+        return view('Ordens/editar', $data);
+    }
+
        
 
         

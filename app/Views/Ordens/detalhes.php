@@ -88,7 +88,7 @@
 
 
             <!-- Example single danger button -->
-            <div class="btn-group">
+            <div class="btn-group mt-5">
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Ações
@@ -122,7 +122,7 @@
                 </div>
             </div>
 
-            <a href="<?php echo site_url('ordens')?>" class="btn btn-secondary btn-sm ml-2">Voltar</a>
+            <a href="<?php echo site_url('ordens')?>" class="btn btn-secondary btn-sm ml-2 mt-5">Voltar</a>
 
         </div> <!-- FIM DO DIV BLOCK -->
 

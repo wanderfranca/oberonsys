@@ -11,7 +11,7 @@
 
 <div class="row">
 
-    <div class="col-lg-12">
+    <div class="col-lg-8">
 
         <div class="block">
 
@@ -23,7 +23,7 @@
                 </div>
 
 
-                <?php echo form_open('/', ['id' => 'form'], ['id' => "$ordem->codigo"])  ?>
+                <?php echo form_open('/', ['id' => 'form'], ['codigo' => "$ordem->codigo"])  ?>
 
                 <?php echo $this->include('Ordens/_form'); ?>
 

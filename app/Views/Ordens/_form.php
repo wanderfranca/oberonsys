@@ -26,30 +26,55 @@
 
 </div>
 
+        <?php if($ordem->id === null): ?>
+
+            <!-- cliente  -->
+            <div class="form-group>
+            <label class="form-control-label">Escolha o cliente</label>
+                <select name="cliente_id" class="selectize">
+                    <option value="">Busque o cliente ou CPF</option>
+                </select>
+            </div>
+            <?php else: ?>
+
 <!-- Número do documento  -->
 <div class="form-group">
-    <label class="form-control-label">Número do Doc</label>
-    <input type="text" name="numero_documento" placeholder="Nr Doc" class="form-control" value="<?php echo esc($ordem->numero_documento) ?>">
+    <label class="form-control-label">Cliente</label>
+    <a tabindex="0" style="text-decoration: none;" role="button" data-toggle="popover" data-tigger="focus"
+    title="Importante" data-content="Não é permitido alterar ou editar o cliente desta O.S">&nbsp;&nbsp; <i class="fa fa-question-circle fa-lg text-info"></i>
+    </a>
+    <input type="text" class="form-control" disabled readonly value="<?php echo esc($ordem->nome) ?>">
 </div>
+
+<?php endif; ?>
+
 <!-- Valor da ordem -->
 <div class="form-group">
-    <label class="form-control-label">Valor da ordem</label>
-    <input type="text" name="valor_conta" placeholder="Insira o valor" class="form-control money" required value="<?php echo esc($ordem->valor_conta) ?>">
+    <label class="form-control-label">Equipamento</label>
+    <input type="text" name="equipamento" placeholder="Informe o equipamento" class="form-control" required value="<?php echo esc($ordem->equipamento) ?>">
 </div>
 
-<!-- Data de vencimento -->
+<!-- Defeitos -->
 <div class="form-group">
-    <label class="form-control-label">Data de vencimento</label>
-    <input type="date" name="data_vencimento" placeholder="dd-mm-aaaa" required class="form-control" value="<?php echo esc($ordem->data_vencimento) ?>">
+    <label class="form-control-label">Defeitos do equipamento</label>
+    <textarea class="form-control" name="defeito" placeholder="Descreva os defeitos do equipamento"><?php echo esc($ordem->defeito) ?></textarea>
 </div>
-
-<!-- Descrição -->
+<!-- Observações -->
 <div class="form-group">
-    <label class="form-control-label">Descrição</label>
-    <textarea class="form-control" name="descricao_conta" placeholder="Desreva a finalidade da ordem"><?php echo esc($ordem->descricao_conta) ?></textarea>
+    <label class="form-control-label">Observações</label>
+    <textarea class="form-control" name="observacoes"><?php echo esc($ordem->observacoes) ?></textarea>
 </div>
 
+<?php if($ordem->id): ?>
+    <!-- Laudo técnico -->
+<div class="form-group">
+    <label class="form-control-label">Laudo Técnico</label>
+    <textarea class="form-control" name="parecer_tecnico"><?php echo esc($ordem->parecer_tecnico) ?></textarea>
 </div>
+
+<?php endif; ?>
+
+
 
 
 

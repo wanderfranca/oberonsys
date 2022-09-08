@@ -112,7 +112,53 @@ class Ordens extends BaseController
         return view('Ordens/editar', $data);
     }
 
-       
+    public function atualizar()
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
 
+        //Hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        // Recuperar o post vindo do formulário
+        $post = $this->request->getPost();
+
+        // Buscar a ordem pelo código e popular a variável
+        $ordem = $this->ordemModel->buscaOrdemOu404($post['codigo']);
+
+        if($ordem->situacao === 'encerrada')
+        {
+            $retorno['erro'] = 'Por favor verifique os erros abaixo';
+            $retorno['erros_model'] = ["situacao" => "Esta ordem não pode ser editada, pois encontra-se ".ucfirst($ordem->situacao)];
+            return $this->response->setJSON($retorno);
+        }
+
+        
+        // Preencher o objeto CENTRAL com os dados que vêm do post
+        $ordem->fill($post);
+
+        // Verificar se houve mudança nos dados DB X POST
+        if($ordem->hasChanged() === false)
+        {
+            $retorno['info'] = 'Não há dados para atualizar';
+            return $this->response->setJSON($retorno);
+        }  
+
+        if($this->ordemModel->save($ordem))
+        {
+            session()->setFlashdata('sucesso', 'Dados atualizados com sucesso!');
+
+            return $this->response->setJSON($retorno);
+        }
+
+        $retorno['erro'] = 'Por favor verifique os erros abaixo';
+        $retorno['erros_model'] = $this->ordemModel->errors();
+
+        return $this->response->setJSON($retorno);
+    
+ 
+    }    
         
 }

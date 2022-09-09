@@ -89,138 +89,137 @@
 <script>
     $("#dataPagamento").hide("slow");
 
-$(document).ready(function() 
-{
-   var $select = $(".selectize").selectize({
-            create: false,
-            // sortField: "text",
+$(document).ready(function() {
+var $select = $(".selectize").selectize({
+        create: false,
+        // sortField: "text",
 
-            maxItem: 1,
-            valueField: 'id',
-            labelField: 'razao',
-            searchField: ['razao', 'cnpj'],
+        maxItem: 1,
+        valueField: 'id',
+        labelField: 'razao',
+        searchField: ['razao', 'cnpj'],
 
-            load: function(query, callback)
+        load: function(query, callback)
+        {
+            if(query.length < 2)
             {
-                if(query.length < 2)
+                return callback();
+            }
+
+            $.ajax({
+
+                url: '<?php echo site_url("cpagar/buscaFornecedores/") ?>?termo=' + encodeURIComponent(query),
+                success: function(response)
                 {
-                    return callback();
+                    $select.options = response;
+
+                    callback(response);
+                },
+
+                error: function() {
+                    alert(
+                        'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!');
+
+                    }
+
+
+            });
+        }
+
+    });
+
+        $("#datapg").attr("readonly", true); 
+
+        $("[name=situacao]").on("click", function() {
+
+            if($(this).val()=="1")
+            {
+                $("#dataPagamento").show("slow");
+                $(".pagamento").addClass('show');
+                $("#datapg").attr("readonly", false); 
+                
+            
+            }else // A conta em aberto
+                {
+                    $("#dataPagamento").hide("slow");       
                 }
 
-                $.ajax({
+        })
 
-                    url: '<?php echo site_url("cpagar/buscaFornecedores/") ?>?termo=' + encodeURIComponent(query),
-                    success: function(response)
-                    {
-                        $select.options = response;
+                $("#form").on('submit', function(e) {
 
-                        callback(response);
-                    },
+                        e.preventDefault();
 
-                    error: function() {
-                        alert(
-                            'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!');
+                        $.ajax({
 
-                        }
+                                type: 'POST',
+                                url: '<?php echo site_url('cpagar/cadastrar'); ?>',
+                                data: new FormData(this),
+                                dataType: 'json',
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                beforeSend: function() {
 
-
-                });
-            }
-
-        });
-
-    $("#datapg").attr("readonly", true); 
-
-    $("[name=situacao]").on("click", function() {
-
-        if($(this).val()=="1")
-        {
-            $("#dataPagamento").show("slow");
-            $(".pagamento").addClass('show');
-            $("#datapg").attr("readonly", false); 
-            
-        
-        }else // A conta em aberto
-            {
-                $("#dataPagamento").hide("slow");       
-            }
-
-    })
-
-            $("#form").on('submit', function(e) {
-
-                    e.preventDefault();
-
-                    $.ajax({
-
-                            type: 'POST',
-                            url: '<?php echo site_url('cpagar/cadastrar'); ?>',
-                            data: new FormData(this),
-                            dataType: 'json',
-                            contentType: false,
-                            cache: false,
-                            processData: false,
-                            beforeSend: function() {
-
-                                $("#response").html('');
-                                $("#btn-salvar").val('Por favor aguarde...');
-
-                            },
-
-                            success: function(response) {
-                                $("#btn-salvar").val('Salvar');
-                                $("#btn-salvar").removeAttr("disabled");
-                                
-                                $('[name=csrf_oberon]').val(response.token);
-
-                                if (!response.erro) {
-
-                                    // Tudo certo com a atualização do usuário
-                                    // Podemos agora redirecioná-lo tranquilamente
-                                    window.location.href = "<?php echo site_url("cpagar/exibir/"); ?>" + response.id;
-
-                                }
-                                    
-                                if(response.erro){
-
-                                    // Existem erros de validação
-                                    $("#response").html('<div class="alert alert-danger">'+ response.erro +'</div>');
-
-                                    if(response.erros_model){
-
-                                        $.each(response.erros_model, function(key, value){
-
-                                            $("#response").append('<ul class="list-unstyled"><li class="text-danger">'+ value +'</li></ul>')
-
-                                        });
-
-                                    }
-                                
-                                }
+                                    $("#response").html('');
+                                    $("#btn-salvar").val('Por favor aguarde...');
 
                                 },
 
-                                error: function() {
+                                success: function(response) {
+                                    $("#btn-salvar").val('Salvar');
+                                    $("#btn-salvar").removeAttr("disabled");
+                                    
+                                    $('[name=csrf_oberon]').val(response.token);
 
-                                    alert(
-                                        'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!');
-                                        $("#btn-salvar").val('Salvar');
-                                        $("#btn-salvar").removeAttr("disabled");
-                                }
+                                    if (!response.erro) {
 
-                            });
+                                        // Tudo certo com a atualização do usuário
+                                        // Podemos agora redirecioná-lo tranquilamente
+                                        window.location.href = "<?php echo site_url("cpagar/exibir/"); ?>" + response.id;
 
-                    });
+                                    }
+                                        
+                                    if(response.erro){
 
-                 $("#form").submit(function(){
+                                        // Existem erros de validação
+                                        $("#response").html('<div class="alert alert-danger">'+ response.erro +'</div>');
 
-                    $(this).find(":submit").attr('disabled', 'disabled')
+                                        if(response.erros_model){
 
-                 });     
+                                            $.each(response.erros_model, function(key, value){
+
+                                                $("#response").append('<ul class="list-unstyled"><li class="text-danger">'+ value +'</li></ul>')
+
+                                            });
+
+                                        }
+                                    
+                                    }
+
+                                    },
+
+                                    error: function() {
+
+                                        alert(
+                                            'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!');
+                                            $("#btn-salvar").val('Salvar');
+                                            $("#btn-salvar").removeAttr("disabled");
+                                    }
+
+                                });
+
+                        });
+
+                    $("#form").submit(function(){
+
+                        $(this).find(":submit").attr('disabled', 'disabled')
+
+                    });     
+                    
+
                 
-
-            
-            });
+                });
 </script>
 
 <?php $this->endSection() ?>

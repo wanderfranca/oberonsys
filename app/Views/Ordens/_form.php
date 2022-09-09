@@ -7,7 +7,14 @@
         <?php if($ordem->id === null): ?>
 
             <div class="contributions">
-               <b class="text-white">O.S aberta por:</b> <?php usuario_logado()->nome;?>
+               <b class="text-white">O.S aberta por:</b> <?php echo usuario_logado()->nome;?>
+            </div>
+
+            <div class="contributions">
+               <b class="text-white">TAG: </b> <?php echo $ordem->codigo?>
+                <a tabindex="0" style="text-decoration: none;" role="button" data-toggle="popover" data-tigger="focus"
+                    title="TAG" data-content="Esse é o código da ordem de serviço, anote para não esquecer">&nbsp;&nbsp; <i class="fa fa-question-circle fa-lg text-info"></i>
+                    </a>
             </div>
 
             <?php else: ?>
@@ -29,15 +36,15 @@
         <?php if($ordem->id === null): ?>
 
             <!-- cliente  -->
-            <div class="form-group>
-            <label class="form-control-label">Escolha o cliente</label>
-                <select name="cliente_id" class="selectize">
+            <div class="form-group">
+            <label class="form-control-label">Escolha o cliente <b class="text-primary">*</b></label>
+                <select name="cliente_id" class="selectize" required>
                     <option value="">Busque o cliente ou CPF</option>
                 </select>
             </div>
             <?php else: ?>
 
-<!-- Número do documento  -->
+<!-- Cliente -->
 <div class="form-group">
     <label class="form-control-label">Cliente</label>
     <a tabindex="0" style="text-decoration: none;" role="button" data-toggle="popover" data-tigger="focus"
@@ -50,7 +57,7 @@
 
 <!-- Valor da ordem -->
 <div class="form-group">
-    <label class="form-control-label">Equipamento</label>
+    <label class="form-control-label">Equipamento <b class="text-primary">*</b></label>
     <input type="text" name="equipamento" placeholder="Informe o equipamento" class="form-control" required value="<?php echo esc($ordem->equipamento) ?>">
 </div>
 

@@ -12,11 +12,15 @@ class Ordens extends BaseController
     
     private $ordemModel;
     private $transacaoModel;
+    private $clienteModel;
+    private $ordemResponsavelModel;
 
     public function __construct()
     {
         $this->ordemModel = new \App\Models\OrdemModel();
         $this->transacaoModel = new \App\Models\TransacaoModel();
+        $this->clienteModel = new \App\Models\ClienteModel();
+        $this->ordemResponsavelModel = new \App\Models\OrdemResponsavelModel();
     }
     public function index()
     {
@@ -67,6 +71,89 @@ class Ordens extends BaseController
 
     }
 
+    public function criar()
+    {
+
+        $ordem = new Ordem();
+
+        $ordem->codigo = $this->ordemModel->geraCodigoOrdem();
+
+        $data = [
+            'titulo' => 'ABRIR UMA NOVA O.S',
+            'ordem' => $ordem,
+        ];
+
+        return view('Ordens/criar', $data);
+    }
+
+    public function cadastrar()
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        //Hash do token do form
+        $retorno['token'] = csrf_hash();
+
+        // Recuperar o post vindo do formulário
+        $post = $this->request->getPost();
+
+
+        // Preencher o objeto CENTRAL com os dados que vêm do post
+        $ordem = new Ordem($post);
+
+        if($this->ordemModel->save($ordem))
+        {
+            //finalizaCadastroDaOrdem
+            $this->inicializaOrdem($ordem);
+
+            session()->setFlashdata('sucesso', 'O.S aberta com sucesso!');
+
+            $retorno['codigo'] = $ordem->codigo;
+
+            return $this->response->setJSON($retorno);
+        }
+
+        $retorno['erro'] = 'Por favor verifique os erros abaixo';
+        $retorno['erros_model'] = $this->ordemModel->errors();
+
+        return $this->response->setJSON($retorno);
+      
+    }
+
+    /**
+     * Método: Busca Clientes via selectize utilizando Ajax Request
+     * Com este método, evitamos de carregar todos os clientes no módulo
+     * @return response
+     */
+    public function buscaClientes()
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        $atributos = [
+            'id',
+            'CONCAT(nome, " - CPF: ", cpf) AS nome',
+            'cpf',
+        ];
+
+        $termo = $this->request->getGet('termo');
+
+        $clientes = $this->clienteModel->select($atributos)
+                                              ->asArray()
+                                              ->like('nome', $termo)
+                                              ->orLike('cpf', $termo)
+                                              ->orderby('nome', 'ASC')
+                                              ->findAll();
+    
+        return $this->response->setJSON($clientes);
+                                                
+
+    }
+
     // Método: Recuperar detalhes da OS
     public function detalhes(string $codigo = null)
     {
@@ -105,7 +192,7 @@ class Ordens extends BaseController
 
 
         $data = [
-            'titulo' => "EDITAR O.S - $ordem->codigo",
+            'titulo' => "EDITAR ORDEM - $ordem->codigo",
             'ordem' => $ordem,
         ];
 
@@ -159,6 +246,24 @@ class Ordens extends BaseController
         return $this->response->setJSON($retorno);
     
  
-    }    
+    }
+    
+    private function inicializaOrdem(object $ordem) : void
+    {
+        $ordemAbertura = [
+            'ordem_id' => $this->ordemModel->getInsertID(), //Ultimo id inserido
+            'usuario_abertura_id' => usuario_logado()->id
+        ];
+
+        // Inserir na tabela de responsáveis
+        $this->ordemResponsavelModel->insert($ordemAbertura);
+        
+        // Recuperar cliente
+        $ordem->cliente = $this->clienteModel->select('nome, email')->find($ordem->cliente_id);
+
+        /**
+         * @todo: Enviar e-mail para o cliente com a OS recém criada
+         */
+    }
         
 }

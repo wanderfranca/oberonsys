@@ -123,13 +123,13 @@ class OrdemModel extends Model
 
     /**
      * Método: Gerar código (protocolo de atendimento) da OS automaticamente
-     * Formato: Dia + Mês + Ano + hora + minuto + 4 caracter alfanum maisculos aleatórios
+     * Formato: Ano + Mês + Dia + hora + minuto + 2 caracter alfanum maisculos aleatórios
      */
     public function geraCodigoOrdem() : string
     {
         do{
 
-            $codigo = 'OS' . date('dmYHis') . strtoupper(random_string('alnum', 4));
+            $codigo = 'OS' . date('YmdHis') . strtoupper(random_string('alnum', 2));
 
             $this->select('codigo')->where('codigo', $codigo);
 

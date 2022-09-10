@@ -261,9 +261,6 @@ class Ordens extends BaseController
         // Recuperar cliente
         $ordem->cliente = $this->clienteModel->select('nome, email')->find($ordem->cliente_id);
 
-        /**
-         * @todo: Enviar e-mail para o cliente com a OS recém criada
-         */
     }
         
 }

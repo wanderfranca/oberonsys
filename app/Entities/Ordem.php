@@ -24,7 +24,7 @@ class Ordem extends Entity
                 return '<span class="text-white">Excluída</span>';
             }
 
-            $icone = '<span class="text-white">Excluída</span> <i class="fa fa-undo"></i> Recuperar OS';
+            $icone = '<i class="fa fa-undo"></i> Recuperar';
             $situacao = anchor("ordens/desfazerexclusao/$this->codigo", $icone, ['class'=> 'btn btn-outline-success btn-sm']);
 
             return $situacao;

@@ -27,7 +27,7 @@
             <a href="<?php echo site_url('ordens/servicosexcluidos');?>" class="btn btn-danger mb-5 mr-1 text-white"> SERVIÇOS EXCLUÍDOS </a> -->
 
             <div class="block">
-                <table id="ajaxTable" class="table table-striped table-sm" style="width: 100%;">
+                <table id="ajaxTable" class="table table-striped table-sm table-hover" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>OS.Código</th>

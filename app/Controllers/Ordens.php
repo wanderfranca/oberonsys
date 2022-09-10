@@ -247,6 +247,67 @@ class Ordens extends BaseController
     
  
     }
+
+    // Método: Recuperar Excluir Ordem de Serviço
+    public function excluir(string $codigo = null)
+    {
+        $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
+
+
+        // Ordem já excluída
+        if($ordem->deletado_em != null)
+        {
+            return redirect()->back()->with('info', "A ordem $ordem->codigo Já encontra-se excluída");
+        }
+
+        // Situações que serão permitidas para exclusão
+        $situacoesPermitidas = [
+
+            'encerrada',
+            'cancelada'
+        ];
+
+        // Bloqueador de situações
+        if(!in_array($ordem->situacao, $situacoesPermitidas))
+        {
+            return redirect()->back()->with('info', "Apenas ordens encerradas ou canceladas podem ser excluídas");
+        }
+
+        if($this->request->getMethod() === 'post')
+        {
+            $this->ordemModel->delete($ordem->id);
+
+            return redirect()->to(site_url('ordens'))->with('sucesso', "Ordem de serviço $ordem->codigo excluída com sucesso");
+
+        }
+        
+       
+        $data = [
+            'titulo' => "EXCLUINDO A ORDEM - $ordem->codigo",
+            'ordem' => $ordem,
+        ];
+
+        return view('Ordens/excluir', $data);
+    }
+
+    // Método: Desfazer exclusão
+    public function desfazerExclusao(string $codigo = null)
+    {
+        $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
+
+        if($ordem->deletado_em == null){
+
+            return redirect()->back()->with('info', "Apenas ordens excluídas podem ser recuperados");
+
+        }
+
+        $ordem->deletado_em = null;
+        $this->ordemModel->protect(false)->save($ordem);
+
+        
+        return redirect()->back()->with('sucesso', "$ordem->codigo recuperada com sucesso!");
+
+    }
     
     private function inicializaOrdem(object $ordem) : void
     {
@@ -261,6 +322,31 @@ class Ordens extends BaseController
         // Recuperar cliente
         $ordem->cliente = $this->clienteModel->select('nome, email')->find($ordem->cliente_id);
 
+        // Definir os dados iniciais, pois ainda não estão sendo buscados no BD
+        $ordem->situacao = 'Aberta';
+        $ordem->criado_em = date('Y/m/d H:i');
+
+        $this->enviaOrdemEmAndamenteParaCliente($ordem);
+
+    }
+
+    private function enviaOrdemEmAndamenteParaCliente(object $ordem) : void
+    {
+        $email = service('email');
+        
+        $email->setFrom('no-replay@oberonsys.com', 'Oberon Sistema');
+        $email->setTo($ordem->cliente->email);
+        $email->setSubject("Ordem de Serviço em andamento");
+
+        $data = [
+                    'ordem' => $ordem,
+            
+                ];
+
+        $mensagem = view('Ordens/ordem_andamento_email', $data);
+
+        $email->setMessage($mensagem);
+        $email->send();
     }
         
 }

@@ -124,6 +124,55 @@ class ItemModel extends Model
 
         return $codigoInterno;
     }
+    
+    /**
+     * pesquisaItens
+     * Método: responsável por pesquisar os itens de acordo com o termo digitado
+     * Detalhe: Só trará itens (produto) com saldo em estoque
+     * @param  string $term
+     * @return array|null
+     */
+    public function pesquisaItens(string $term = null) : array
+    {
+        if($term === null)
+        {
+            return [];
+        }
+
+        $atributos = [
+
+            'itens.*',
+            'itens_imagens.imagem',
+        ];
+
+        $itens = $this->select($atributos)
+                        ->like('itens.nome', $term)
+                        ->orLike('itens.codigo_interno', $term)
+                        ->join('itens_imagens', 'itens_imagens.item_id = itens.id', 'LEFT')
+                        ->where('itens.situacao', true)
+                        ->where('deletado_em', null)
+                        ->groupBy('itens.nome')
+                        ->findAll();
+
+        // Se nenhum termo for encontrado - return array vazio
+        if($itens === null)
+        {
+            return [];
+        }
+
+        // Percorrer o array de itens e:
+        // Verificar se exite nas opções encontrada algum item do tipo produto que esteja com o estoque abaixo de 1 (0 ou -1)
+        foreach($itens as $key => $item)
+        {
+            if($item->tipo === 'produto' && $item->estoque < 1)
+            {
+                unset($itens[$key]);
+            }
+        }
+
+        return $itens;
+
+    }
 
 
 }

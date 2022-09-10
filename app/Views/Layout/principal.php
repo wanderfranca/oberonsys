@@ -10,7 +10,7 @@
         <!-- Bootstrap CSS-->
         <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome CSS-->
-        <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="<?php echo site_url('recursos/');?>vendor/font-awesome/css/fontawesome4.min.css">
         <!-- Custom Font Icons CSS-->
         <link rel="stylesheet" href="<?php echo site_url('recursos/');?>css/font.css">
         <!-- Google fonts - Muli-->
@@ -48,7 +48,7 @@
                         <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
                     </div>
                     <div class="right-menu list-inline no-margin-bottom">
-                       
+
                        
                         <!-- Megamenu-->
                         <div class="list-inline-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Menu Geral <i class="fa fa-list"></i></a>

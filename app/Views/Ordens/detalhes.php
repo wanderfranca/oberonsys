@@ -55,7 +55,7 @@
 
                         <hr class="border-secondary">
 
-                        <?php if($ordem->ordens === null):?>
+                        <?php if($ordem->itens === null):?>
                         <div class="contributions py-3">
 
                             <p>Nenhum item foi adicionado à esta OS</p>
@@ -99,7 +99,7 @@
 
                     <a class="dropdown-item" href="<?php echo site_url("ordens/editar/$ordem->codigo"); ?>">Editar</a>
                     <a class="dropdown-item" href="<?php echo site_url("ordens/responsavel/$ordem->codigo"); ?>">Definir técnico responsável</a>
-                    <a class="dropdown-item" href="<?php echo site_url("ordensitens/editar/$ordem->codigo"); ?>">Gerenciar itens</a>
+                    <a class="dropdown-item" href="<?php echo site_url("ordensitens/itens/$ordem->codigo"); ?>">Gerenciar itens</a>
                     <a class="dropdown-item" href="<?php echo site_url("ordens/encerrar/$ordem->codigo"); ?>">Encerrar</a>
                     <?php endif;  ?>
 

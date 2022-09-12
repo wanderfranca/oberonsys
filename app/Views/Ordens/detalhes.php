@@ -63,7 +63,7 @@
                             <?php if($ordem->situacao === 'aberta'): ?>
 
                             <a class="btn btn-outline-primary btn-sm"
-                                href="<?php echo site_url("ordensitens/ordens/$ordem->codigo") ?>">Adicionar itens</a>
+                                href="<?php echo site_url("ordensitens/itens/$ordem->codigo") ?>">Adicionar itens</a>
 
                             <?php endif; ?>
 

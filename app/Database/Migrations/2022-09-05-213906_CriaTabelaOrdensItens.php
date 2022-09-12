@@ -31,6 +31,14 @@ class CriaTabelaOrdensItens extends Migration
                 'type'              => 'INT',
                 'constraint'        => 5,
             ],
+            'item_preco'            => [
+                'type'              => 'DECIMAL',
+                'constraint'        => '10,2',
+            ],
+            'item_preco_total'      => [
+                'type'              => 'DECIMAL',
+                'constraint'        => '10,2',
+            ],
         ]);
 
         $this->forge->addKey('id', true);

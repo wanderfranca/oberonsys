@@ -2039,6 +2039,7 @@ th, td { text-align: left !important; }
 .table td,
 .table th {
   border-color: #343434;
+  font-size: 0.90rem;
 }
 
 .table thead th {

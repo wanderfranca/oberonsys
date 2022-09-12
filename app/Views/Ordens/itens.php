@@ -40,26 +40,143 @@
 
         <div class="block">
 
-
-
             <!-- Botão para acionar modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddItens">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAddItens">
                 Adicionar Itens
             </button>
 
-
-
             <?php if($ordem->itens === null):?>
-            <div class="contributions py-3">
 
-                <p>Nenhum item foi adicionado a esta ordem de serviço</p>
+            <div class="user-block text-center ">
+
+                <div class="contributions pt-3">
+
+                    <p>Nenhum item foi adicionado a esta ordem de serviço</p>
+
+                </div>
 
 
             </div>
 
             <?php else: ?>
 
-            ============ OS TEM ordens
+            <div class="table-responsive my-5">
+
+                <table class="table table-borderless table-striped table-sm">
+                    <caption>Itens adicionados a Ordem</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Qtde</th>
+                            <th scope="col">Subtotal</th>
+                            <th scope="col" class="text-center">Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php
+                    
+                        $valorProdutos = 0;
+                        $valorServicos = 0;
+                    
+                    ?>
+
+                        <?php foreach($ordem->itens as $item): 
+                            
+                            if($item->tipo === 'produto')
+                                {
+                                    $valorProdutos += $item->preco_total_vendido;
+                                
+                                } else
+                                {
+                                    $valorServicos += $item->preco_total_vendido;
+                                }
+
+                                $hiddenAcoes = [
+
+                                    'id_principal' => $item->id_principal,
+                                    'item_id' => $item->id,
+
+                                ];
+                            
+                            ?>
+                        <tr>
+                            <th scope="row"><?php echo ellipsize($item->nome, 30); ?></th>
+                            <td><?php echo esc(ucfirst($item->tipo)); ?></td>
+                            <td>R$ <?php echo esc(number_format($item->preco_vendido, 2)); ?></td>
+                            <td>
+                                <?php echo form_open("ordensitens/atualizarquantidade/$ordem->codigo", ['class' => 'form-inline'], $hiddenAcoes); ?>
+                                <input style="max-width: 70px !important" type="number" name="item_quantidade"
+                                    class="form-control form-control-sm" value="<?php echo $item->item_quantidade; ?>" required>
+                                <button type="submit" class="btn_table_success ml-2"><i
+                                        class="fa fa-refresh"></i></button>
+
+                                <?php echo form_close(); ?>
+                            </td>
+                            <td>R$ <?php echo esc(number_format($item->item_quantidade * $item->preco_vendido, 2)) ?></td>
+                            <!-- Botão de remover -->
+                            <td class="text-center">
+                                    <?php 
+                                    
+                                    $atributosRemover = [
+
+                                        'class' => 'form-inline',
+                                        'onClick' => 'return confirm("Tem certeza da exclusão?")',
+                                    ];
+
+                                    ?>
+
+                                    <?php echo form_open("ordensitens/removeritem/$ordem->codigo", $atributosRemover, $hiddenAcoes); ?>
+                                    
+                                    <button type="submit" class="btn_table_danger ml-2 mx-auto"><i class="fa fa-times"></i></button>
+
+                                    <?php echo form_close(); ?>
+
+
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td class="text-right font-weight-bold" colspan="5">
+                                
+                            <label> Valor Produtos: </label>
+
+                            </td>
+
+                            <td class="text-right font-weight-bold">R$ <?php echo esc(number_format($valorProdutos, 2)); ?></td>
+
+                        </tr>
+                        <tr>
+                            <td class="text-right font-weight-bold" colspan="5">
+                                
+                            <label> Valor Serviços: </label>
+
+                            </td>
+
+                            <td class="text-right font-weight-bold">R$ <?php echo esc(number_format($valorServicos, 2)); ?></td>
+
+                        </tr>
+                        <tr>
+                            <td class="text-right font-weight-bold" colspan="5">
+                                
+                            <label> Valor Total: </label>
+
+                            </td>
+
+                            <td class="text-right font-weight-bold">R$ <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?></td>
+
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+
+            </div>
 
             <?php endif; ?>
 
@@ -128,16 +245,14 @@
             </div>
             <div class="modal-body">
 
+                <div id="response"></div>
+
                 <div class="ui-widget">
                     <input type="text" name="query" id="query" class="form-control form-control-lg mb-5"
                         placeholder="Pesquise pelo nome ou código do item">
                 </div>
 
                 <div class="bock-body">
-
-                    <div id="response">
-
-                    </div>
 
                     <?php 
             $hiddens = [
@@ -269,6 +384,92 @@ $(document).ready(function() {
         }; //Fim do autocomplete
 
     }); // fim Function inicial
+
+    $("#form").on('submit', function(e) {
+
+        e.preventDefault();
+
+        $.ajax({
+
+            type: 'POST',
+            url: '<?php echo site_url('ordensitens/adicionaritem'); ?>',
+            data: new FormData(this),
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+
+                $("#response").html('');
+                $("#btn-salvar").val('Por favor aguarde...');
+
+            },
+
+            success: function(response) {
+                $("#btn-salvar").val('Salvar');
+                $("#btn-salvar").removeAttr("disabled");
+
+                $('[name=csrf_oberon]').val(response.token);
+
+                if (!response.erro) {
+
+                    if (response.info) {
+
+                        $("#response").html('<div class="alert alert-info">' + response
+                            .info + '</div>');
+
+                    } else {
+
+                        // Tudo certo com a atualização do usuário
+                        // Podemos agora redirecioná-lo tranquilamente
+
+                        window.location.href =
+                            "<?php echo site_url("ordensitens/itens/$ordem->codigo"); ?>";
+
+                    }
+
+                }
+
+                if (response.erro) {
+
+                    // Existem erros de validação
+                    $("#response").html('<div class="alert alert-danger">' + response.erro +
+                        '</div>');
+
+                    if (response.erros_model) {
+
+                        $.each(response.erros_model, function(key, value) {
+
+                            $("#response").append(
+                                '<ul class="list-unstyled"><li class="text-danger">' +
+                                value + '</li></ul>')
+
+                        });
+
+                    }
+
+                }
+
+            },
+
+            error: function() {
+
+                alert(
+                    'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!'
+                );
+                $("#btn-salvar").val('Salvar');
+                $("#btn-salvar").removeAttr("disabled");
+            }
+
+        });
+
+    });
+
+    $("#form").submit(function() {
+
+        $(this).find(":submit").attr('disabled', 'disabled')
+
+    });
 
 });
 </script>

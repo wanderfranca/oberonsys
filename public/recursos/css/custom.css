@@ -3928,11 +3928,11 @@
   
   .btn-sm,
   .btn-group-sm>.btn {
-    --bs-btn-padding-y: 0.5rem;
-    --bs-btn-padding-x: 2rem;
-    --bs-btn-font-size: 0.75rem;
-    --bs-btn-border-radius: 0.5rem;
+    --bs-btn-padding-y: 7px;
+    --bs-btn-padding-x: 15px;
+    /* --bs-btn-font-size: 10px; */
   }
+
   
   .fade {
     transition: opacity 0.15s linear;
@@ -3984,6 +3984,65 @@
   .dropdown-center {
     position: relative;
   }
+
+  .btn_table_success {
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 2px;
+    color: #FFFFFF;
+    font-family: Open Sans;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px;
+    background-color: transparent;
+    border: 1px solid #05ae16; 
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+ }
+ 
+ .btn_table_success:hover {
+    background: #05ae16;
+    border: solid #042f00 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+ }
+
+ .btn_table_danger {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  color: #FFFFFF;
+  font-family: Open Sans;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px;
+  background-color: #ab0e0e;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+}
+
+.btn_table_danger:hover {
+  background: #ca0808;
+  border: 1px solid #e90a0a 0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+}
     
   
   

@@ -806,7 +806,7 @@ class Itens extends BaseController
    }
     
     /**
-     * Método que recupera o Item (produto)
+     * Método que recupera o Item (produto ou serviço)
      * 
      * @param integer $id
      * @return Exceptions|object

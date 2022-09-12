@@ -12,6 +12,8 @@ class OrdemItemModel extends Model
         'ordem_id',
         'item_id',
         'item_quantidade',
+        'item_preco',
+        'item_preco_total',
     ];
 
     
@@ -31,6 +33,8 @@ class OrdemItemModel extends Model
             'itens.controla_estoque',
             'ordens_itens.id AS id_principal',
             'ordens_itens.item_quantidade',
+            'ordens_itens.item_preco AS preco_vendido',
+            'ordens_itens.item_preco_total AS preco_total_vendido',
         ];
 
         return $this->select($atributos)

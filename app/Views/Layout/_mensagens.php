@@ -42,10 +42,10 @@
 
 <?php endif; ?>
 
-<!-- AJAX POST -->
+<!-- POST SEM AJAX -->
 <?php if(session()->has('erros_model')): ?>
 <ul>
-    <?php foreach($erros_model as $erro): ?>
+    <?php foreach(session('erros_model') as $erro): ?>
 
         <li class="text-danger"><?php echo $erro; ?></li>
 

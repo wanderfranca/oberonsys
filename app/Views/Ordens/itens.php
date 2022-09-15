@@ -103,8 +103,13 @@
                             
                             ?>
                         <tr>
+                            <!-- 0 Item -->
                             <th scope="row"><?php echo ellipsize($item->nome, 30); ?></th>
+
+                            <!-- 1 Tipo -->
                             <td><?php echo esc(ucfirst($item->tipo)); ?></td>
+
+                            <!-- 2 Preço do item vendido -->
                             <td>R$ <?php echo esc(number_format($item->preco_vendido, 2)); ?></td>
                             <td>
                                 <?php echo form_open("ordensitens/atualizarquantidade/$ordem->codigo", ['class' => 'form-inline'], $hiddenAcoes); ?>
@@ -115,7 +120,9 @@
 
                                 <?php echo form_close(); ?>
                             </td>
-                            <td>R$ <?php echo esc(number_format($item->item_quantidade * $item->preco_vendido, 2)) ?></td>
+                            
+                            <td>R$ <?php echo esc(number_format($item->preco_total_vendido, 2)) ?></td>
+                           
                             <!-- Botão de remover -->
                             <td class="text-center">
                                     <?php 
@@ -142,7 +149,7 @@
 
                     <tfoot>
                         <tr>
-                            <td class="text-right font-weight-bold" colspan="5">
+                            <td class="text-right font-weight-bold" colspan="4">
                                 
                             <label> Valor Produtos: </label>
 
@@ -152,7 +159,7 @@
 
                         </tr>
                         <tr>
-                            <td class="text-right font-weight-bold" colspan="5">
+                            <td class="text-right font-weight-bold" colspan="4">
                                 
                             <label> Valor Serviços: </label>
 
@@ -162,7 +169,7 @@
 
                         </tr>
                         <tr>
-                            <td class="text-right font-weight-bold" colspan="5">
+                            <td class="text-right font-weight-bold" colspan="4">
                                 
                             <label> Valor Total: </label>
 

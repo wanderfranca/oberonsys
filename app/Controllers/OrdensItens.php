@@ -247,8 +247,6 @@ class OrdensItens extends BaseController
         // Validar a existência do item na OS (registro principal)
         $ordemItem = $this->buscaOrdemItemOu404($post['id_principal'], $ordem->id);
 
-        dd($ordemItem);
-
 
         if($item->tipo === 'produto' && $post['item_quantidade'] > $item->estoque)
         {
@@ -256,19 +254,11 @@ class OrdensItens extends BaseController
             $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
             $retorno['erros_model'] = ['estoque' => "Este produto possui apenas <b class='text-white'> $item->estoque </b> UND. em estoque"];
 
-                return $this->response->setJSON($retorno);
         }
 
         
 
-        // Verificar se a OS já possui o item escolhido
-        if($this->verificaSeOrdemPossuiItem($ordem->id, $item->id))
-        {
-            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-            $retorno['erros_model'] = ['estoque' => "Esta O.S já possui o item selecionado"];
-
-                return $this->response->setJSON($retorno);
-        }
+        
 
 
         // Dados que serão inseridos
@@ -284,17 +274,11 @@ class OrdensItens extends BaseController
         // print_r($ordemItem);
         // exit;
 
-        if($this->ordemItemModel->insert($ordemItem))
-        {
-            session()->setFlashdata('sucesso', "+1 um item adicionado!");
 
             // return $this->response->setJSON($retorno);
         }
 
-        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-        $retorno['erros_model'] = $this->ordemItemModel->errors();
 
-        return $this->response->setJSON($retorno);
 
     }
 

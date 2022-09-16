@@ -46,4 +46,13 @@ class OrdemItemModel extends Model
 
     }
 
+    public function atualizaQuantidadeItem(object $ordemItem)
+    {
+
+        return $this->set('item_quantidade', $ordemItem->item_quantidade)
+                    ->where('id', $ordemItem->id)
+                    ->update();
+
+    }
+
 }

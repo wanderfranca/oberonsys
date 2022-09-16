@@ -174,8 +174,8 @@ class OrdensItens extends BaseController
             'ordem_id' => (int) $ordem->id,
             'item_id' => (int) $item->id,
             'item_quantidade' => (int) $post['item_quantidade'],
-            'item_preco' => $post['item_preco'],
-            'item_preco_total' => $post['item_preco'] * (int) $post['item_quantidade'],
+            'item_preco' => str_replace(',','', $post['item_preco']), 
+            'item_preco_total' => (int) $post['item_quantidade'] * str_replace(',','', $post['item_preco']),
         ];
 
         // echo '<pre>';
@@ -251,32 +251,27 @@ class OrdensItens extends BaseController
         if($item->tipo === 'produto' && $post['item_quantidade'] > $item->estoque)
         {
              // Retorno de validações
-            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
-            $retorno['erros_model'] = ['estoque' => "Este produto possui apenas <b class='text-white'> $item->estoque </b> UND. em estoque"];
-
+            return redirect()->back()->with('atencao', 'Verifique os erros abaixo e tente novamente')
+                                     ->with('erros_model', ['estoque' => "Este produto possui apenas <b class='text-white'> $item->estoque </b> UND. em estoque"]);
         }
 
-        
+        if($post['item_quantidade'] === $ordemItem->item_quantidade)
+        {
+            return redirect()->back()->with('info', 'Não há dados a serem atualizados.');
+        }
 
-        
+        // Alterar o Objeto $ordemItem com a nova quantidade
+        $ordemItem->item_quantidade = $post['item_quantidade'];
 
 
         // Dados que serão inseridos
-        $ordemItem = [
-            'ordem_id' => (int) $ordem->id,
-            'item_id' => (int) $item->id,
-            'item_quantidade' => (int) $post['item_quantidade'],
-            'item_preco' => $post['item_preco'],
-            'item_preco_total' => $post['item_preco'] * (int) $post['item_quantidade'],
-        ];
-
-        // echo '<pre>';
-        // print_r($ordemItem);
-        // exit;
-
-
-            // return $this->response->setJSON($retorno);
-        }
+        // $ordemItem = [
+        //     'ordem_id' => (int) $ordem->id,
+        //     'item_id' => (int) $item->id,
+        //     'item_quantidade' => (int) $post['item_quantidade'],
+        //     'item_preco' => $post['item_preco'],
+        //     'item_preco_total' => $post['item_preco'] * (int) $post['item_quantidade'],
+        // ];
 
 
 

@@ -6,7 +6,7 @@
 <?php echo $this->section('estilos') ?>
 
 <link rel="stylesheet" href="<?php echo site_url('recursos/vendor/fullcalendar/fullcalendar.min.css');?>">
-<link rel="stylesheet" href="<?php echo site_url('recursos/vendor/fullcalendar/toastr.min.css');?>">
+<link rel="stylesheet" href="<?php echo site_url('recursos/vendor/fullcalendar/fullcalendar.min.css');?>">
 <style>
 .fc-unthemed .fc-divider,
 .fc-unthemed .fc-list-heading td,

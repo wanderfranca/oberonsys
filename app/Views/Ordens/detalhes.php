@@ -51,7 +51,7 @@
 
                         <p class="card-text">Criado em: <?php echo date("d/m/Y H:m",strtotime($ordem->criado_em)); ?>
                         </p>
-                        <p class="card-text">Atualizado em: <?php echo $ordem->atualizado_em->humanize();?></p>
+                        <p class="card-text">Atualizado em: <?php echo date("d/m/Y H:m",strtotime($ordem->atualizado_em));?></p>
 
                         <hr class="border-secondary">
 

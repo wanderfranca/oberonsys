@@ -138,5 +138,36 @@ class UsuarioModel extends Model
                     ->set('email', $email)
                     ->update();
     }
+    
+    /**
+     * recuperaResponsaveisParaOrdem
+     * Método: Recupera no banco de dados os usuários cadastrados que são técnicos
+     * Joins: Trazer apenas usuários que estão em grupos
+     * Where: Usuários ativos
+     * Where: Grupos Marcodos para Exibição técnica
+     * Where: Usuários com o ID DIFERENTE de 2 (garantindo que não traga clientes (id == 2))
+     * Where: Grupos deletado_em NULL (Garantindo que não traga grupo deletado)
+     * Where: Usuários deletado_em NULL (Garantindo que não traga usuário deletado)
+     *
+     * @return null|array
+     */
+    public function recuperaResponsaveisParaOrdem()
+    {
+        $atributos = [
+            'usuarios.id',
+            'usuarios.nome',
+        ];
+
+        return $this->select($atributos)
+                    ->join('grupos_usuarios', 'grupos_usuarios.usuario_id = usuarios.id')
+                    ->join('grupos', 'grupos.id = grupos_usuarios.grupo_id')
+                    ->where('usuarios.ativo', true)
+                    ->where('grupos.exibir', true)
+                    ->where('grupos.id !=', 2)
+                    ->where('grupos.deletado_em', null)
+                    ->where('usuarios.deletado_em', null)
+                    ->groupBy('usuarios.nome')
+                    ->findAll();
+    }
 
 }

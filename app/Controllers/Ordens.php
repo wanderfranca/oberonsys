@@ -14,6 +14,7 @@ class Ordens extends BaseController
     private $transacaoModel;
     private $clienteModel;
     private $ordemResponsavelModel;
+    private $usuarioModel;
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class Ordens extends BaseController
         $this->transacaoModel = new \App\Models\TransacaoModel();
         $this->clienteModel = new \App\Models\ClienteModel();
         $this->ordemResponsavelModel = new \App\Models\OrdemResponsavelModel();
+        $this->usuarioModel = new \App\Models\UsuarioModel();
     }
     public function index()
     {
@@ -192,7 +194,7 @@ class Ordens extends BaseController
 
 
         $data = [
-            'titulo' => "EDITAR ORDEM - $ordem->codigo",
+            'titulo' => "Editar ordem de serviço TAG: $ordem->codigo",
             'ordem' => $ordem,
         ];
 
@@ -288,6 +290,34 @@ class Ordens extends BaseController
         ];
 
         return view('Ordens/excluir', $data);
+    }
+
+
+    // Método: Recuperar detalhes da OS
+    public function responsavel(string $codigo = null)
+    {
+        $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
+        
+
+        if($ordem->situacao === 'encerrada')
+        {
+            return redirect()->back()->with("info", "Esta O.S não pode ser editada, pois está " . ucfirst($ordem->situaca));
+        }
+
+
+        $data = [
+            'titulo' => "Definindo o responsável técnico - TAG: $ordem->codigo",
+            'ordem' => $ordem,
+        ];
+
+        return view('Ordens/responsavel', $data);
+    }
+
+    public function recuperaResponsaveis()
+    {
+        $responsaveis = $this->usuarioModel->recuperaResponsaveisParaOrdem();
+
+        return $this->response->setJSON($responsaveis);
     }
 
     // Método: Desfazer exclusão

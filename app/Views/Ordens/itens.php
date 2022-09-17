@@ -146,7 +146,7 @@
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
-
+                    
                     <tfoot>
                         <tr>
                             <td class="text-right font-weight-bold" colspan="4">
@@ -155,7 +155,7 @@
 
                             </td>
 
-                            <td class="text-right font-weight-bold">R$ <?php echo esc(number_format($valorProdutos, 2)); ?></td>
+                            <td class="font-weight-bold">R$ <?php echo esc(number_format($valorProdutos, 2)); ?></td>
 
                         </tr>
                         <tr>
@@ -165,7 +165,7 @@
 
                             </td>
 
-                            <td class="text-right font-weight-bold">R$ <?php echo esc(number_format($valorServicos, 2)); ?></td>
+                            <td class="font-weight-bold">R$ <?php echo esc(number_format($valorServicos, 2)); ?></td>
 
                         </tr>
                         <tr>
@@ -175,7 +175,7 @@
 
                             </td>
 
-                            <td class="text-right font-weight-bold">R$ <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?></td>
+                            <td class="font-weight-bold">R$ <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?></td>
 
                         </tr>
                     </tfoot>

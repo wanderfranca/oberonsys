@@ -3345,19 +3345,19 @@
     border-radius: 2px;
     color: #FFFFFF;
     font-family: Open Sans;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 500;
-    padding: 8px;
+    padding: 5px;
     background-color: transparent;
     border: 1px solid #05ae16; 
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
     text-align: center;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 5px;
+    padding-top: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 2px;
  }
  
  .btn_table_success:hover {
@@ -3370,27 +3370,29 @@
  }
 
  .btn_table_danger {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  color: #FFFFFF;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 2px;
+  color: #b0a4a4;
   font-family: Open Sans;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 500;
-  padding: 8px;
-  background-color: #ab0e0e;
+  padding: 5px;
+  background-color: transparent;
+  border: 1px solid #ab0e0e; 
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
   text-align: center;
-  padding-top: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 5px;
+  padding-top: 3px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 2px;
 }
 
 .btn_table_danger:hover {
   background: #ca0808;
+  color: #ffffff;
   border: 1px solid #e90a0a 0;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;

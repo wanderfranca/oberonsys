@@ -144,15 +144,40 @@
                                                 <?php echo esc(number_format($valorServicos, 2)); ?>
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <td class="text-right font-weight-bold" colspan="4">
+                                                <label class="text-white mr-3"> Valor Desconto: </label>
+                                            </td>
+                                            <td class="font-weight-bold">
+                                                R$ <?php echo esc(number_format($ordem->valor_desconto, 2)); ?>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-right font-weight-bold" colspan="4">
+                                                <label class="text-white mr-3"> Valor Total da Ordem: </label>
+                                            </td>
+                                            <td class="font-weight-bold">
+                                                R$ <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?>
+                                            </td>
+                                        </tr>
+
                                         <tr>
                                             <td class="text-right font-weight-bold" colspan="4">
                                                 <label class="text-white mr-3"> Valor Total: </label>
                                             </td>
                                             <td class="font-weight-bold">
-                                                R$ <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?>
+                                                R$ <?php 
+                                                
+                                                        $valorItens = $valorServicos + $valorProdutos;        
+                                                        echo esc(number_format($valorItens - $ordem->valor_desconto, 2)); 
+                                                        
+                                                    ?>
                                             </td>
-
                                         </tr>
+
                                     </tfoot>
 
                                 </table>

@@ -262,21 +262,81 @@ class OrdensItens extends BaseController
 
         // Alterar o Objeto $ordemItem com a nova quantidade
         $ordemItem->item_quantidade = $post['item_quantidade'];
+        $ordemItem->item_preco_total = (int) $post['item_quantidade'] * str_replace(',','', $ordemItem->item_preco);
 
+        // echo '<pre>';
+        // print_r($ordemItem);
+        // exit;
 
-        // Dados que serão inseridos
-        // $ordemItem = [
-        //     'ordem_id' => (int) $ordem->id,
-        //     'item_id' => (int) $item->id,
-        //     'item_quantidade' => (int) $post['item_quantidade'],
-        //     'item_preco' => $post['item_preco'],
-        //     'item_preco_total' => $post['item_preco'] * (int) $post['item_quantidade'],
-        // ];
+        if($this->ordemItemModel->atualizaQuantidadeItem($ordemItem))
+        {
+            return redirect()->back()->with('sucesso', 'Quantidade atualizada com sucesso!');
 
+        }
 
+        return redirect()->back()->with('atencao', 'Verifique os erros abaixo e tente novamente')
+                                 ->with('erros_model', $this->ordemItemModel->erros());
 
     }
 
+
+    public function removerItem(string $codigo = null)
+    {
+        if($this->request->getMethod() !== 'post')
+        {
+            return redirect()->back();
+        }
+
+        $validacao = service('validation');
+
+        $regras = [
+            'item_id' => 'required',
+            'id_principal' => 'required|greater_than[0]', //primary_key tbm ordens_itens
+        ];
+
+        $mensagens = [//Errors
+            'item_id' => [
+                'required' => 'Não foi possível identificar o item a ser excluído',
+            ],
+            'id_principal' => [
+                'required' => 'Houve um erro no processamento da requisição',
+                'greater_than' => 'Não foi possível processar a sua requisição',
+            ],
+        ];
+
+        $validacao->setRules($regras, $mensagens);
+
+        if($validacao->withRequest($this->request)->run() === false){
+
+            return redirect()->back()->with('atencao', 'Verifique os erros abaixo e tente novamente')
+                                    ->with('erros_model', $validacao->getErrors());
+        
+
+        }
+
+        $post = $this->request->getPost();
+
+        // Buscar a ordem de serviço envolvida no processo
+        $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
+
+        // Validar a existência do item
+        $item = $this->buscaItemOu404($post['item_id']);
+
+
+        // Validar a existência do item na OS (registro principal)
+        $ordemItem = $this->buscaOrdemItemOu404($post['id_principal'], $ordem->id);
+
+
+        if($this->ordemItemModel->delete($ordemItem->id))
+        {
+            return redirect()->back()->with('sucesso', 'Item removido com sucesso!');
+
+        }
+
+        return redirect()->back()->with('atencao', 'Verifique os erros abaixo e tente novamente')
+                                 ->with('erros_model', $this->ordemItemModel->erros());
+
+    }
 
 
 
@@ -312,9 +372,9 @@ class OrdensItens extends BaseController
     {
 
         if (!$id_principal || !$ordemItem = $this->ordemItemModel
-                                                    ->where('id', $id_principal)
-                                                    ->where('ordem_id',$ordem_id )
-                                                    ->first()){
+                                                ->where('id', $id_principal)
+                                                ->where('ordem_id',$ordem_id )
+                                                ->first()){
 
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("O registro principal não foi encontrado: $id_principal");
 

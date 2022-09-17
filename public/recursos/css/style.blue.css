@@ -227,7 +227,7 @@ pre {
 
 .page-content {
   position: relative;
-  background: #22252a;
+  background: #101010;
   min-height: 100vh;
   width: calc(100% - 280px);
   padding: 0;
@@ -261,10 +261,9 @@ pre {
   color: #8a8d93;
   font-size: 1rem;
   min-width: 200px;
-  background: #2d3035;
+  background: #393c43;
   border-radius: 0;
   padding: 0;
-  /*margin-top: 21px;*/
   border: 1px solid #393c43;
 }
 
@@ -3131,7 +3130,7 @@ a.bg-dark:focus, a.bg-dark:hover {
 }
 
 .border-secondary {
-  border-color: #868e96 !important;
+  border-color: #626262 !important;
 }
 
 .border-success {

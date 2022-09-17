@@ -59,31 +59,118 @@
                         <div class="contributions py-3">
 
                             <p>Nenhum item foi adicionado à esta OS</p>
-
-                            <?php if($ordem->situacao === 'aberta'): ?>
-
-                            <a class="btn btn-outline-primary btn-sm"
-                                href="<?php echo site_url("ordensitens/itens/$ordem->codigo") ?>">Adicionar itens</a>
-
-                            <?php endif; ?>
-
                         </div>
+                        <?php if($ordem->situacao === 'aberta'): ?>
 
-                        <?php else: ?>
-
-                        ============ OS TEM ordens
+                        <a class="btn btn-outline-primary btn-sm"
+                            href="<?php echo site_url("ordensitens/itens/$ordem->codigo") ?>">Adicionar itens</a>
 
                         <?php endif; ?>
 
                     </div>
+
+
+                    <?php else: ?>
+
+                    <!-- DIV - TABLE ITENS -->
+                    <div class="row container-fluid">
+
+                        <div class="col-lg-12">
+
+                            <div class="table-responsive text-left">
+
+                                <table class="table table-borderless table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Preço</th>
+                                            <th scope="col">Qtde.</th>
+                                            <th scope="col">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <?php
+                    
+                                        $valorProdutos = 0;
+                                        $valorServicos = 0;
+                                    
+                                    ?>
+
+                                        <?php foreach($ordem->itens as $item): 
+                            
+                                        if($item->tipo === 'produto')
+                                            {
+                                                $valorProdutos += $item->preco_total_vendido;
+                                            
+                                            } else
+                                            {
+                                                $valorServicos += $item->preco_total_vendido;
+                                            }
+                                        
+                                        ?>
+                                        <tr>
+                                            <!-- 0 Item -->
+                                            <th scope="row"><?php echo ellipsize($item->nome, 30); ?></th>
+                                            <!-- 1 Tipo -->
+                                            <td><?php echo esc(ucfirst($item->tipo)); ?></td>
+                                            <!-- 2 Preço do item vendido -->
+                                            <td>R$ <?php echo esc(number_format($item->preco_vendido, 2)); ?></td>
+                                            <!-- 3 Quantidade de itens -->
+                                            <td> <?php echo $item->item_quantidade; ?></td>
+                                            <!-- 4 Preço que foi vendido -->
+                                            <td>R$ <?php echo esc(number_format($item->preco_total_vendido, 2)) ?></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+
+                                    <tfoot>
+                                        <tr>
+                                            <td class="text-right font-weight-bold" colspan="4">
+                                                <label class="text-white mr-3"> Valor Produtos: </label>
+                                            </td>
+
+                                            <td class="font-weight-bold">R$
+                                                <?php echo esc(number_format($valorProdutos, 2)); ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right font-weight-bold" colspan="4">
+                                                <label class="text-white mr-3"> Valor Serviços: </label>
+                                            </td>
+
+                                            <td class="font-weight-bold">R$
+                                                <?php echo esc(number_format($valorServicos, 2)); ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right font-weight-bold" colspan="4">
+                                                <label class="text-white mr-3"> Valor Total: </label>
+                                            </td>
+                                            <td class="font-weight-bold">
+                                                R$ <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?>
+                                            </td>
+
+                                        </tr>
+                                    </tfoot>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <?php endif; ?>
+                    </div>
+
                 </div>
                 <?php if(isset($ordem->transacao)): ?>
                 <!-- TRANSACOES -->
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     TRANSAÇÕES DA ORDEM
                 </div>
-                <?php endif; ?>
+
             </div>
+            <?php endif; ?>
 
 
 
@@ -95,22 +182,29 @@
                 </button>
                 <div class="dropdown-menu">
 
-                <?php if($ordem->situacao === 'aberta'): ?>
+                    <?php if($ordem->situacao === 'aberta'): ?>
 
                     <a class="dropdown-item" href="<?php echo site_url("ordens/editar/$ordem->codigo"); ?>">Editar</a>
-                    <a class="dropdown-item" href="<?php echo site_url("ordens/responsavel/$ordem->codigo"); ?>">Definir técnico responsável</a>
-                    <a class="dropdown-item" href="<?php echo site_url("ordensitens/itens/$ordem->codigo"); ?>">Gerenciar itens</a>
-                    <a class="dropdown-item" href="<?php echo site_url("ordens/encerrar/$ordem->codigo"); ?>">Encerrar</a>
+                    <a class="dropdown-item" href="<?php echo site_url("ordens/responsavel/$ordem->codigo"); ?>">Definir
+                        técnico responsável</a>
+                    <a class="dropdown-item"
+                        href="<?php echo site_url("ordensitens/itens/$ordem->codigo"); ?>">Gerenciar itens</a>
+                    <a class="dropdown-item"
+                        href="<?php echo site_url("ordens/encerrar/$ordem->codigo"); ?>">Encerrar</a>
                     <?php endif;  ?>
 
-                    <a class="dropdown-item" href="<?php echo site_url("ordensevidencias/evidencias/$ordem->codigo"); ?>">Evidências da Ordem</a>
+                    <a class="dropdown-item"
+                        href="<?php echo site_url("ordensevidencias/evidencias/$ordem->codigo"); ?>">Evidências da
+                        Ordem</a>
 
-                    <a class="dropdown-item" href="<?php echo site_url("ordens/email/$ordem->codigo"); ?>">Enviar por e-mail</a>
-                    <a class="dropdown-item" href="<?php echo site_url("ordens/gerarpdf/$ordem->codigo"); ?>">Gerar PDF</a>
+                    <a class="dropdown-item" href="<?php echo site_url("ordens/email/$ordem->codigo"); ?>">Enviar por
+                        e-mail</a>
+                    <a class="dropdown-item" href="<?php echo site_url("ordens/gerarpdf/$ordem->codigo"); ?>">Gerar
+                        PDF</a>
 
-                   
+
                     <?php if($ordem->deletado_em === null): ?>
-                        <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?php echo site_url("ordens/excluir/$ordem->codigo"); ?>">Excluir</a>
 
                     <?php else:  ?>

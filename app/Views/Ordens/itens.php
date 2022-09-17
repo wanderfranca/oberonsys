@@ -231,7 +231,7 @@
                 </div>
             </div>
 
-            <a href="<?php echo site_url('ordens')?>" class="btn btn-secondary btn-sm ml-2 mt-5">Voltar</a>
+            <a href="<?php echo site_url("ordens/detalhes/$ordem->codigo")?>" class="btn btn-secondary btn-sm ml-2 mt-5">Voltar</a>
 
         </div> <!-- FIM DO DIV BLOCK -->
 

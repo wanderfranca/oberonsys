@@ -45,11 +45,19 @@ class OrdemItemModel extends Model
                     ->findAll();
 
     }
-
+    
+    /**
+     * atualizaQuantidadeItem
+     * Método: Faz update na coluna item_quantidade e item_preco_total
+     * Objeto: Pega o objeto atualizado e recalcula o valor total dos itens
+     * @param  mixed $ordemItem
+     * @return void
+     */
     public function atualizaQuantidadeItem(object $ordemItem)
     {
 
         return $this->set('item_quantidade', $ordemItem->item_quantidade)
+                    ->set('item_preco_total', $ordemItem->item_preco_total)
                     ->where('id', $ordemItem->id)
                     ->update();
 

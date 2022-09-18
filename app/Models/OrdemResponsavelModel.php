@@ -15,4 +15,19 @@ class OrdemResponsavelModel extends Model
         'usuario_encerramento_id',
     ];
 
+    
+    /**
+     * defineUsuarioResponsavel
+     * Método: Definir o técnico responsável pela OS
+     * @param  int $ordem_id = id da OS
+     * @param  int $usuario_responsavel_id = id do usuário
+     * @return void
+     */
+    public function defineUsuarioResponsavel(int $ordem_id, int $usuario_responsavel_id)
+    {
+        return $this->set('usuario_responsavel_id', $usuario_responsavel_id)
+                    ->where('ordem_id', $ordem_id)
+                    ->update();
+    }
+
 }

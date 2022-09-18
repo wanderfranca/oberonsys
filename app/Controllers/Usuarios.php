@@ -708,7 +708,6 @@ class Usuarios extends BaseController
 
     }
 
-    
     private function buscaGrupoUsuarioOu404(int $principal_id = null)
     {
 

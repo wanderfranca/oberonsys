@@ -148,19 +148,26 @@ class UsuarioModel extends Model
      * Where: Usuários com o ID DIFERENTE de 2 (garantindo que não traga clientes (id == 2))
      * Where: Grupos deletado_em NULL (Garantindo que não traga grupo deletado)
      * Where: Usuários deletado_em NULL (Garantindo que não traga usuário deletado)
-     *
+     * @param sting $termo = O termo será pesquisado pelo usuário, passara pelo controller e chegará aqui
      * @return null|array
      */
-    public function recuperaResponsaveisParaOrdem()
+    public function recuperaResponsaveisParaOrdem(string $termo = null)
     {
+
+        if($termo === null)
+        {
+            return [];
+        }
+
         $atributos = [
             'usuarios.id',
             'usuarios.nome',
         ];
 
-        return $this->select($atributos)
+        $responsaveis = $this->select($atributos)
                     ->join('grupos_usuarios', 'grupos_usuarios.usuario_id = usuarios.id')
                     ->join('grupos', 'grupos.id = grupos_usuarios.grupo_id')
+                    ->like('usuarios.nome', $termo)
                     ->where('usuarios.ativo', true)
                     ->where('grupos.exibir', true)
                     ->where('grupos.id !=', 2)
@@ -168,6 +175,15 @@ class UsuarioModel extends Model
                     ->where('usuarios.deletado_em', null)
                     ->groupBy('usuarios.nome')
                     ->findAll();
+
+            if($responsaveis === null)
+            {
+                return [];
+            }
+
+        return $responsaveis;
     }
+
+    
 
 }

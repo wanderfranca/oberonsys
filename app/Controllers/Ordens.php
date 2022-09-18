@@ -313,11 +313,86 @@ class Ordens extends BaseController
         return view('Ordens/responsavel', $data);
     }
 
-    public function recuperaResponsaveis()
+    public function buscaResponsaveis()
     {
-        $responsaveis = $this->usuarioModel->recuperaResponsaveisParaOrdem();
+
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        
+        $termo = $this->request->getGet('termo');
+
+        $responsaveis = $this->usuarioModel->recuperaResponsaveisParaOrdem($termo);
 
         return $this->response->setJSON($responsaveis);
+    }
+
+    public function definirResponsavel()
+    {
+        if(!$this->request->isAJAX())
+        {
+            return redirect()->back();
+        }
+
+        // Enviar o token do Form
+        $retorno['token'] = csrf_hash();
+
+        $validacao = service('validation');
+
+        $regras = [
+            'usuario_responsavel_id' => 'required|greater_than[0]',
+        ];
+
+        $mensagens = [//Errors
+            'usuario_responsavel_id' => [
+                'required' => 'Pesquise e insira um responsável técnico',
+                'greater_than' => 'Você precisa informar um técnico responsável',
+            ],
+        ];
+
+        $validacao->setRules($regras, $mensagens);
+
+        if($validacao->withRequest($this->request)->run() === false){
+        
+            // Retorno de validações
+        $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        $retorno['erros_model'] = $validacao->getErrors();
+
+            return $this->response->setJSON($retorno);
+
+        }
+
+        $post = $this->request->getPost();
+
+        $ordem = $this->ordemModel->buscaOrdemOu404($post['codigo']);
+
+        // Validação: Se a situação da OS for encerrada
+        if($ordem->situacao === 'encerrada')
+        {
+            $retorno['erro'] = 'Por favor, verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['situacao' => "Esta O.S não pode ser editada pois encontra-se ".ucfirst($ordem->situacao)];
+            
+            return $this->response->setJSON($retorno);
+        }
+
+        //Validação: Existência do usuarioResponsavel
+        $usuarioResponsavel = $this->buscaUsuarioResponsavelOu404($post['usuario_responsavel_id']);
+
+        if($this->ordemResponsavelModel->defineUsuarioResponsavel($ordem->id, $usuarioResponsavel->id)) //Isso não é erro
+        {
+            session()->setFlashdata('sucesso', 'O técnico responsável foi definido com sucesso!');
+
+            return $this->response->setJSON($retorno);
+        }
+
+            // Retorno de validações
+            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = $this->ordemResponsavelModel->errors();
+
+            return $this->response->setJSON($retorno);
+
     }
 
     // Método: Desfazer exclusão
@@ -377,6 +452,28 @@ class Ordens extends BaseController
 
         $email->setMessage($mensagem);
         $email->send();
+    }
+    
+    /**
+     * buscaUsuarioResponsavelOu404
+     * Método privado: Buscar usuário responsável e trazer o ID e Nome no objeto
+     * @param  int $usuario_responsavel_id
+     * @return array
+     */
+    private function buscaUsuarioResponsavelOu404(int $usuario_responsavel_id = null)
+    {
+
+        if (!$usuario_responsavel_id || !$usuarioResponsavel = $this->usuarioModel
+                                                                    ->select('id, nome')
+                                                                    ->where('ativo', true)
+                                                                    ->find($usuario_responsavel_id)){
+
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Usuário não encontrado");
+
+        }
+
+        return $usuarioResponsavel;
+
     }
         
 }

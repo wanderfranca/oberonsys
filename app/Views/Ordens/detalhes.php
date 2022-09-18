@@ -38,11 +38,14 @@
                         </div>
 
                         <p class="contributions mt-0"><?php echo $ordem->exibeSituacao(); ?></p>
-                        <p class="contributions mt-0">Aberta por: <?php echo esc($ordem->usuario_abertura); ?></p>
+                        <p class="contributions mt-0 text-white"><b>Aberta por:</b> <?php echo esc($ordem->usuario_abertura); ?></p>
 
-                        <p class="contributions mt-0">Técnico:
-                            <?php echo esc($ordem->usuario_responsavel !== null ? $ordem->usuario_responsavel : 'Não definido'); ?>
-                        </p>
+                        <?php if($ordem->usuario_responsavel !== null): ?>
+                        <p class="contributions mt-0 text-white"><b>Técnico:</b> <?php echo $ordem->usuario_responsavel; ?></p>
+
+                        <?php else: ?>
+                    <p class="contributions mt-0">Técnico: Sem técnico definido</p>
+                        <?php endif; ?>
 
                         <?php if($ordem->situacao === 'encerrada'): ?>
                         <p class="contributions mt-0">Encerrada por: <?php echo esc($ordem->usuario_encerramento); ?>

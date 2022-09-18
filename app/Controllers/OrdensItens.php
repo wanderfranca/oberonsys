@@ -338,8 +338,6 @@ class OrdensItens extends BaseController
 
     }
 
-
-
     /**
      * Método que recupera o Item (produto ou serviço)
      * 

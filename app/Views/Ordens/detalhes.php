@@ -147,7 +147,9 @@
                                                 <?php echo esc(number_format($valorServicos, 2)); ?>
                                             </td>
                                         </tr>
-
+                                        
+                                        <?php  if($ordem->valor_desconto !== null || 0): ?>
+                                        <!-- Valor do desconto -->
                                         <tr>
                                             <td class="text-right font-weight-bold" colspan="4">
                                                 <label class="text-white mr-3"> Valor Desconto: </label>
@@ -155,22 +157,22 @@
                                             <td class="font-weight-bold">
                                                 R$ <?php echo esc(number_format($ordem->valor_desconto, 2)); ?>
                                             </td>
-
                                         </tr>
-
+                                            <?php endif; ?>
                                         <tr>
                                             <td class="text-right font-weight-bold" colspan="4">
-                                                <label class="text-white mr-3"> Valor Total da Ordem: </label>
+                                                <label class="text-white mr-3"> Valor Total da OS: </label>
                                             </td>
                                             <td class="font-weight-bold">
                                                 R$ <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?>
                                             </td>
                                         </tr>
 
+                                       <!-- TR - VALOR TOTAL  -->
                                         <tr>
                                             <td class="text-right font-weight-bold" colspan="4">
-                                                <label class="text-white mr-3"> Valor Total: </label>
-                                            </td>
+                                                <label class="text-white mr-3"><?php echo ($ordem->valor_desconto == null || 0 ? 'Valor Total: ' : 'Valor Total Com Desconto: ') ?> </label>
+                                            </td> 
                                             <td class="font-weight-bold">
                                                 R$ <?php 
                                                 

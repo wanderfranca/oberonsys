@@ -8,7 +8,8 @@
         "php": "^7.3 || ^8.0",
         "codeigniter4/framework": "^4",
         "picqer/php-barcode-generator": "^2.2",
-        "dompdf/dompdf": "^2.0"
+        "dompdf/dompdf": "^2.0",
+        "gerencianet/gerencianet-sdk-php": "^4.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

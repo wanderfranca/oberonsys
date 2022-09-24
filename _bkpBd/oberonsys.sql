@@ -11,7 +11,7 @@
  Target Server Version : 100902
  File Encoding         : 65001
 
- Date: 16/09/2022 19:10:08
+ Date: 24/09/2022 18:12:58
 */
 
 SET NAMES utf8mb4;
@@ -1075,7 +1075,7 @@ INSERT INTO `clientes` VALUES (999, 3002, 'Sara Benez Leonidas', '906.593.172-49
 INSERT INTO `clientes` VALUES (1000, 3003, 'Yasmin Takizawa', '643.433.180-01', '(19) 98577-1193', 'closes@gmail.com.vd.ged', '26032-230', 'Rua Dona Luzinda', '734', 'Cerâmica', 'New Fabríciofurt', 'Nova Iguaçu', 'RJ', '2022-07-19 11:46:53', '2022-07-21 17:03:11', NULL);
 INSERT INTO `clientes` VALUES (1001, 3004, 'tyr utiy yut yut', '146.092.717-61', '(21) 99324-8320', 'wander.wpf@gmail.com', '26032-230', 'Rua Dona Luzinda', '650', 'Cerâmica', '', 'Nova Iguaçu', 'RJ', '2022-07-21 21:16:07', '2022-07-24 00:10:23', '2022-07-24 00:10:23');
 INSERT INTO `clientes` VALUES (1002, 3005, 'João Marcelo Sabino', '138.780.767-62', '(21) 99955-6056', 'testando123@gmail.com', '25011-380', 'Rua Tenente José Wilson da Silva', '55', 'Centro', '', 'Duque de Caxias', 'RJ', '2022-07-21 21:44:48', '2022-07-23 18:31:44', '2022-07-23 18:31:44');
-INSERT INTO `clientes` VALUES (1003, 3006, 'Poze do Rodo', '630.227.846-51', '(21) 99932-3232', 'poze@gmail.com', '25011-200', 'Rua Nova', '10', 'Parque Laguna e Dourados', '', 'Duque de Caxias', 'RJ', '2022-07-22 17:21:50', '2022-07-22 17:21:50', NULL);
+INSERT INTO `clientes` VALUES (1003, 3006, 'Poze do Rodo', '630.227.846-51', '(21) 99932-3232', 'poze@gmail.com', '25011-200', 'Rua Nova', '10', 'Parque Laguna e Dourados', '', 'Duque de Caxias', 'RJ', '2022-07-22 17:21:50', '2022-09-21 19:40:20', NULL);
 INSERT INTO `clientes` VALUES (1004, 3007, 'Arlindo Cruz', '273.773.630-70', '(21) 59080-9098', 'testew@email.com', '26032-510', 'Rua Provedor Marquês de Abrantes', '10', 'Ponto Chic', '', 'Nova Iguaçu', 'RJ', '2022-07-22 21:11:59', '2022-07-23 18:18:12', '2022-07-23 18:18:12');
 INSERT INTO `clientes` VALUES (1005, 3008, 'Periclão da Silva Sauro', '397.832.390-74', '(54) 05405-5555', 'teste@email.com.br', '26032-240', 'Rua Professor Leonardo', '66', 'Cerâmica', '', 'Nova Iguaçu', 'RJ', '2022-08-27 15:28:07', '2022-08-27 15:34:41', NULL);
 
@@ -3578,17 +3578,21 @@ CREATE TABLE `grupos`  (
   `deletado_em` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `nome`(`nome`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of grupos
 -- ----------------------------
 INSERT INTO `grupos` VALUES (1, 'Administradores', 'Grupo de usuários com acesso total ao sistema', 0, '2022-06-18 19:22:25', '2022-06-18 19:22:25', NULL);
 INSERT INTO `grupos` VALUES (2, 'Clientes', 'Grupo de usuários com permissão apenas de visualizar suas ordens de serviços', 0, '2022-06-18 19:22:25', '2022-06-18 19:22:25', NULL);
-INSERT INTO `grupos` VALUES (3, 'Atendentes', 'Grupo de usuários com permissão para realizar atendimentos aos clientes', 1, '2022-06-18 19:22:25', '2022-06-27 15:39:03', NULL);
+INSERT INTO `grupos` VALUES (3, 'Atendentes', 'Grupo de usuários com permissão para realizar atendimentos aos clientes', 0, '2022-06-18 19:22:25', '2022-09-17 19:49:19', NULL);
 INSERT INTO `grupos` VALUES (4, 'Vendedor externo', 'Grupo para vendedores externos', 0, '2022-06-27 16:47:52', '2022-06-27 16:47:52', NULL);
-INSERT INTO `grupos` VALUES (5, 'Suporte Técnico', 'Grupo para análises, testes e suporte', 1, '2022-06-27 16:48:31', '2022-07-03 15:41:02', NULL);
+INSERT INTO `grupos` VALUES (5, 'Técnicos de TI', 'Técnicos de tecnologia da informação, manutenção e suporte', 1, '2022-06-27 16:48:31', '2022-09-17 19:48:53', NULL);
 INSERT INTO `grupos` VALUES (6, 'Financeiro', 'Setor financeiro', 0, '2022-06-27 16:49:20', '2022-06-29 17:29:42', NULL);
+INSERT INTO `grupos` VALUES (7, 'Especialista em Microcomponentes', 'Especialistas em Microcomponentes', 1, '2022-09-17 19:07:57', '2022-09-17 19:07:57', NULL);
+INSERT INTO `grupos` VALUES (8, 'Técnicos Apple', 'Apenas técnicos especialistas em tecnologia apple, seja software ou hardware', 1, '2022-09-17 19:08:54', '2022-09-17 19:08:54', NULL);
+INSERT INTO `grupos` VALUES (9, 'Técnicos Smartphones ', 'Técnicos de smartphones em geral, seja hardware ou software como android, windows phone, entre outros.', 1, '2022-09-17 19:09:59', '2022-09-17 19:09:59', NULL);
+INSERT INTO `grupos` VALUES (10, 'Técnicos em elétrica', 'Eletricistas', 1, '2022-09-17 19:43:58', '2022-09-17 19:43:58', NULL);
 
 -- ----------------------------
 -- Table structure for grupos_permissoes
@@ -3628,7 +3632,7 @@ CREATE TABLE `grupos_usuarios`  (
   INDEX `grupos_usuarios_usuario_id_foreign`(`usuario_id`) USING BTREE,
   CONSTRAINT `grupos_usuarios_grupo_id_foreign` FOREIGN KEY (`grupo_id`) REFERENCES `grupos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `grupos_usuarios_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1043 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1051 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of grupos_usuarios
@@ -4640,11 +4644,15 @@ INSERT INTO `grupos_usuarios` VALUES (1032, 2, 3006);
 INSERT INTO `grupos_usuarios` VALUES (1033, 2, 3007);
 INSERT INTO `grupos_usuarios` VALUES (1034, 2, 3008);
 INSERT INTO `grupos_usuarios` VALUES (1037, 1, 2002);
-INSERT INTO `grupos_usuarios` VALUES (1038, 6, 2003);
-INSERT INTO `grupos_usuarios` VALUES (1039, 3, 2003);
-INSERT INTO `grupos_usuarios` VALUES (1040, 5, 2003);
-INSERT INTO `grupos_usuarios` VALUES (1041, 4, 2003);
 INSERT INTO `grupos_usuarios` VALUES (1042, 1, 894);
+INSERT INTO `grupos_usuarios` VALUES (1043, 5, 2001);
+INSERT INTO `grupos_usuarios` VALUES (1044, 9, 2001);
+INSERT INTO `grupos_usuarios` VALUES (1045, 8, 2001);
+INSERT INTO `grupos_usuarios` VALUES (1046, 8, 1997);
+INSERT INTO `grupos_usuarios` VALUES (1047, 5, 1997);
+INSERT INTO `grupos_usuarios` VALUES (1048, 9, 1997);
+INSERT INTO `grupos_usuarios` VALUES (1049, 10, 2000);
+INSERT INTO `grupos_usuarios` VALUES (1050, 3, 2003);
 
 -- ----------------------------
 -- Table structure for itens
@@ -10807,7 +10815,7 @@ INSERT INTO `ordens` VALUES (999, 904, 'OS0409202220482125LL', NULL, 'aberta', N
 INSERT INTO `ordens` VALUES (1000, 518, 'OS04092022204821KGZE', NULL, 'cancelada', NULL, NULL, NULL, NULL, NULL, 'Notebook', 'Teclado não funciona', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
 INSERT INTO `ordens` VALUES (1001, 696, 'OS04092022204821WXUH', NULL, 'aguardando', NULL, NULL, NULL, NULL, NULL, 'Pc ', 'Defeito na placa mãe', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
 INSERT INTO `ordens` VALUES (1002, 43, 'OS04092022204821LVDM', NULL, 'encerrada', NULL, NULL, NULL, NULL, NULL, 'Notebook', 'Tela não liga', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
-INSERT INTO `ordens` VALUES (1003, 1003, 'OS20220916153822MT', NULL, 'aberta', NULL, NULL, NULL, NULL, NULL, 'Notebook', 'teste teste testeee', 'ts tst tsts ', NULL, '2022-09-16 15:38:45', '2022-09-16 15:38:45', NULL);
+INSERT INTO `ordens` VALUES (1003, 1003, 'OS20220916153822MT', NULL, 'aberta', NULL, NULL, NULL, 120.00, NULL, 'Notebook', 'A tela não liga', 'O aparelho está sem fonte', 'Foi necessário trocar a placa mãe', '2022-09-16 15:38:45', '2022-09-16 15:38:45', NULL);
 
 -- ----------------------------
 -- Table structure for ordens_itens
@@ -10825,16 +10833,14 @@ CREATE TABLE `ordens_itens`  (
   INDEX `ordens_itens_item_id_foreign`(`item_id`) USING BTREE,
   CONSTRAINT `ordens_itens_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `itens` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ordens_itens_ordem_id_foreign` FOREIGN KEY (`ordem_id`) REFERENCES `ordens` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ordens_itens
 -- ----------------------------
 INSERT INTO `ordens_itens` VALUES (1, 997, 10, 1, 345.00, 345.00);
-INSERT INTO `ordens_itens` VALUES (2, 1003, 638, 1, 828.52, 828.52);
-INSERT INTO `ordens_itens` VALUES (3, 1003, 2690, 1, 523.36, 523.36);
-INSERT INTO `ordens_itens` VALUES (4, 1003, 5007, 3, 1255.05, 3765.15);
-INSERT INTO `ordens_itens` VALUES (5, 1003, 4712, 2, 838.20, 1676.40);
+INSERT INTO `ordens_itens` VALUES (6, 1003, 2690, 1, 523.36, 523.36);
+INSERT INTO `ordens_itens` VALUES (7, 1003, 5007, 1, 1255.05, 1255.05);
 
 -- ----------------------------
 -- Table structure for ordens_responsaveis
@@ -11862,7 +11868,7 @@ INSERT INTO `ordens_responsaveis` VALUES (999, 999, 894, NULL, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (1000, 1000, 894, NULL, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (1001, 1001, 894, NULL, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (1002, 1002, 894, NULL, NULL);
-INSERT INTO `ordens_responsaveis` VALUES (1003, 1003, 2002, NULL, NULL);
+INSERT INTO `ordens_responsaveis` VALUES (1003, 1003, 2002, 2001, NULL);
 
 -- ----------------------------
 -- Table structure for permissoes
@@ -13948,11 +13954,11 @@ INSERT INTO `usuarios` VALUES (1993, 'Johnny McDermott', 'fadel.sigmund@yahoo.co
 INSERT INTO `usuarios` VALUES (1994, 'Dr. Mavis Lemke IV', 'randi77@hotmail.com', '123456', NULL, NULL, NULL, 1, '2022-06-01 18:46:15', '2022-06-01 18:46:15', NULL);
 INSERT INTO `usuarios` VALUES (1995, 'Lonie Monahan', 'swilliamson@yahoo.com', '123456', NULL, NULL, NULL, 0, '2022-06-01 18:46:15', '2022-06-01 18:46:15', NULL);
 INSERT INTO `usuarios` VALUES (1996, 'Garth Wehner', 'stokes.stefanie@gmail.com', '123456', NULL, NULL, NULL, 1, '2022-06-01 18:46:15', '2022-06-01 18:46:15', NULL);
-INSERT INTO `usuarios` VALUES (1997, 'Lia Goldner', 'huels.tito@grimes.com', '123456', NULL, NULL, NULL, 1, '2022-06-01 18:46:15', '2022-06-01 18:46:15', NULL);
+INSERT INTO `usuarios` VALUES (1997, 'Nicolas Cage', 'nicolascage@suporteoberon.com.br', '$2y$10$wkEQuZxUP3WRO7WjfJzeguSCTC08Q/J1twE0FEawNXWfHzba/TXcu', NULL, NULL, '1663453004_a12b0789959877a365b0.jpg', 1, '2022-06-01 18:46:15', '2022-09-17 19:20:06', NULL);
 INSERT INTO `usuarios` VALUES (1998, 'Letícia Almeida', 'cliente@suporteoberon.com.br', '$2y$10$UMgGsJFujRIMBu4BgEF/t.yonkuAVsE8uN9ZHfQwn7fJIqch7emKW', NULL, NULL, '1656552269_8f03c151b6f6b699969b.jpg', 1, '2022-06-01 18:46:15', '2022-06-29 22:24:29', NULL);
 INSERT INTO `usuarios` VALUES (1999, 'Ricky Jaskolski', 'ogoldner@harvey.net', '123456', NULL, NULL, NULL, 0, '2022-06-01 18:46:15', '2022-06-01 18:46:15', NULL);
-INSERT INTO `usuarios` VALUES (2000, 'Jamey Russel', 'beahan.gudrun@mitchell.org', '123456', NULL, NULL, NULL, 0, '2022-06-01 18:46:15', '2022-06-01 18:46:15', NULL);
-INSERT INTO `usuarios` VALUES (2001, 'Wander Pereira', 'wander@me.com', '$2y$10$nuJvmqOsXSMRY0nOKkvq1OZ6ssFOpsKGZRwZ7wN03EY.IXLd0bsIS', NULL, NULL, NULL, 1, '2022-06-13 17:28:13', '2022-06-13 17:28:13', NULL);
+INSERT INTO `usuarios` VALUES (2000, 'Jamey Russel', 'tecnico@suporteoberon.com.br', '$2y$10$XwRuaA44fNMUaK5TKXp53u3H02Cw3X33NHw7D5RP/185XhXV4nn1a', NULL, NULL, '1663454810_8a3a7da113ab20479d3a.jpg', 1, '2022-06-01 18:46:15', '2022-09-17 19:48:18', NULL);
+INSERT INTO `usuarios` VALUES (2001, 'Wander França', 'wander@suporteoberon.com.br', '$2y$10$TObIWt7MdmDj5rLR04QKWuLgkOJ/h4CwhIwvtF6o3c/JlSvmqEiuS', NULL, NULL, '1663452846_6a0dfa777887fc8e2d3d.jpg', 1, '2022-06-13 17:28:13', '2022-09-17 19:14:06', NULL);
 INSERT INTO `usuarios` VALUES (2002, 'Winston Server', 'w@suporteoberon.com.br', '$2y$10$2G4dIoA91H.UJeXddqsB.eIvJoynMl91oNMrkViryJNbGjl/4ZTHC', NULL, NULL, '1656552286_b3c73549cf0d85b97baf.jpg', 1, '2022-06-13 17:34:22', '2022-07-06 21:36:18', NULL);
 INSERT INTO `usuarios` VALUES (2003, 'Fulano de Tal', '1234@email.com', '$2y$10$UMgGsJFujRIMBu4BgEF/t.yonkuAVsE8uN9ZHfQwn7fJIqch7emKW', NULL, NULL, '1655407529_2112d4dda5fe635b9d1e.jpg', 1, '2022-06-13 19:43:49', '2022-06-16 16:44:46', NULL);
 INSERT INTO `usuarios` VALUES (2004, 'Violeta Rico Jr.', 'valdez.mila@gmail.com', '$2y$10$9aSo1kYS/BuzMif3ZwwU8utJuOKz4DUbc1mBHAw8/lbjqb0wPGGce', NULL, NULL, NULL, 1, '2022-07-19 11:45:54', '2022-07-19 11:45:54', NULL);
@@ -14957,7 +14963,7 @@ INSERT INTO `usuarios` VALUES (3002, 'Sara Benez Leon', 'lorena.rangel@yahoo.com
 INSERT INTO `usuarios` VALUES (3003, 'Yohanna Isis Saito Sobrinho', 'closes@gmail.com.vd.ged', '$2y$10$hZItgn21z3pOe/LgoWt6FOQpEBio6BjLje41M8srjvubTXGhL70nm', NULL, NULL, NULL, 1, '2022-07-19 11:46:53', '2022-07-21 17:03:11', NULL);
 INSERT INTO `usuarios` VALUES (3004, 'tyr utiy yut yut', 'wander.wpf@gmail.com', '$2y$10$JeM83nRe.2jaqMu.ZJc3FOWDrbG2u/B7eOoYqUvMy90AF079Y.Lx6', NULL, NULL, NULL, 1, '2022-07-21 21:16:07', '2022-07-21 21:16:07', NULL);
 INSERT INTO `usuarios` VALUES (3005, 'João Marcelo Sabino', 'testando123@gmail.com', '$2y$10$5oPgEsftfIk2dhwbBNegFec7WoCREhQEf91CR1yWGIFluoK7ssfz.', NULL, NULL, NULL, 1, '2022-07-21 21:44:48', '2022-07-21 21:44:48', NULL);
-INSERT INTO `usuarios` VALUES (3006, 'Poze do Rodo', 'poze@gmail.com', '$2y$10$4wblBgA1KNT/aKCOE/gRLuDBRsDdSl/8Mt3tWjlcGx7NFFmnuF1l6', NULL, NULL, NULL, 1, '2022-07-22 17:21:50', '2022-07-22 17:21:50', NULL);
+INSERT INTO `usuarios` VALUES (3006, 'Poze do Rodo', 'poze@gmail.com', '$2y$10$4wblBgA1KNT/aKCOE/gRLuDBRsDdSl/8Mt3tWjlcGx7NFFmnuF1l6', NULL, NULL, NULL, 1, '2022-07-22 17:21:50', '2022-09-21 19:40:20', NULL);
 INSERT INTO `usuarios` VALUES (3007, 'Arlindo Cruz', 'testew@email.com', '$2y$10$aMjWvJVfrAQ8QuvqfTUkee8dp1m3om.4n4SRsKEnRf6oCal89zKDO', NULL, NULL, NULL, 1, '2022-07-22 21:11:59', '2022-07-22 21:11:59', NULL);
 INSERT INTO `usuarios` VALUES (3008, 'Periclão da Silva Sauro', 'teste@email.com.br', '$2y$10$t.w5czPHzSSEsC8vc8YMo.8P.qBxrwfJW.6Qh5LcKKuinTFOzu5Bq', NULL, NULL, '1661986131_7ded76ce55718d42b8fa.jpg', 1, '2022-08-27 15:28:07', '2022-08-31 19:48:51', NULL);
 

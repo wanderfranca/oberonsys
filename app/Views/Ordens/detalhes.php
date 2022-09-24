@@ -227,7 +227,7 @@
                         href="<?php echo site_url("ordensevidencias/evidencias/$ordem->codigo"); ?>">Evidências da
                         Ordem</a>
 
-                    <a class="dropdown-item" href="<?php echo site_url("ordens/email/$ordem->codigo"); ?>">Enviar por
+                    <a id="btn-enviar-email" class="dropdown-item" href="<?php echo site_url("ordens/email/$ordem->codigo"); ?>">Enviar por
                         e-mail</a>
                     <a class="dropdown-item" href="<?php echo site_url("ordens/gerarpdf/$ordem->codigo"); ?>">Gerar
                         PDF</a>
@@ -258,4 +258,23 @@
 
 <!-- Scripts -->
 <?php echo $this->section('scripts') ?>
+
+<script src="<?php echo site_url('recursos/vendor/loadingoverlay/loadingoverlay.min.js'); ?>"></script>
+
+<script>
+$(document).ready(function() {
+
+    $("#btn-enviar-email").on('click', function(){
+
+        $.LoadingOverlay("show", {
+            image: "",
+            fontawesome: "fa fa-spinner fa-pulse text-primary",
+            text: "Enviando e-mail...",
+        });
+
+    });
+
+});
+</script>
+
 <?php $this->endSection() ?>

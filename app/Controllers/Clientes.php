@@ -380,7 +380,7 @@ class Clientes extends BaseController
 
        $email = $this->request->getGet('email');
 
-       return $this->response->setJSON($this->checkEmail($email, true));
+       return $this->response->setJSON($this->checkEmail($email));
 
     }
 

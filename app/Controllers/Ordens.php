@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Entities\Ordem;
 use App\Traits\OrdemTrait;
+use Dompdf\Dompdf;
 
 class Ordens extends BaseController
 {
@@ -201,6 +202,7 @@ class Ordens extends BaseController
         return view('Ordens/editar', $data);
     }
 
+    // Método: Atualizar OS
     public function atualizar()
     {
         if(!$this->request->isAJAX())
@@ -282,16 +284,14 @@ class Ordens extends BaseController
             return redirect()->to(site_url('ordens'))->with('sucesso', "Ordem de serviço $ordem->codigo excluída com sucesso");
 
         }
-        
        
         $data = [
-            'titulo' => "EXCLUINDO A ORDEM - $ordem->codigo",
+            'titulo' => "Excluindo a Ordem de Serviço: $ordem->codigo",
             'ordem' => $ordem,
         ];
 
         return view('Ordens/excluir', $data);
     }
-
 
     // Método: Recuperar detalhes da OS
     public function responsavel(string $codigo = null)
@@ -366,7 +366,11 @@ class Ordens extends BaseController
 
         $post = $this->request->getPost();
 
+        //Validação: Existência da Ordem
         $ordem = $this->ordemModel->buscaOrdemOu404($post['codigo']);
+
+        //Validação: Existência do usuarioResponsavel
+        $usuarioResponsavel = $this->buscaUsuarioOu404($post['usuario_responsavel_id']);
 
         // Validação: Se a situação da OS for encerrada
         if($ordem->situacao === 'encerrada')
@@ -377,12 +381,9 @@ class Ordens extends BaseController
             return $this->response->setJSON($retorno);
         }
 
-        //Validação: Existência do usuarioResponsavel
-        $usuarioResponsavel = $this->buscaUsuarioResponsavelOu404($post['usuario_responsavel_id']);
-
         if($this->ordemResponsavelModel->defineUsuarioResponsavel($ordem->id, $usuarioResponsavel->id)) //Isso não é erro
         {
-            session()->setFlashdata('sucesso', 'O técnico responsável foi definido com sucesso!');
+            session()->setFlashdata('sucesso', 'O técnico responsável foi atribuído a Ordem de Serviço');
 
             return $this->response->setJSON($retorno);
         }
@@ -392,6 +393,53 @@ class Ordens extends BaseController
             $retorno['erros_model'] = $this->ordemResponsavelModel->errors();
 
             return $this->response->setJSON($retorno);
+
+    }
+
+    
+    public function gerarPdf(string $codigo = null)
+    {
+        $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
+
+        $this->preparaItensDaOrdem($ordem);
+
+        $data = [
+            'titulo' => "Imprimir Ordem de Serviço: - $ordem->codigo",
+            'ordem' => $ordem,
+        ];
+
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view("Ordens/ordem_pdf", $data));
+        // (Optional) Setup the paper size and orientation
+        // Landscap = Horizontal portrait = Vertical (em pé)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream("Detalhes-$ordem->codigo.pdf", ["Attachment"=> false]); // Exibir no navegador
+
+    }
+
+    // Método: Enviar E-mail da OS
+    public function email(string $codigo = null)
+    {
+        $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
+        
+        //OrdemTrait com a unserialize dos itens ou NULL
+        $this->preparaItensDaOrdem($ordem);
+
+        if($ordem->situacao === 'aberta')
+        {
+            $this->enviaOrdemEmAndamenteParaCliente($ordem);
+        } else 
+            {
+                $this->enviaOrdemEncerradaParaCliente($ordem);
+            }
+
+        return redirect()->to(site_url("ordens/detalhes/$ordem->codigo"))->with('sucesso', "O.S enviada para o e-mail do cliente.");
 
     }
 
@@ -440,8 +488,18 @@ class Ordens extends BaseController
         $email = service('email');
         
         $email->setFrom('no-replay@oberonsys.com', 'Oberon Sistema');
-        $email->setTo($ordem->cliente->email);
-        $email->setSubject("Ordem de Serviço em andamento");
+
+        if(isset($ordem->cliente))
+        {
+            $emailCliente = $ordem->cliente->email;
+        
+        } else 
+            {
+                $emailCliente = $ordem->email;
+            }
+
+        $email->setTo($emailCliente);
+        $email->setSubject("Serviço $ordem->codigo em andamento");
 
         $data = [
                     'ordem' => $ordem,
@@ -453,6 +511,45 @@ class Ordens extends BaseController
         $email->setMessage($mensagem);
         $email->send();
     }
+
+    private function enviaOrdemEncerradaParaCliente(object $ordem) : void
+    {
+        $email = service('email');
+        
+        $email->setFrom('no-replay@oberonsys.com', 'Oberon Sistema');
+
+        if(isset($ordem->cliente))
+        {
+            $emailCliente = $ordem->cliente->email;
+        
+        } else 
+            {
+                $emailCliente = $ordem->email;
+            }
+
+        $email->setTo($emailCliente);
+
+        if(isset($ordem->transacao))
+        {
+            $tituloEmail = "O.S $ordem->codigo encerrada com Boleto Bancário";
+        
+        }else
+            {
+                $tituloEmail = "O.S $ordem->codigo encerrada";
+            }
+
+        $email->setSubject($tituloEmail);
+
+        $data = [
+                    'ordem' => $ordem,
+            
+                ];
+
+        $mensagem = view('Ordens/ordem_encerrada_email', $data);
+
+        $email->setMessage($mensagem);
+        $email->send();
+    }
     
     /**
      * buscaUsuarioResponsavelOu404
@@ -460,7 +557,7 @@ class Ordens extends BaseController
      * @param  int $usuario_responsavel_id
      * @return array
      */
-    private function buscaUsuarioResponsavelOu404(int $usuario_responsavel_id = null)
+    private function buscaUsuarioOu404(int $usuario_responsavel_id = null)
     {
 
         if (!$usuario_responsavel_id || !$usuarioResponsavel = $this->usuarioModel

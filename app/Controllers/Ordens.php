@@ -227,7 +227,6 @@ class Ordens extends BaseController
             return $this->response->setJSON($retorno);
         }
 
-        
         // Preencher o objeto CENTRAL com os dados que vêm do post
         $ordem->fill($post);
 
@@ -240,6 +239,15 @@ class Ordens extends BaseController
 
         if($this->ordemModel->save($ordem))
         {
+
+             // Verificação: Se na sessão houver 'ordem-encerrar'
+             if(session()->has('ordem-encerrar'))
+             {   
+                session()->setFlashdata('sucesso', 'Agora já é possível encerrar esta Ordem de Serviço');              
+                 $retorno['redirect'] = "ordens/encerrar/$ordem->codigo";
+                 return $this->response->setJSON($retorno);
+             }
+
             session()->setFlashdata('sucesso', 'Dados atualizados com sucesso!');
 
             return $this->response->setJSON($retorno);
@@ -472,13 +480,27 @@ class Ordens extends BaseController
          */
         session()->set('ordem-encerrar', $ordem->codigo);
 
-        // Validação: Se a OS NÃO tiver um responsável técnico
+        // VERIFICAÇÃO: PARECER TÉCNICO === NULL ou VAZIA
+        if($ordem->parecer_tecnico === null || empty($ordem->parecer_tecnico))
+        {
+            return redirect()->to(site_url("ordens/editar/$ordem->codigo"))->with('atencao', 'Por favor, informe o parecer (laudo) técnico da Ordem de Serviço');
+        }
+
+        // VERIFICAÇÃO: Se a OS NÃO tiver um responsável técnico
         if(!$this->ordemTemResponsavel($ordem->id))
         {
             return redirect()->to(site_url("ordens/responsavel/$ordem->codigo"))->with('atencao', 'Defina um responsável técnico antes de encerrar a Ordem de Serviço');
         }
 
-        dd($ordem);
+
+        $this->preparaItensDaOrdem($ordem);
+
+        $data = [
+            'titulo' => "Encerrar a Ordem de Serviço - $ordem->codigo",
+            'ordem' => $ordem,
+        ];
+
+        return view("ordens/encerrar", $data);
 
     }
 

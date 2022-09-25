@@ -84,8 +84,7 @@ $(document).ready(function()
 
                                 // Tudo certo com a atualização do usuário
                                 // Podemos agora redirecioná-lo tranquilamente
-
-                                window.location.href = "<?php echo site_url("ordens/detalhes/$ordem->codigo"); ?>";
+                                window.location.href = "<?php echo site_url(); ?>" + response.redirect;
 
                         }
 

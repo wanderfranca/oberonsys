@@ -50,20 +50,30 @@
     <div class="form-group">
         <label class="form-control-label">Cliente</label>
         <a tabindex="0" style="text-decoration: none;" role="button" data-toggle="popover" data-tigger="focus"
-            title="Importante" data-content="Não é permitido alterar ou editar o cliente desta O.S">&nbsp;&nbsp; <i
-                class="fa fa-question-circle fa-lg text-info"></i>
+            title="Importante" data-content="Não é permitido alterar ou editar o cliente desta O.S">&nbsp;&nbsp; <i class="fa fa-question-circle fa-lg text-info"></i>
         </a>
-        <input type="text" class="form-control" disabled readonly value="<?php echo esc($ordem->nome) ?>">
+        <input type="text" title="Cliente da Ordem de Serviço"  class="form-control" disabled readonly value="<?php echo esc($ordem->nome) ?>">
     </div>
 
     <?php endif; ?>
 
-    <!-- Valor da ordem -->
+    <?php if($ordem->equipamento === null): ?>
+    <!-- Equipamento -->
     <div class="form-group">
-        <label class="form-control-label">Equipamento <b class="text-primary">*</b></label>
+        <label class="form-control-label">Equipamento <b class="text-danger">*</b></label>
         <input type="text" name="equipamento" placeholder="Informe o equipamento" class="form-control" required
             value="<?php echo esc($ordem->equipamento) ?>">
     </div>
+
+    <?php else: ?>
+    <!-- Equipamento -->
+    <div class="form-group">
+        <label class="form-control-label">Equipamento <b class="text-danger">*</b></label>
+        <input type="text" name="equipamento" title="Equipamento já definido" placeholder="Informe o equipamento" class="form-control" disabled readonly
+            value="<?php echo esc($ordem->equipamento) ?>">
+    </div>
+
+    <?php endif; ?>
 
     <!-- Defeitos -->
     <div class="form-group">

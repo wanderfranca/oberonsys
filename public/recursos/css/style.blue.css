@@ -2052,24 +2052,25 @@ th, td { text-align: left !important; }
   transition: all 0.3s;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: #282b2f;
+.table-striped tbody tr {
+  background-color: #212325;
 }
 
-.table-striped tbody tr:nth-of-type(odd):hover {
-  background-color: #26292d;
+.table-striped tbody tr:hover {
+  background-color: #101113 !important;
+  color: #fff !important;
+}
+
+.table tbody tr:hover {
+  background-color: #101113;
+  color: #fff;
 }
 
 .table thead th{
-  background-color: #2d3035 !important;
+  background-color: #2653d4 !important;
 }
 
-.table-bordered td,
-.table-bordered th {
-  border-color: #343a40;
-}
-
-@media (max-width: 991px) {
+@media (max-width: 990px) {
   section.tables {
     padding: 0;
   }

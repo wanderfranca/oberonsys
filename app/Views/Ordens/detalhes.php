@@ -30,7 +30,7 @@
             <!-- DETALHES -->
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="user-block text-center">
+                    <div class="user-block text-center"> <!-- Div user block text center -->
 
                         <div class="user-title mb-4">
                             <h5 class="card-title mt-2"><?php echo esc($ordem->nome);?></h5>
@@ -44,7 +44,7 @@
                         <p class="contributions mt-0 text-white"><b>Técnico:</b> <?php echo $ordem->usuario_responsavel; ?></p>
 
                         <?php else: ?>
-                    <p class="contributions mt-0">Técnico: Sem técnico definido</p>
+                        <p class="contributions mt-0">Técnico: Sem técnico definido</p>
                         <?php endif; ?>
 
                         <?php if($ordem->situacao === 'encerrada'): ?>
@@ -62,19 +62,20 @@
                         <div class="contributions py-3">
 
                             <p>Nenhum item foi adicionado à esta OS</p>
-                        </div>
+                        
                         <?php if($ordem->situacao === 'aberta'): ?>
-
+                           
                         <a class="btn btn-outline-primary btn-sm"
                             href="<?php echo site_url("ordensitens/itens/$ordem->codigo") ?>">Adicionar itens</a>
-
+                        
+                        </div> <!-- fim da div Contribuitions -->
                         <?php endif; ?>
 
-                    </div>
+                    </div> <!-- FIM Div user block text center -->
+                    
 
 
                     <?php else: ?>
-
                     <!-- DIV - TABLE ITENS -->
                     <div class="row container-fluid">
 

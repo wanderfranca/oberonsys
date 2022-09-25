@@ -89,6 +89,7 @@ class Ordens extends BaseController
         return view('Ordens/criar', $data);
     }
 
+    // Método: Cadastrar nova ordem de serviço
     public function cadastrar()
     {
         if(!$this->request->isAJAX())
@@ -313,6 +314,7 @@ class Ordens extends BaseController
         return view('Ordens/responsavel', $data);
     }
 
+    // Método: Buscar os responsáveis da OS usando termo
     public function buscaResponsaveis()
     {
 
@@ -369,9 +371,6 @@ class Ordens extends BaseController
         //Validação: Existência da Ordem
         $ordem = $this->ordemModel->buscaOrdemOu404($post['codigo']);
 
-        //Validação: Existência do usuarioResponsavel
-        $usuarioResponsavel = $this->buscaUsuarioOu404($post['usuario_responsavel_id']);
-
         // Validação: Se a situação da OS for encerrada
         if($ordem->situacao === 'encerrada')
         {
@@ -381,13 +380,26 @@ class Ordens extends BaseController
             return $this->response->setJSON($retorno);
         }
 
-        if($this->ordemResponsavelModel->defineUsuarioResponsavel($ordem->id, $usuarioResponsavel->id)) //Isso não é erro
+        //Validação: Existência do usuarioResponsavel
+        $usuarioResponsavel = $this->buscaUsuarioOu404($post['usuario_responsavel_id']);
+        
+        if($this->ordemResponsavelModel->defineUsuarioResponsavel($ordem->id, $usuarioResponsavel->id)) //$usuarioResponsavel->id está sinalizando um erro inexistente
         {
+            // Verificação: Se na sessão houver 'ordem-encerrar'
+            if(session()->has('ordem-encerrar'))
+            {
+                session()->setFlashdata('sucesso', 'Agora já é possível encerrar esta Ordem de Serviço');
+                
+                $retorno['redirect'] = "ordens/encerrar/$ordem->codigo";
+                return $this->response->setJSON($retorno);
+            }
+
             session()->setFlashdata('sucesso', 'O técnico responsável foi atribuído a Ordem de Serviço');
 
+            $retorno['redirect'] = "ordens/responsavel/$ordem->codigo";
             return $this->response->setJSON($retorno);
-        }
 
+        }
             // Retorno de validações
             $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
             $retorno['erros_model'] = $this->ordemResponsavelModel->errors();
@@ -396,7 +408,7 @@ class Ordens extends BaseController
 
     }
 
-    
+    // Método: Gerar PDF da OS
     public function gerarPdf(string $codigo = null)
     {
         $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
@@ -440,6 +452,33 @@ class Ordens extends BaseController
             }
 
         return redirect()->to(site_url("ordens/detalhes/$ordem->codigo"))->with('sucesso', "O.S enviada para o e-mail do cliente.");
+
+    }
+
+    // Método: Encerrar OS
+    public function encerrar(string $codigo = null)
+    {
+        $ordem = $this->ordemModel->buscaOrdemOu404($codigo);
+
+        if($ordem->situacao !== 'aberta')
+        {
+            return redirect()->back()->with('atencao', 'Apenas Ordens em Aberto podem ser Encerradas');
+        }
+
+        /**
+         * Definir na sessão uma chave 'ordem-encerrar'
+         * Usar a chave definada 
+         * Para redireiconar para o encerramento, bem como para o parecer técnico
+         */
+        session()->set('ordem-encerrar', $ordem->codigo);
+
+        // Validação: Se a OS NÃO tiver um responsável técnico
+        if(!$this->ordemTemResponsavel($ordem->id))
+        {
+            return redirect()->to(site_url("ordens/responsavel/$ordem->codigo"))->with('atencao', 'Defina um responsável técnico antes de encerrar a Ordem de Serviço');
+        }
+
+        dd($ordem);
 
     }
 
@@ -571,6 +610,17 @@ class Ordens extends BaseController
 
         return $usuarioResponsavel;
 
+    }
+
+    // Verificar se a OS tem um responsável técnico
+    private function ordemTemResponsavel(int $ordem_id) : bool
+    {
+        if($this->ordemResponsavelModel->where('ordem_id', $ordem_id)->where('usuario_responsavel_id', null)->first())
+        {
+            return false;
+        }
+
+        return true;
     }
         
 }

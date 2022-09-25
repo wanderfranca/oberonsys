@@ -21,6 +21,7 @@
 .selectize-input input {
     color: #fbfbfb;
     background-color: #303030;
+    
 }
 
 .selectize-input {
@@ -79,7 +80,7 @@
 
                 <!-- cliente  -->
                 <div class="form-group">
-                    <label class="form-control-label">Escolha o técnico <b class="text-primary">*</b></label>
+                    <label class="form-control-label">Escolha o técnico <b class="text-danger">*</b></label>
                     <select name="usuario_responsavel_id" class="selectize" required>
                         <option value="">Digite o nome do técnico</option>
                     </select>
@@ -179,7 +180,7 @@ $(document).ready(function() {
 
                 if (!response.erro) {
 
-                    window.location.href = "<?php echo site_url("ordens/responsavel/$ordem->codigo"); ?>";
+                    window.location.href = "<?php echo site_url(); ?>" + response.redirect;
                 }
 
                 if (response.erro) {

@@ -1,3 +1,3 @@
-$(".closealert").fadeTo(5000, 500).slideUp(500, function() {
-    $(".closealert").slideUp(800);
+$(".closealert").fadeTo(7000, 700).slideUp(700, function() {
+    $(".closealert").slideUp(900);
 });

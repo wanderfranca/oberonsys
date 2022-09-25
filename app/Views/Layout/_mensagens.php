@@ -33,8 +33,8 @@
 
 <?php if(session()->has('atencao')): ?>
 
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Atenção!</strong> <?php echo session('atencao') ?>
+<div class="alert alert-warning alert-dismissible fade show closealert" role="alert">
+    <strong><i class="fa fa-exclamation-triangle"> </i> Atenção!</strong> <?php echo session('atencao') ?>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>

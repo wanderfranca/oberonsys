@@ -10,7 +10,6 @@ class FornecedorModel extends Model
     protected $returnType       = 'App\Entities\Fornecedor';
     protected $useSoftDeletes   = true;
     protected $allowedFields    = [
-
         'razao',
         'cnpj',
         'ie',
@@ -35,7 +34,7 @@ class FornecedorModel extends Model
 
     // Validation
     protected $validationRules = [
-        'razao'                 => 'required|min_length[3]|max_length[150]|is_unique[fornecedores.razao,id,{id}]',
+        'razao'                 => 'required|min_length[3]|max_length[120]|is_unique[fornecedores.razao,id,{id}]',
         'cnpj'                  => 'required|validaCNPJ|max_length[25]|is_unique[fornecedores.cnpj,id,{id}]',
         'ie'                    => 'required|max_length[25]|is_unique[fornecedores.ie,id,{id}]',
         'telefone'              => 'required|max_length[18]|is_unique[fornecedores.telefone,id,{id}]',
@@ -50,12 +49,12 @@ class FornecedorModel extends Model
     ];
     protected $validationMessages = [
         'razao' => [
-            'required' => 'A razão social é obrigatória.',
+            'required' => 'Razão social ou Nome, é obrigatório.',
             'min_length' => 'insira pelo menos 3 caracteres.',
-            'max_length' => 'O máximo permitido é 150 caractéres.',
+            'max_length' => 'O máximo permitido é 120 caracteres.',
         ],
         'cnpj' => [
-            'required' => 'O campo E-mail é obrigatório.',
+            'required' => 'O CNPJ é obrigatório.',
             'max_length' => 'CNPJ Inválido',
             'is_unique' => 'Já existe um fornecedor cadastrado com este CNPJ',
         ],

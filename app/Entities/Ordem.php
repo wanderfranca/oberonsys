@@ -33,7 +33,7 @@ class Ordem extends Entity
 
             if($this->situacao === 'aberta')
             {
-                return '<span class="text-info"><i class="fa fa-unlock" aria-hidden="true"></i>&nbsp;'.ucfirst($this->situacao);
+                return '<span class="text-info" title="Esta Ordem de Serviço está aberta"><i class="fa fa-unlock" aria-hidden="true"></i>&nbsp;'.ucfirst($this->situacao);
             }
             if($this->situacao === 'encerrada')
             {
@@ -41,15 +41,15 @@ class Ordem extends Entity
             }
             if($this->situacao === 'aguardando')
             {
-                return '<span class="text-secondary"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;'.ucfirst($this->situacao);
+                return '<span class="text-secondary" title="Aguardando pagamento via boleto"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;'.ucfirst($this->situacao);
             }
             if($this->situacao === 'nao_pago')
             {
-                return '<span class="text-warning"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp Não pago';
+                return '<span class="text-warning" title="O boleto desta Ordem de Serviço não foi pago"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp Não pago';
             }
             if($this->situacao === 'cancelada')
             {
-                return '<span class="text-danger"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp'.ucfirst($this->situacao);;
+                return '<span class="text-danger" title="Ordem de Serviço cancelada"><i class="fa fa-ban" aria-hidden="true"></i>&nbsp'.ucfirst($this->situacao);;
             }
 
         }

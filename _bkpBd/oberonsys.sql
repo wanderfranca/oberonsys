@@ -11,7 +11,7 @@
  Target Server Version : 100902
  File Encoding         : 65001
 
- Date: 24/09/2022 18:12:58
+ Date: 27/09/2022 19:56:01
 */
 
 SET NAMES utf8mb4;
@@ -1078,6 +1078,45 @@ INSERT INTO `clientes` VALUES (1002, 3005, 'João Marcelo Sabino', '138.780.767-
 INSERT INTO `clientes` VALUES (1003, 3006, 'Poze do Rodo', '630.227.846-51', '(21) 99932-3232', 'poze@gmail.com', '25011-200', 'Rua Nova', '10', 'Parque Laguna e Dourados', '', 'Duque de Caxias', 'RJ', '2022-07-22 17:21:50', '2022-09-21 19:40:20', NULL);
 INSERT INTO `clientes` VALUES (1004, 3007, 'Arlindo Cruz', '273.773.630-70', '(21) 59080-9098', 'testew@email.com', '26032-510', 'Rua Provedor Marquês de Abrantes', '10', 'Ponto Chic', '', 'Nova Iguaçu', 'RJ', '2022-07-22 21:11:59', '2022-07-23 18:18:12', '2022-07-23 18:18:12');
 INSERT INTO `clientes` VALUES (1005, 3008, 'Periclão da Silva Sauro', '397.832.390-74', '(54) 05405-5555', 'teste@email.com.br', '26032-240', 'Rua Professor Leonardo', '66', 'Cerâmica', '', 'Nova Iguaçu', 'RJ', '2022-08-27 15:28:07', '2022-08-27 15:34:41', NULL);
+
+-- ----------------------------
+-- Table structure for configuracoes
+-- ----------------------------
+DROP TABLE IF EXISTS `configuracoes`;
+CREATE TABLE `configuracoes`  (
+  `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `razao` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `codigo_empresa` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `cpf_cnpj` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `cnae` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `nire` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `data_nire` date NULL DEFAULT NULL,
+  `isento` tinyint(1) NOT NULL,
+  `ie` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `im` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `regime_tributario` enum('mei','simples nacional','lucro presumido','normal','indefinido') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `cep` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `endereco` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `numero` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `bairro` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `complemento` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `cidade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `estado` varchar(5) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `telefone1` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `telefone2` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `email` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `site` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `logotipo` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `atualizado_por` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `criado_em` datetime(0) NULL DEFAULT NULL,
+  `atualizado_em` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of configuracoes
+-- ----------------------------
+INSERT INTO `configuracoes` VALUES (1, 'Empresa Desenvolvimento Obn', '0001', '14508234578', '12353', '443215', '2022-09-07', 0, '3673252', '234623', 'mei', '25011310', 'Rua Doutor XYZ', '49', 'Laguna e Dourados', 'Sem Complemento', 'Duque de Caxias', 'RJ', '2199990000', '2188880000', 'w@suporteoberon.com.br', 'https://suporteoberon.com.br', NULL, 'Mael Soares', '2022-09-26 19:37:01', '2022-09-26 19:37:11');
 
 -- ----------------------------
 -- Table structure for contas_pagar
@@ -9754,7 +9793,7 @@ CREATE TABLE `migrations`  (
   `time` int(11) NOT NULL,
   `batch` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
@@ -9782,6 +9821,7 @@ INSERT INTO `migrations` VALUES (93, '2022-09-04-214646', 'App\\Database\\Migrat
 INSERT INTO `migrations` VALUES (94, '2022-09-04-214705', 'App\\Database\\Migrations\\CriaTabelaOrdernsResponsaveis', 'default', 'App', 1662329503, 21);
 INSERT INTO `migrations` VALUES (95, '2022-09-05-213906', 'App\\Database\\Migrations\\CriaTabelaOrdensItens', 'default', 'App', 1663345561, 22);
 INSERT INTO `migrations` VALUES (96, '2022-09-05-221638', 'App\\Database\\Migrations\\CriaTabelaTransacoes', 'default', 'App', 1663345561, 22);
+INSERT INTO `migrations` VALUES (99, '2022-09-26-161703', 'App\\Database\\Migrations\\CriaTabelaConfiguracoes', 'default', 'App', 1664212773, 23);
 
 -- ----------------------------
 -- Table structure for ordens
@@ -10810,8 +10850,8 @@ INSERT INTO `ordens` VALUES (994, 739, 'OS04092022204821CINE', NULL, 'aberta', N
 INSERT INTO `ordens` VALUES (995, 265, 'OS040920222048215R1H', NULL, 'aberta', NULL, NULL, NULL, NULL, NULL, 'Notebook Gamer', 'Desligando sozinho', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
 INSERT INTO `ordens` VALUES (996, 374, 'OS04092022204821YQT9', NULL, 'aberta', NULL, NULL, NULL, NULL, NULL, 'TV 50 LG', 'Som não funciona', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
 INSERT INTO `ordens` VALUES (997, 708, 'OS04092022204821XXZF', NULL, 'aberta', NULL, NULL, NULL, NULL, NULL, 'TV 32 Samsung', 'Não liga', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
-INSERT INTO `ordens` VALUES (998, 794, 'OS04092022204821MZWR', NULL, 'aberta', NULL, NULL, NULL, NULL, NULL, 'Servidor u16', 'Windows não abre', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
-INSERT INTO `ordens` VALUES (999, 904, 'OS0409202220482125LL', NULL, 'aberta', NULL, NULL, NULL, NULL, NULL, 'Servidor u12', 'Necessita de manutenção', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
+INSERT INTO `ordens` VALUES (998, 794, 'OS04092022204821MZWR', NULL, 'aberta', NULL, NULL, NULL, NULL, NULL, 'Servidor u16', 'Windows não abre', '', 'somente manutenção', '2022-09-04 20:48:21', '2022-09-24 22:19:00', NULL);
+INSERT INTO `ordens` VALUES (999, 904, 'OS0409202220482125LL', NULL, 'aberta', NULL, NULL, NULL, NULL, NULL, 'Servidor u12', 'Necessita de manutenção', '', 'Manutenção feita, foi trocado o cabo sata do hd principal.', '2022-09-04 20:48:21', '2022-09-24 22:15:35', NULL);
 INSERT INTO `ordens` VALUES (1000, 518, 'OS04092022204821KGZE', NULL, 'cancelada', NULL, NULL, NULL, NULL, NULL, 'Notebook', 'Teclado não funciona', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
 INSERT INTO `ordens` VALUES (1001, 696, 'OS04092022204821WXUH', NULL, 'aguardando', NULL, NULL, NULL, NULL, NULL, 'Pc ', 'Defeito na placa mãe', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
 INSERT INTO `ordens` VALUES (1002, 43, 'OS04092022204821LVDM', NULL, 'encerrada', NULL, NULL, NULL, NULL, NULL, 'Notebook', 'Tela não liga', '', NULL, '2022-09-04 20:48:21', '2022-09-04 20:48:21', NULL);
@@ -10833,7 +10873,7 @@ CREATE TABLE `ordens_itens`  (
   INDEX `ordens_itens_item_id_foreign`(`item_id`) USING BTREE,
   CONSTRAINT `ordens_itens_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `itens` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ordens_itens_ordem_id_foreign` FOREIGN KEY (`ordem_id`) REFERENCES `ordens` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ordens_itens
@@ -10841,6 +10881,9 @@ CREATE TABLE `ordens_itens`  (
 INSERT INTO `ordens_itens` VALUES (1, 997, 10, 1, 345.00, 345.00);
 INSERT INTO `ordens_itens` VALUES (6, 1003, 2690, 1, 523.36, 523.36);
 INSERT INTO `ordens_itens` VALUES (7, 1003, 5007, 1, 1255.05, 1255.05);
+INSERT INTO `ordens_itens` VALUES (8, 999, 638, 3, 828.52, 2485.56);
+INSERT INTO `ordens_itens` VALUES (9, 999, 5007, 2, 1255.05, 2510.10);
+INSERT INTO `ordens_itens` VALUES (10, 998, 5007, 1, 1255.05, 1255.05);
 
 -- ----------------------------
 -- Table structure for ordens_responsaveis
@@ -11863,8 +11906,8 @@ INSERT INTO `ordens_responsaveis` VALUES (994, 994, 894, NULL, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (995, 995, 894, NULL, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (996, 996, 894, NULL, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (997, 997, 894, NULL, NULL);
-INSERT INTO `ordens_responsaveis` VALUES (998, 998, 894, NULL, NULL);
-INSERT INTO `ordens_responsaveis` VALUES (999, 999, 894, NULL, NULL);
+INSERT INTO `ordens_responsaveis` VALUES (998, 998, 894, 2001, NULL);
+INSERT INTO `ordens_responsaveis` VALUES (999, 999, 894, 1997, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (1000, 1000, 894, NULL, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (1001, 1001, 894, NULL, NULL);
 INSERT INTO `ordens_responsaveis` VALUES (1002, 1002, 894, NULL, NULL);

@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class ConfiguracaoModel extends Model
 {
     protected $table            = 'configuracoes';
-    protected $returnType       = 'App\Entities\Configuracao';
+    protected $returnType       = 'object';
     protected $protectFields    = true;
     protected $allowedFields    = [
         'razao',
@@ -93,4 +93,17 @@ class ConfiguracaoModel extends Model
             'required' => 'O Estado (UF) é obrigatório.',
         ],
     ];
+
+    public function buscaConfiguracoesGerais()
+    {
+       
+        $atributos = [
+            'configuracoes.*',
+        ];
+
+        $configuracoes  =  $this->select($atributos)->findAll(); 
+       
+        return $configuracoes;
+
+    }
 }

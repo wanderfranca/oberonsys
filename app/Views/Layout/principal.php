@@ -218,7 +218,7 @@
                 </ul>
                 <!-- /USUÁRIOS -->
                 <li><a href="#"><i class="icon-chart"></i> Relatórios </a></li>
-                <li><a href="#"><i class="icon-settings"></i> Configurações </a></li>
+                <li class="<?php echo (url_is('configuracoes') ? 'active' : '') ?>"><a href="<?php echo site_url('configuracoes'); ?>"><i class="icon-settings"></i> Configurações </a></li>
         
         </nav>
         <!-- Sidebar Navigation end-->

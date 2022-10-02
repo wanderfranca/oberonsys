@@ -312,8 +312,8 @@
 <?php echo $this->section('scripts') ?>
 
 <script src="<?php echo site_url("/recursos/vendor/auto-complete/jquery-ui.js")?>"></script>
-<script src="<?php echo site_url("/recursos/vendor/mask/app.js")?>"></script>
 <script src="<?php echo site_url("/recursos/vendor/mask/jquery.mask.min.js")?>"></script>
+<script src="<?php echo site_url("/recursos/vendor/mask/app.js")?>"></script>
 
 <script>
 $(document).ready(function() {

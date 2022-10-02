@@ -170,38 +170,60 @@
                                     <tfoot>
                                         <tr>
                                             <td class="text-right font-weight-bold" colspan="4">
-
-                                                <label> Valor Produtos: </label>
-
+                                                <label class="text-white mr-3"> Valor Produtos: </label>
                                             </td>
 
                                             <td class="font-weight-bold">R$
-                                                <?php echo esc(number_format($valorProdutos, 2)); ?></td>
-
+                                                <?php echo esc(number_format($valorProdutos, 2)); ?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="text-right font-weight-bold" colspan="4">
-
-                                                <label> Valor Serviços: </label>
-
+                                                <label class="text-white mr-3"> Valor Serviços: </label>
                                             </td>
 
                                             <td class="font-weight-bold">R$
-                                                <?php echo esc(number_format($valorServicos, 2)); ?></td>
-
+                                                <?php echo esc(number_format($valorServicos, 2)); ?>
+                                            </td>
                                         </tr>
+
+                                        <?php  if($ordem->valor_desconto !== null || 0): ?>
+                                        <!-- Valor do desconto -->
                                         <tr>
                                             <td class="text-right font-weight-bold" colspan="4">
-
-                                                <label> Valor Total: </label>
-
+                                                <label class="text-white mr-3"> Valor Desconto: </label>
                                             </td>
-
-                                            <td class="font-weight-bold">R$
-                                                <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?>
+                                            <td class="font-weight-bold">
+                                                R$ <?php echo esc(number_format($ordem->valor_desconto, 2)); ?>
                                             </td>
-
                                         </tr>
+                                        <?php endif; ?>
+                                        <tr>
+                                            <td class="text-right font-weight-bold" colspan="4">
+                                                <label class="text-white mr-3"> Valor Total da OS: </label>
+                                            </td>
+                                            <td class="font-weight-bold">
+                                                R$ <?php echo esc(number_format($valorServicos + $valorProdutos, 2)); ?>
+                                            </td>
+                                        </tr>
+
+                                        <!-- TR - VALOR TOTAL  -->
+                                        <tr>
+                                            <td class="text-right font-weight-bold" colspan="4">
+                                                <label
+                                                    class="text-white mr-3"><?php echo ($ordem->valor_desconto == null || 0 ? 'Valor Total: ' : 'Valor Total Com Desconto: ') ?>
+                                                </label>
+                                            </td>
+                                            <td class="font-weight-bold">
+                                                R$ <?php 
+                                                
+                                                        $valorItens = $valorServicos + $valorProdutos;        
+                                                        echo esc(number_format($valorItens - $ordem->valor_desconto, 2)); 
+                                                        
+                                                    ?>
+                                            </td>
+                                        </tr>
+
                                     </tfoot>
 
                                 </table>
@@ -308,11 +330,10 @@
 <!-- Modal -->
 <div class="modal fade" id="modalAddItens" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="TituloModalCentralizado">Adicionar item na ordem -
-                    <?php echo $ordem->codigo; ?></h5>
+                <h5 class="modal-title" id="TituloModalCentralizado">Gerenciar Desconto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -321,53 +342,48 @@
 
                 <div id="response"></div>
 
-                <div class="ui-widget">
-                    <input type="text" name="query" id="query" class="form-control form-control-lg mb-5"
-                        placeholder="Pesquise pelo nome ou código do item">
-                </div>
-
                 <div class="bock-body">
 
-                    <?php 
-            $hiddens = [
-                        'codigo' => $ordem->codigo,
-                        'item_id' => '', // Preenchido qndo o item for escolhido no autocomplete
-                    ];
-                    
-                    ?>
 
-
-                    <?php echo form_open('/', ['id' => 'form'], $hiddens) ?>
+                    <?php echo form_open('/', ['id' => 'formInserir'], ['codigo' => $ordem->codigo]); ?>
 
                     <div class="form-row">
 
                         <!-- Item -->
-                        <div class="form-group col-md-8">
-                            <label class="form-control-label">Item</label>
-                            <input type="text" name="item_nome" class="form-control" readonly required>
+                        <div class="form-group col-md-12">
+                            <label class="form-control-label">Desconto (opcional)</label>
+
+                            <?php $desconto = ($ordem->valor_desconto !== null ? number_format($ordem->valor_desconto, 2) : '' ); ?>
+
+                            <input type="text" name="valor_desconto" class="form-control money"
+                                value="<?php echo $desconto; ?>" placeholder="0.00">
+
                         </div>
 
-                        <!-- Valor -->
-                        <div class="form-group col-md-2">
-                            <label class="form-control-label">Valor</label>
-                            <input type="text" name="item_preco" class="form-control money" readonly required>
-                        </div>
-
-                        <!-- Quantidade -->
-                        <div class="form-group col-md-2">
-                            <label class="form-control-label">Qtde</label>
-                            <input type="number" name="item_quantidade" class="form-control" value="1" min="1" step="1"
-                                required>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="mr-auto">
-                    <input id="btn-salvar" class="btn btn-primary btn-sm" type="submit" value="salvar">
+                    <input id="btn-inserir" class="btn btn-primary btn-sm" type="submit" value="Aplicar Desconto">
                     <button type="button" class="btn btn-secondary btn-sm ml-2" data-dismiss="modal">Cancelar</button>
                 </div>
+                <?php echo form_close(); ?>
             </div>
+
+            <?php if($ordem->valor_desconto): ?>
+
+            <?php echo form_open('/', ['id' => 'formRemover', 'class' => 'mt-2'], ['codigo' => $ordem->codigo]); ?>
+
+
+            <div class="modal-footer">
+                <div class="mr-auto">
+                    <input id="btn-remover" class="btn btn-danger btn-lg" type="submit" value="Remover Desconto">
+                </div>
+                <?php echo form_close(); ?>
+            </div>
+
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -378,20 +394,123 @@
 <!-- Scripts -->
 <?php echo $this->section('scripts') ?>
 
-<script src="<?php echo site_url('recursos/vendor/loadingoverlay/loadingoverlay.min.js'); ?>"></script>
+<script src="<?php echo site_url("/recursos/vendor/mask/jquery.mask.min.js")?>"></script>
+<script src="<?php echo site_url("/recursos/vendor/mask/app.js")?>"></script>
+
+<script src="<?php //echo site_url('recursos/vendor/loadingoverlay/loadingoverlay.min.js'); ?>"></script>
 
 <script>
 $(document).ready(function() {
 
-    $("#btn-enviar-email").on('click', function() {
+    // $("#btn-enviar-email").on('click', function() {
 
-        $.LoadingOverlay("show", {
-            image: "",
-            fontawesome: "fa fa-spinner fa-pulse text-primary",
-            text: "Enviando e-mail...",
+    //     $.LoadingOverlay("show", {
+    //         image: "",
+    //         fontawesome: "fa fa-spinner fa-pulse text-primary",
+    //         text: "Aplicando desconto...",
+    //     });
+
+    // });
+
+    $("#formInserir").on('submit', function(e) {
+
+        e.preventDefault();
+
+        $.ajax({
+
+            type: 'POST',
+            url: '<?php echo site_url('ordens/inserirdesconto'); ?>',
+            data: new FormData(this),
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+
+                $("#response").html('');
+                $("#btn-inserir").val('Por favor aguarde...');
+
+            },
+
+            success: function(response) {
+                $("#btn-inserir").val('Salvar');
+                $("#btn-inserir").removeAttr("disabled");
+
+                $('[name=csrf_oberon]').val(response.token);
+
+                if (!response.erro) {
+
+                    if (response.info) {
+
+                        $("#response").html('<div class="alert alert-info">' + response
+                            .info + '</div>');
+
+                    } else {
+
+                        // Tudo certo com a atualização do usuário
+                        // Podemos agora redirecioná-lo tranquilamente
+
+                        window.location.href =
+                            "<?php echo site_url("ordens/encerrar/$ordem->codigo"); ?>";
+
+                    }
+
+                }
+
+                if (response.erro) {
+
+                    // Existem erros de validação
+                    $("#response").html('<div class="alert alert-danger">' + response.erro +
+                        '</div>');
+
+                    if (response.erros_model) {
+
+                        $.each(response.erros_model, function(key, value) {
+
+                            $("#response").append(
+                                '<ul class="list-unstyled"><li class="text-danger">' +
+                                value + '</li></ul>')
+
+                        });
+
+                    }
+
+                }
+
+            },
+
+            error: function() {
+
+                alert(
+                    'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!'
+                );
+                $("#btn-inserir").val('Salvar');
+                $("#btn-inserir").removeAttr("disabled");
+            }
+
         });
 
     });
+
+    $("#formInserir").submit(function() {
+
+        $(this).find(":submit").attr('disabled', 'disabled')
+
+    });
+
+    $("#formRemover").submit(function() {
+
+        $(this).find(":submit").attr('disabled', 'disabled')
+
+    });
+
+    $("#formEncerramento").submit(function() {
+
+        $(this).find(":submit").attr('disabled', 'disabled')
+
+    });
+
+
 
 });
 </script>

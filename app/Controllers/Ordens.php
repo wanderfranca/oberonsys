@@ -613,6 +613,117 @@ class Ordens extends BaseController
     }
     
     /**
+     * inserirDesconto
+     * Método: Responsável por inserir o desconto na Ordem
+     * @todo: Validar quanto o usuário pode dar de desconto, tornar isso parametrizável
+     * @return void
+     */
+    public function inserirDesconto()
+    {
+        // if(!$this->request->isAJAX())
+        // {
+        //     return redirect()->back();
+        // }
+
+        // Enviar o token do Form
+         $retorno['token'] = csrf_hash();
+
+        // Buscar o post
+         $post = $this->request->getPost();
+
+        // Buscar a ordem de serviço
+         $ordem = $this->ordemModel->buscaOrdemOu404($post['codigo']);
+
+         // Serviço de validação
+         $validacao = service('validation');
+ 
+         $regras = [
+             'valor_desconto' => 'required',
+         ];
+ 
+         $mensagens = [//Errors
+             'valor_desconto' => [
+                 'required' => 'Informe o valor de desconto',
+             ],
+         ];
+ 
+         $validacao->setRules($regras, $mensagens);
+ 
+         if($validacao->withRequest($this->request)->run() === false){
+         
+        // Retorno de validações
+         $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+         $retorno['erros_model'] = $validacao->getErrors();
+ 
+             return $this->response->setJSON($retorno);
+ 
+         }
+
+         // Capturar o valor do desconto e remover ponto e virgula
+         $valorDesconto = str_replace([',', '.'], '', $post['valor_desconto']);
+
+         // Se o valor de desconto for menor ou igual a zero
+         if($valorDesconto <= 0 )
+         {
+            // Retorno de validações
+            $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+            $retorno['erros_model'] = ['valor_desconto' => 'Informe um valor maior que zero'];
+
+                return $this->response->setJSON($retorno);
+         }
+
+         $ordem->valor_desconto = str_replace(',', '', $post['valor_desconto']);
+
+         if($ordem->hasChanged() === false)
+         {
+            // Retorno de validações
+            $retorno['info'] = 'Não há dados para atualizar';
+
+                return $this->response->setJSON($retorno);
+         }
+
+         $descontoBoleto = getenv('gerenciaNetDesconto') / 100 . '%';
+
+            $descontoAdicionado = "R$ ". number_format($ordem->valor_desconto, 2);
+
+
+            session()->setFlashdata('sucesso', "Desconto de $descontoAdicionado inserido com sucesso!");
+            
+            $usuarioLogado = usuario_logado()->nome;
+
+            session()->setFlashdata('info', "<b>$usuarioLogado</b>, se esta ordem for encerra com <b>Boleto Bancário</b>, prevalecerá o valor de desconto de <b>$descontoBoleto</b> para esse método de pagamento");
+
+            return $this->response->setJSON($retorno);
+
+
+            
+        //  if($this->ordemModel->save($ordem))
+        //  {
+
+        //     $descontoBoleto = getenv('gerenciaNetDesconto') / 100 . '%';
+
+        //     $descontoAdicionado = "R$ ".number_format($ordem->valor_desconto, 2);
+
+
+        //     session()->setFlashdata('sucesso', "Desconto de $descontoAdicionado inserido com sucesso!");
+            
+        //     $usuarioLogado = usuario_logado()->nome;
+
+        //     session()->setFlashdata('info', "<b>$usuarioLogado</b>, se esta ordem for encerra com <b>Boleto Bancário</b>, prevalecerá o valor de desconto de <b>$descontoBoleto</b> para esse método de pagamento");
+
+        //     return $this->response->setJSON($retorno);
+
+
+        //  }
+
+        //  // Retorno de validações
+        //  $retorno['erro'] = 'Por favor verifique os erros abaixo e tente novamente';
+        //  $retorno['erros_model'] = $this->ordemModel->errors();
+
+        //      return $this->response->setJSON($retorno);
+    }
+    
+    /**
      * buscaUsuarioResponsavelOu404
      * Método privado: Buscar usuário responsável e trazer o ID e Nome no objeto
      * @param  int $usuario_responsavel_id

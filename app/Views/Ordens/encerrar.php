@@ -234,7 +234,7 @@
                                         <div class="card-body">
                                             <!-- Botão para acionar modal -->
                                             <button type="button" class="btn btn-outline-info" data-toggle="modal"
-                                                data-target="#modalAddItens">
+                                                data-target="#modalAddDesconto">
                                                 Gerenciar Desconto
                                             </button>
                                         </div>
@@ -328,7 +328,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modalAddItens" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+<div class="modal fade" id="modalAddDesconto" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -359,7 +359,6 @@
                                 value="<?php echo $desconto; ?>" placeholder="0.00">
 
                         </div>
-
                     </div>
                 </div>
             </div>

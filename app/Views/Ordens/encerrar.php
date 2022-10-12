@@ -491,6 +491,86 @@ $(document).ready(function() {
 
     });
 
+    $("#formRemover").on('submit', function(e) {
+
+        e.preventDefault();
+
+        $.ajax({
+
+            type: 'POST',
+            url: '<?php echo site_url('ordens/removerdesconto'); ?>',
+            data: new FormData(this),
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+
+                $("#response").html('');
+                $("#btn-remover").val('Por favor aguarde...');
+
+            },
+
+            success: function(response) {
+                $("#btn-remover").val('Salvar');
+                $("#btn-remover").removeAttr("disabled");
+
+                $('[name=csrf_oberon]').val(response.token);
+
+                if (!response.erro) {
+
+                    if (response.info) {
+
+                        $("#response").html('<div class="alert alert-info">' + response
+                            .info + '</div>');
+
+                    } else {
+
+                        // Tudo certo com a atualização do usuário
+                        // Podemos agora redirecioná-lo tranquilamente
+
+                        window.location.href =
+                            "<?php echo site_url("ordens/encerrar/$ordem->codigo"); ?>";
+
+                    }
+
+                }
+
+                if (response.erro) {
+
+                    // Existem erros de validação
+                    $("#response").html('<div class="alert alert-danger">' + response.erro +
+                        '</div>');
+
+                    if (response.erros_model) {
+
+                        $.each(response.erros_model, function(key, value) {
+
+                            $("#response").append(
+                                '<ul class="list-unstyled"><li class="text-danger">' +
+                                value + '</li></ul>')
+
+                        });
+
+                    }
+
+                }
+
+            },
+
+            error: function() {
+
+                alert(
+                    'Não foi possível processar a solicitação, por favor entre em contato com o suporte técnico da Oberon!'
+                );
+                $("#btn-remover").val('Salvar');
+                $("#btn-remover").removeAttr("disabled");
+            }
+
+        });
+
+    });
+
     $("#formInserir").submit(function() {
 
         $(this).find(":submit").attr('disabled', 'disabled')

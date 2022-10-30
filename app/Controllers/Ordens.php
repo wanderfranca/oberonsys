@@ -16,6 +16,7 @@ class Ordens extends BaseController
     private $clienteModel;
     private $ordemResponsavelModel;
     private $usuarioModel;
+    private $formaPagamentoModel;
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class Ordens extends BaseController
         $this->clienteModel = new \App\Models\ClienteModel();
         $this->ordemResponsavelModel = new \App\Models\OrdemResponsavelModel();
         $this->usuarioModel = new \App\Models\UsuarioModel();
+        $this->formaPagamentoModel = new \App\Models\FormaPagamentoModel();
     }
     public function index()
     {
@@ -499,6 +501,22 @@ class Ordens extends BaseController
             'titulo' => "Encerrar a Ordem de Serviço - $ordem->codigo",
             'ordem' => $ordem,
         ];
+
+        if($ordem->itens !== null)
+        {
+            //OS Tem pelo menos 1 item
+            // Retornar todas as formas de pagamento ativa, menos a cortesia
+            $data['formasPagamentos'] = $this->formaPagamentoModel->where('id !=', 2)->where('ativo', true)->findAll();
+        
+        } else 
+            {
+                //OS sem valor, envio apenas a forma de pagamento cortesia
+                $data['formasPagamentos'] = $this->formaPagamentoModel->where('id', 2)->findAll();
+
+
+            }
+
+
 
         return view("ordens/encerrar", $data);
 
